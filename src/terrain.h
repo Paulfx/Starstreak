@@ -1,5 +1,5 @@
-#ifndef PARTIE_H
-#define PARTIE_H
+#ifndef TERRAIN_H
+#define TERRAIN_H
 
 #include <stdlib.h>
 #include <iostream>
@@ -13,16 +13,16 @@
  @brief la classe qui teste le succés d'une note et modifie le score
  */
 
-class Terrein {
+class TerrAin {
     
 private:
     Partition part;
-    line tab[8];
+    line tab[//depend de la difficulté][8];
     float score;
     
     
 public:
-    Terrein();
+    Terrain();
     
-    Terrein(   );
+    Terrain(   );
 };

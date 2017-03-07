@@ -3,14 +3,12 @@
 using namespace std;
 
 Partie::Partie(){
-    Partition();
-    score=0;
-    noteStreak=0;
-    startPower=0;
+    Terrain part();
+    
 }
 
 Partie::Partie(const string & filename,int difficulty){
-    Partition(const string & filename,int difficulty);
+    Partition part(const string & filename,int difficulty);
     score=0;
     noteStreak=0;
     startPower=0;
