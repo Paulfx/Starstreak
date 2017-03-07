@@ -3,21 +3,32 @@
 
 
 #include <stdlib.h>
+#include <fstream>
+#include <iostream>
+#include <cassert>
+
 
 using namespace std;
+
+
+typedef struct { //Une ligne de jeu = données (eg "1001") + temps jusqu'à la prochaine ligne
+	string data; 
+	float time;
+}line;
+
+
 
 class Partition {
 
 	private :
 
-		char** partition; //tableau 2D
+		line* partition; //tableau 2D 
+		int nbLine;
 
 	public :
 		/**
 		*/
-		Partition() {
-
-		} 
+		Partition();
 
 		/**@brief Constructeur
 		*/
@@ -31,4 +42,3 @@ class Partition {
 };
 
 #endif
-
