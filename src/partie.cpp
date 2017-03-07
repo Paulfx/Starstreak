@@ -23,3 +23,4 @@ Partie::~Partie(){
     startPower=0;
     
 }
+
