@@ -1,4 +1,4 @@
-#include "partition.h"
+ #include "partition.h"
 
 Partition::Partition() {
 	partition = NULL;

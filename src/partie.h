@@ -36,6 +36,9 @@ public:
      @brief constructeur par paramètres
      Constructeur avec l'ensemble des arguments passés par jeu. Le constructeur de partie appelle le constructeur de partition.
      les autres valeurs sont initialisées à 0.
+     @param filename reference sur le fichier de lecture/ecriture
+     @param difficulty difficulté de la partie et donc modification de la lecture/ecriture sur le fichier ? 
+     @todo
      */
     Partie(const string & filename,int difficulty);
     

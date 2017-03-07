@@ -32,6 +32,9 @@ class Partition {
 		Partition();
 
 		/**@brief Constructeur
+         @param
+         @paramm
+         
 		*/
 		Partition(const string & filename,int difficulty);
 
