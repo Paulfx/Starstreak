@@ -24,6 +24,7 @@ class Partition {
 
 		line* partition; //tableau 2D 
 		int nbLine;
+		int duree;
 
 	public :
 		/**
@@ -37,6 +38,8 @@ class Partition {
 		/**@brief Destructeur
 		*/
 		~Partition();
+
+		void afficher();
 
 
 };

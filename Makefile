@@ -8,10 +8,10 @@ vpath %.cpp src
 
 OBJET=obj/jeu.o obj/partie.o obj/partition.o obj/score.h
 
-all:  make_dir guitarZero
+all:  make_dir guitarZhero
 
 make_dir :
-	test -d obj || mkdir -p obj data bin
+	test -d obj || mkdir -p obj bin
 
 jeu: $(OBJET) obj/mainJeu.o
 	g++ -o bin/$@ $^ $(LIB)
@@ -19,8 +19,8 @@ jeu: $(OBJET) obj/mainJeu.o
 partie: $(OBJET) obj/mainPartie.o
 	g++ -o bin/$@ $^ $(LIB)
 
-partition: $(OBJET) obj/mainPartition.o
-	g++ -o bin/$@ $^ $(LIB)
+partition: obj/partition.o obj/mainPartition.o
+	g++ -o bin/$@ $^
 
 score: $(OBJET) obj/mainScore.o
 	g++ -o bin/$@ $^ $(LIB)
