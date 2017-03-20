@@ -13,16 +13,18 @@
  @brief la classe qui teste le succés d'une note et modifie le score
  */
 
-class TerrAin {
+class Terrain {
     
 private:
     Partition part;
-    line tab[//depend de la difficulté][8];
-    float score;
+    int difficulty;
+    char** terrain;
+    string data;//element à place dans un case de terrain
+    in nbLine;//nombre de case utilisée dans le terrain (utile lors de la construction)
     
     
 public:
     Terrain();
     
-    Terrain(   );
+    Terrain(const ligne & ,int difficulty,);
 };

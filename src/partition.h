@@ -22,7 +22,7 @@ class Partition {
 
 	private :
 
-		line* partition; //tableau 2D 
+		line* partition; //tableau 1D
 		int nbLine;
 		int duree;
 
@@ -47,4 +47,4 @@ class Partition {
 
 };
 
-#endif
+ 
