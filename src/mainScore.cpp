@@ -1,4 +1,5 @@
 #include "score.h"
+#include "partition.h"
 
 int main(){
     Score test (30);
