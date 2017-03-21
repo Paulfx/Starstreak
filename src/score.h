@@ -50,6 +50,6 @@ public:
     void updateScore(const line currLine,const Keyboard keyState);
     
 
-}
+};
 
 #endif
