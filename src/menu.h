@@ -39,11 +39,13 @@ public :
 
 	/**@brief Modifie le currPtr de manière à remonter dans le menu
 	*/
-	moveUp();
+	void moveUp();
 
 	/**@brief Modifie le currPtr de manière à descendre dans le menu
 	*/
-	moveDown();
+	void moveDown();
+
+	void afficher();
 
 
 
