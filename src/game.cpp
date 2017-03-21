@@ -1,4 +1,4 @@
-#include "partie.cpp"
+#include "game.h"
 
 using namespace std;
 
