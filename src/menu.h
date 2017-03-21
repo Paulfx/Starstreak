@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <cassert>
+#include <sstream>
 
 using namespace std;
 
@@ -21,6 +22,7 @@ private :
 	
 	Song** songTab; //tableau de liens sur song
 	Song* currPtr; //ptr sur la chanson ciblée
+	unsigned int nbSongs; //taille du tab
 
 public :
 	/**@brief Constructeur par défaut 
@@ -36,6 +38,14 @@ public :
 	   @param[in,out] filename
 	*/
 	Menu(const string& filename);
+
+	/**@brief Destructeur
+	   Destructeur de la classe Menu
+	   Libère l'espace alloué dans le tableau songTab
+	*/
+	~Menu();
+
+
 
 	/**@brief Modifie le currPtr de manière à remonter dans le menu
 	*/
