@@ -8,7 +8,7 @@ vpath %.cpp src
 
 OBJET=obj/menu.o obj/game.o obj/partition.o obj/score.h
 
-all:  make_dir guitarZhero
+all:  make_dir straStreak
 
 make_dir :
 	test -d obj || mkdir -p obj bin

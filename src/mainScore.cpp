@@ -9,11 +9,42 @@ int main(){
     lineTest.data="01010";
     //line.time=34.0;
     
+    
+    
+    line lineTestFail;
+    lineTestFail.data="00010";
+    
     keyboard ktest;
     ktest.setKey(0);
     ktest.setKey(2);
     ktest.setKey(4);
+    
     test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTest,ktest);
+    
+    test.updateScore(lineTestFail,ktest);
+    
+    test.updateScore(lineTest,ktest);
+    test.updateScore(lineTestFail,ktest);
+    
+    
+    return 0;
 }
 
 
