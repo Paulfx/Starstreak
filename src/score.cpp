@@ -3,6 +3,7 @@
 #include <iostream>
 #include <assert.h>
 #include <fstream>
+#include <stdbool.h>
 
 using namespace std;
 
@@ -29,29 +30,29 @@ Score::Score(const int nbNotes){
 Score::~Score(){
 }
 
-void Score::updateScore(const line currLine,const Keyboard keyState){
+void Score::updateScore(const line currLine,const keyboard& keyState) {
     
     /*
      test de validité en fonction de l'état du clavier et de la ligne courante
      */
-    bool TEST_SUCCES=0;
+    bool testSucces=0;
     
-    bool tab[6] = keyState.getTab();
+    bool *tab = keyState.getKey();
     string seqUSER; //contient les touches appuyées par l'user sous la forme d'une chaine de caractère
     
     /*convertion du tab bool en string pour la comparer avec la ligne de jeu courante*/
     
     for (int i=1;i<=5;++i){//la boucle commence à 1 car la 1ere case du tab correspond à la touche "enter" (elle n'apparait dpnc pas dans Line
-        if (tab[i]==TRUE){
+        if (tab[i]==true){
             seqUSER+="1";
         }
         else seqUSER+="0";
     }
-    if (seqUSER == currLine){
-        TEST_SUCCES=1;
+    if (seqUSER == currLine.data){
+        testSucces=1;
     }
     
-    if (TEST_SUCCES) {
+    if (testSucces) {
         noteStreak++;
         numberSucces++;
         if (noteStreak%10 == 0 && noteStreak<40){//de 0 à 40 notes consécutives le multiplicateur est incrémenté toutes les 10 notes

@@ -7,6 +7,9 @@
 #include <iostream>
 #include <cassert>
 
+#include "partition.h"
+#include "keyboard.hpp"
+
 
 
 
@@ -47,7 +50,7 @@ public:
     /**
      @brief La fonction updateScore est appelée à chaque fois qu'une note doit etre jouée. Elle contient un test de validité qui compare la ligne de jeu courante avec létat du clavier. Les différentes valeurs du score seront ensuite mise à jour en fonction du résultat du ce test.
      */
-    void updateScore(const line currLine,const Keyboard keyState);
+    void updateScore(const line currLine,const keyboard& keyState);
     
 
 };
