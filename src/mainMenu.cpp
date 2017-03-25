@@ -9,5 +9,7 @@ int main() {
 
 	menu.afficher();
 
+	menu.choose();
+
 	return 0;
 }

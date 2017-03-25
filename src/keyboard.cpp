@@ -31,6 +31,6 @@ void keyboard::setKey(const unsigned int i){
 }
 
 
-bool* keyboard::getKey() const {
+bool* keyboard::getKey() const{
     return keyTab;
 }

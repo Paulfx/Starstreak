@@ -6,8 +6,9 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include <partition.h>
-#include <score.h>
+#include "partition.h"
+#include "struct.h"
+#include "score.h"
 
 /**
  @class Game 
@@ -15,7 +16,7 @@
  */
 class Game {
     
-private:
+private :
     
     Partition partition;
     Score score;
@@ -25,7 +26,7 @@ private:
     
     
     
-public:
+public :
     
     /** 
      @brief Constructeur par defaut

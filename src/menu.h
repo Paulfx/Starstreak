@@ -8,13 +8,10 @@
 #include <cassert>
 #include <sstream>
 
+#include "game.h"
+#include "struct.h"
+
 using namespace std;
-
-typedef struct {
-	string title,filePartition,fileMusic,fileImage;
-	float duration;
-} Song;
-
 
 class Menu {
 
@@ -47,7 +44,7 @@ public :
 	*/
 	~Menu();
 
-
+	void afficher();
 
 	/**@brief Modifie le currPtr de manière à remonter dans le menu
 	*/

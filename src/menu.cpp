@@ -7,7 +7,6 @@ Menu::Menu() {
 	currPtr = NULL;
 	nbSongs = 0;
 	isActive = true;
-	currGame = NULL;
 }
 
 Menu::Menu(const string& filename) {
@@ -45,7 +44,6 @@ Menu::Menu(const string& filename) {
 	}
 	currPtr = songTab[0];
 	isActive = true;
-	currGame = NULL;
 }
 
 Menu::~Menu() {
@@ -72,7 +70,7 @@ void Menu::moveDown() {
 }
 
 void Menu::choose() {
-	Game currGame(currPtr,0); // Difficulté, pourquoi pas dans game que cela se choisit, 
+	Game currGame(currPtr,1); // Difficulté, pourquoi pas dans game que cela se choisit, 
 	isActive = false;
 }									//on lance la partie et on choisit juste avant de jouer, plus facile car dans game on accède a la difficulté
 									//qu'on envoie à Partition

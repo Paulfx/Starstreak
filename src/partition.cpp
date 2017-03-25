@@ -46,3 +46,4 @@ void Partition::afficher() {
 	}
 }
 
+int Partition::getNbLine() {return nbLine;}

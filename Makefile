@@ -6,7 +6,7 @@ CXXFLAGS=-Wall -ggdb
 #dit au makefile de chercher les .cpp dans le dossier dir
 vpath %.cpp src
 
-OBJET=obj/menu.o obj/game.o obj/partition.o obj/score.h
+OBJET=obj/menu.o obj/game.o obj/partition.o obj/score.o obj/keyboard.o
 
 all:  make_dir straStreak
 
@@ -16,7 +16,7 @@ make_dir :
 game: $(OBJET) obj/mainGame.o
 	g++ -o bin/$@ $^ 
 
-menu: obj/menu.o obj/mainMenu.o
+menu: $(OBJET) obj/mainMenu.o
 	g++ -o bin/$@ $^ 
 
 partition: obj/partition.o obj/mainPartition.o

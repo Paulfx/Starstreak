@@ -44,6 +44,7 @@ class Partition {
 
 		void afficher();
 
+		int getNbLine();
 
 };
 

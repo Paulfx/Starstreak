@@ -35,7 +35,7 @@ class keyboard{
     /** @brief Accesseur du tableau d'etat
      renvoie un pointeur sur tableau de bool
     */
-    bool* getKey();
+    bool* getKey() const;
 
 
 
