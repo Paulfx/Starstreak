@@ -1,7 +1,7 @@
 CXXFLAGS=-Wall -ggdb
 
-LIB = -lSDL2 -lSDL2_ttf -lSDL2_image
-INCLUDE = -I/usr/include/SDL2 -Isrc
+#LIB = -lSDL2 -lSDL2_ttf -lSDL2_image
+#INCLUDE = -I/usr/include/SDL2 -Isrc
 
 #dit au makefile de chercher les .cpp dans le dossier dir
 vpath %.cpp src
@@ -14,19 +14,19 @@ make_dir :
 	test -d obj || mkdir -p obj bin
 
 game: $(OBJET) obj/mainGame.o
-	g++ -o bin/$@ $^ $(LIB)
+	g++ -o bin/$@ $^ 
 
 menu: obj/menu.o obj/mainMenu.o
-	g++ -o bin/$@ $^ $(LIB) ; cd bin/
+	g++ -o bin/$@ $^ 
 
 partition: obj/partition.o obj/mainPartition.o
 	g++ -o bin/$@ $^ 
 
 score: $(OBJET) obj/mainScore.o
-	g++ -o bin/$@ $^ $(LIB)
+	g++ -o bin/$@ $^ 
 
 obj/%.o : %.cpp
-	g++ -c $(CXXFLAGS) $(INCLUDE) $^ -o $@ 
+	g++ -c $(CXXFLAGS)  $^ -o $@ 
 
 clean:
 	rm -f obj/*.o

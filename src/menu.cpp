@@ -6,6 +6,8 @@ Menu::Menu() {
 	songTab = NULL;
 	currPtr = NULL;
 	nbSongs = 0;
+	isActive = true;
+	currGame = NULL;
 }
 
 Menu::Menu(const string& filename) {
@@ -13,28 +15,19 @@ Menu::Menu(const string& filename) {
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
 
-
 	string line;
 	unsigned int i,j=0;
 	Song* song;
-
 	string word;
-
 
 	fichier>>nbSongs;
 	songTab = new Song*[nbSongs];
-
 	while(getline(fichier,line)) {
-		
 		if(!line.empty()) {
 			stringstream lineStream(line);
 			i=0;
 			song = new Song;
-
-			
-
 			while(getline(lineStream,word,',')) {
-
 				switch(i) {
 					case 0 : song->title = word; break;
 					case 1 : song->filePartition = word; break;
@@ -43,67 +36,19 @@ Menu::Menu(const string& filename) {
 					case 4 : song->duration = atof(word.c_str()); break;
 					default : break;
 				}
-
 				i++;
 			}
-
-			//cout<<song->title<<song->fileImage<<endl;
-			
 			songTab[j] = song;
 			j++;
 			song = NULL;
-
 		}
 	}
-
-
-
-
-
-/*
-	fichier>>nbSongs; //Récupération du nombre de chansons (donnée membre)
-
-
-
-	songTab = new Song* [nbSongs];
-	
-
-
-	while(getline(fichier,line)) {
-		
-		stringstream lineStream(line); //conversion d'un str en stream
-		string word;
-		song = new Song;
-		j=0;
-		while(getline(lineStream,word,',')) {
-			cout<<word;
-			switch(j) {
-				case 0 : song->title = word; break;
-				case 1 : song->filePartition = word; break;
-				case 2 : song->fileMusic = word; break;
-				case 3 : song->fileImage = word; break;
-				case 4 : song->duration = atof(word.c_str()); break;
-				default : break;
-			}
-			j++;
-		}
-
-		songTab[i] = song;
-		i++;
-		song = NULL;
-	}
-
-	afficher();
-
-
-	currPtr = songTab[0];*/
-
+	currPtr = songTab[0];
+	isActive = true;
+	currGame = NULL;
 }
 
-
 Menu::~Menu() {
-
-
 	for(unsigned int i =0;i<nbSongs;i++) {
 		delete songTab[i];
 	}
@@ -119,9 +64,15 @@ void Menu::afficher() {
 }
 
 void Menu::moveUp() {
-	currPtr--;
+	currPtr--; //Liste chainée pour tourner en boucle ?
 }
 
 void Menu::moveDown() {
 	currPtr++;
 }
+
+void Menu::choose() {
+	Game currGame(currPtr,0); // Difficulté, pourquoi pas dans game que cela se choisit, 
+	isActive = false;
+}									//on lance la partie et on choisit juste avant de jouer, plus facile car dans game on accède a la difficulté
+									//qu'on envoie à Partition

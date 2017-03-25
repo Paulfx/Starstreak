@@ -17,7 +17,7 @@ class Game {
     
 private:
     
-    Partition part;
+    Partition partition;
     Score score;
     bool creationMode;
 
@@ -37,11 +37,11 @@ public:
      @brief constructeur par paramètres
      Constructeur avec l'ensemble des arguments passés par jeu. Le constructeur de Game appelle le constructeur de partition.
      les autres valeurs sont initialisées à 0.
-     @param filename reference sur le fichier de lecture/ecriture
+     @param song pointeur sur le Song choisit
      @param difficulty difficulté de la Game et donc modification de la lecture/ecriture sur le fichier ? 
      @todo
      */
-    Game(const string & filename,int difficulty);
+    Game(Song* song,int difficulty);
     
     /**@brief Destructeur
      */

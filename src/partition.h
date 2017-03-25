@@ -32,8 +32,8 @@ class Partition {
 		Partition();
 
 		/**@brief Constructeur
-         @param
-         @paramm
+         @param filename 
+         @param difficulty 1 pour facile, 2 moyen et 3 difficile
          
 		*/
 		Partition(const string & filename,int difficulty);
