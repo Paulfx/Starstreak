@@ -16,8 +16,8 @@ make_dir :
 game: $(OBJET) obj/mainGame.o
 	g++ -o bin/$@ $^ 
 
-menu: $(OBJET) obj/mainMenu.o
-	g++ -o bin/$@ $^ 
+menu: $(OBJET) obj/mainTxt.o obj/winTxt.o obj/txtGame.o
+	g++ -o bin/$@ $^ -Itxt
 
 partition: obj/partition.o obj/mainPartition.o
 	g++ -o bin/$@ $^ 

@@ -19,6 +19,7 @@ private :
 	
 	Song** songTab; //tableau de liens sur song
 	Song* currPtr; //ptr sur la chanson ciblée
+	unsigned int currI; //indice dans songTab de currPtr
 	unsigned int nbSongs; //taille du tab
 	bool isActive; //false si une game est active = menu inactif
 	Game currGame; //La partie en cours
@@ -58,6 +59,12 @@ public :
 		Rend le menu inactif
 	*/
 	void choose();
+
+	Song** getSongTab();
+
+	unsigned int getCurrI() const;
+
+	unsigned int getNbSongs() const;
 
 };
 

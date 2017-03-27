@@ -63,14 +63,29 @@ void Menu::afficher() {
 
 void Menu::moveUp() {
 	currPtr--; //Liste chainée pour tourner en boucle ?
+	currI--;
 }
 
 void Menu::moveDown() {
 	currPtr++;
+	currI++;
 }
 
 void Menu::choose() {
 	Game currGame(currPtr,1); // Difficulté, pourquoi pas dans game que cela se choisit, 
-	isActive = false;
-}									//on lance la partie et on choisit juste avant de jouer, plus facile car dans game on accède a la difficulté
+	isActive = false;    //on lance la partie et on choisit juste avant de jouer, plus facile car dans game on accède a la difficulté
 									//qu'on envoie à Partition
+}									
+
+Song** Menu::getSongTab() {
+	return songTab;
+}
+
+unsigned int Menu::getCurrI() const {
+	return currI;
+}
+
+unsigned int Menu::getNbSongs() const {
+	return nbSongs;
+}
+
