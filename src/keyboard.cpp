@@ -6,7 +6,7 @@
 //
 //
 
-#include "Keyboard.hpp"
+#include "keyboard.hpp"
 
 
 keyboard::keyboard(){

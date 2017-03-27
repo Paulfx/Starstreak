@@ -18,10 +18,9 @@ class Menu {
 private :
 	
 	Song** songTab; //tableau de liens sur song
-	Song* currPtr; //ptr sur la chanson ciblée
 	unsigned int currI; //indice dans songTab de currPtr
 	unsigned int nbSongs; //taille du tab
-	bool isActive; //false si une game est active = menu inactif
+	bool isActive; //false si menu inactif = une game est active
 	Game currGame; //La partie en cours
 
 public :

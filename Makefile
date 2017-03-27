@@ -17,7 +17,7 @@ game: $(OBJET) obj/mainGame.o
 	g++ -o bin/$@ $^ 
 
 menu: $(OBJET) obj/mainTxt.o obj/winTxt.o obj/txtGame.o
-	g++ -o bin/$@ $^ -Itxt
+	g++ -o bin/$@ $^ -Itxt -std=c++11
 
 partition: obj/partition.o obj/mainPartition.o
 	g++ -o bin/$@ $^ 
@@ -27,7 +27,7 @@ score: $(OBJET) obj/mainScore.o
 
 
 obj/%.o : %.cpp
-	g++ -c $(CXXFLAGS) $^ -o $@ 
+	g++ -c $(CXXFLAGS) $^ -o $@ -std=c++11
 
 clean:
 	rm -f obj/*.o

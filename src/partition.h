@@ -23,8 +23,9 @@ class Partition {
 	private :
 
 		line* partition; //tableau 1D
-		int nbLine;
-		int duree;
+		unsigned int nbLine;
+		unsigned int duree;
+		unsigned int index; //Indice tenant compte de l'avancée dans partition
 
 	public :
 		/**
@@ -46,6 +47,7 @@ class Partition {
 
 		int getNbLine();
 
+		line getLine();
 };
 
 #endif

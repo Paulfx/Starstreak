@@ -25,7 +25,7 @@ private :
     bool starPower;
     int numberSucces;
     int numberNotes;
-    unsigned int multiplier; //valeur (de 1 à 4) établit en fonction de noteStreak qui multi la valeur d'une note
+    unsigned int multiplier; //valeur (de 1 à 4) établit en fonction de noteStreak qui multiplie la valeur d'une note
     //int rockometer-valeur qui augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro la partie s'arrête
     
 public:

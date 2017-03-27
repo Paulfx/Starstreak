@@ -4,7 +4,7 @@ using namespace std;
 
 Menu::Menu() {
 	songTab = NULL;
-	currPtr = NULL;
+	currI=0;
 	nbSongs = 0;
 	isActive = true;
 }
@@ -42,7 +42,7 @@ Menu::Menu(const string& filename) {
 			song = NULL;
 		}
 	}
-	currPtr = songTab[0];
+	currI=0;
 	isActive = true;
 }
 
@@ -62,17 +62,15 @@ void Menu::afficher() {
 }
 
 void Menu::moveUp() {
-	currPtr--; //Liste chainée pour tourner en boucle ?
-	currI--;
+	currI = (currI + 1) % nbSongs;
 }
 
 void Menu::moveDown() {
-	currPtr++;
-	currI++;
+	currI = (currI - 1) % nbSongs;
 }
 
 void Menu::choose() {
-	Game currGame(currPtr,1); // Difficulté, pourquoi pas dans game que cela se choisit, 
+	Game currGame(songTab[currI],1); // Difficulté, pourquoi pas dans game que cela se choisit, 
 	isActive = false;    //on lance la partie et on choisit juste avant de jouer, plus facile car dans game on accède a la difficulté
 									//qu'on envoie à Partition
 }									

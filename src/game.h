@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <assert.h>
+#include <queue>
 
 #include "partition.h"
 #include "struct.h"
@@ -12,7 +13,8 @@
 
 /**
  @class Game 
- @brief Classe qui gère une partie
+ @brief Classe qui contient les informations d'une partie (la chanson en cours, la partition associée, le score).
+ S'occupe du cadre déroulant des notes.
  */
 class Game {
     
@@ -21,6 +23,9 @@ private :
     Partition partition;
     Score score;
     bool creationMode;
+    Song song;
+    queue<line> cadre; //Contient le cadre
+
 
     //int rockometer-valeur qui augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro la Game s'arrête   
     

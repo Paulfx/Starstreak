@@ -7,7 +7,7 @@
 #include "winTxt.h"
 
 #include <string>
-#include "Menu.h"
+#include "menu.h"
 #include "struct.h"
 
 void txtAff(WinTXT & win, Menu & menu) {

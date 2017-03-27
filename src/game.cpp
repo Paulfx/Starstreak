@@ -7,9 +7,12 @@ Game::Game() {
 }
 
 
-Game::Game(Song* song,int difficulty) {
-	Partition partition(song->filePartition,difficulty);
+Game::Game(Song* currSong,int difficulty) {
+	Partition partition(currSong->filePartition,difficulty);
 
+
+
+	//song = *currSong; 
 	partition.afficher();
 	//Score score(partition.getNbLine());
 

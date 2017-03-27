@@ -1,9 +1,11 @@
 #include "partition.h"
 #include <sstream>
+#include <iostream>
 #include <string>
 
 Partition::Partition() {
 	partition = NULL;
+	index=0;
 }
 
 Partition::Partition(const string & filename,int difficulty) {
@@ -11,13 +13,16 @@ Partition::Partition(const string & filename,int difficulty) {
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
 
+	index = 0;
+
+
 	string difficultyLine,strNbBeginning;
 	getline(fichier,difficultyLine);
 	stringstream ss(difficultyLine); //Conversion de str en flux
 	for (unsigned int i=0;i<difficulty;i++) {
 		getline(ss,strNbBeginning,','); //Séparation de la ligne selon la virgule
 	}
-	int nbBeginning = stoi(strNbBeginning.c_str());
+	int nbBeginning = std::stoi(strNbBeginning.c_str());
 
 	fichier.seekg(nbBeginning,ios::beg); // On se déplace au début de la partition
 
@@ -47,3 +52,7 @@ void Partition::afficher() {
 }
 
 int Partition::getNbLine() {return nbLine;}
+
+line Partition::getLine() {
+	return partition[index];
+}
