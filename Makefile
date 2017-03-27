@@ -25,8 +25,9 @@ partition: obj/partition.o obj/mainPartition.o
 score: $(OBJET) obj/mainScore.o
 	g++ -o bin/$@ $^ 
 
+
 obj/%.o : %.cpp
-	g++ -c $(CXXFLAGS)  $^ -o $@ 
+	g++ -c $(CXXFLAGS) $^ -o $@ 
 
 clean:
 	rm -f obj/*.o
