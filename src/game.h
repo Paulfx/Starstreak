@@ -51,6 +51,10 @@ public :
      */
     ~Game();
     
+    /**@brief fonction qui traite les lignes dans la file en fonction du temps
+     */
+    void exeGame ();//peut etre inutile
+    
     bool isFail();
     
 };
