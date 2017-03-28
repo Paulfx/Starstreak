@@ -26,7 +26,7 @@ private :
     int numberSucces;
     int numberNotes;
     unsigned int multiplier; //valeur (de 1 à 4) établit en fonction de noteStreak qui multiplie la valeur d'une note
-    //int rockometer-valeur qui augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro la partie s'arrête
+    int rockometer; /*la valeur augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro (ou -1) la partie s'arrête
     
 public:
     
