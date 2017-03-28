@@ -23,6 +23,8 @@ private :
 	bool isActive; //false si menu inactif = une game est active
 	Game currGame; //La partie en cours
 
+
+	
 public :
 	/**@brief Constructeur par défaut 
 	*/

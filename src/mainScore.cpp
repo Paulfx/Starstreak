@@ -19,6 +19,7 @@ int main(){
     ktest.setKey(2);
     ktest.setKey(4);
     
+    
     test.updateScore(lineTest,ktest);
     test.updateScore(lineTest,ktest);
     test.updateScore(lineTest,ktest);

@@ -11,10 +11,11 @@ Game::Game(Song* currSong,int difficulty) {
 	Partition partition(currSong->filePartition,difficulty);
 
 
-
-	//song = *currSong; 
-	partition.afficher();
-	//Score score(partition.getNbLine());
+	/*for (unsigned int i = 0;i<10;) {
+		cadre.push(partition.getLine());	
+	}*/
+	
+	Score score(partition.getNbLine());
 
 }
 

@@ -17,17 +17,24 @@ void txtAff(WinTXT & win, Menu & menu) {
 	win.clear();
 
     // Affichage des titres
-	for(int i=0;i<menu.getNbSongs();++i) {
+	for(unsigned int i=0;i<menu.getNbSongs();++i) {
 		const char* title = songList[i]->title.c_str();
 		win.print(0,i,title);
 		if(i == currI) {
-			char* arrow = "<---";
+			string arrow = "<---";
 			int taille = songList[i]->title.size();
-			win.print(taille,i,arrow);
+			win.print(taille,i,arrow.c_str());
 		}
 	}
 
 	win.draw();
+}
+
+
+void diffAff(WinTXT & win, Menu & menu) {
+
+	const unsigned int currI = menu.getCurrI();
+
 }
 
 void txtBoucle (Menu& menu) {

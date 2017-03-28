@@ -25,7 +25,7 @@ private :
     bool creationMode;
     Song song;
     queue<line> cadre; //Contient le cadre
-
+    bool fail; //True si le joueur a perdu
 
     //int rockometer-valeur qui augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro la Game s'arrête   
     
@@ -51,6 +51,7 @@ public :
      */
     ~Game();
     
+    bool isFail() {return fail;}
     
     
 };

@@ -15,7 +15,6 @@ Partition::Partition(const string & filename,int difficulty) {
 
 	index = 0;
 
-
 	string difficultyLine,strNbBeginning;
 	getline(fichier,difficultyLine);
 	stringstream ss(difficultyLine); //Conversion de str en flux
@@ -53,6 +52,4 @@ void Partition::afficher() {
 
 int Partition::getNbLine() {return nbLine;}
 
-line Partition::getLine() {
-	return partition[index];
-}
+line Partition::getLine() {return partition[index];}

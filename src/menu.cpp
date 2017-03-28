@@ -62,11 +62,11 @@ void Menu::afficher() {
 }
 
 void Menu::moveUp() {
-	currI = (currI + 1) % nbSongs;
+	currI = (currI - 1) % nbSongs;
 }
 
 void Menu::moveDown() {
-	currI = (currI - 1) % nbSongs;
+	currI = (currI + 1) % nbSongs;
 }
 
 void Menu::choose() {
