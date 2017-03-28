@@ -8,7 +8,7 @@ Partition::Partition() {
 	index=0;
 }
 
-Partition::Partition(const string & filename,int difficulty) {
+Partition::Partition(const string & filename,unsigned int difficulty) {
 	cout<<"Ouverture de : "<<filename<<endl;
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());

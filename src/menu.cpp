@@ -7,9 +7,10 @@ Menu::Menu() {
 	currI=0;
 	nbSongs = 0;
 	isActive = true;
+	difficulty = 1;
 }
 
-Menu::Menu(const string& filename) {
+Menu::Menu(const string& filename) : currI(0), isActive(true), difficulty(1){
 	cout<<"Ouverture de : "<<filename<<endl;
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
@@ -39,11 +40,9 @@ Menu::Menu(const string& filename) {
 			}
 			songTab[j] = song;
 			j++;
-			song = NULL;
+			song=NULL;
 		}
 	}
-	currI=0;
-	isActive = true;
 }
 
 Menu::~Menu() {
@@ -62,7 +61,7 @@ void Menu::afficher() {
 }
 
 void Menu::moveUp() {
-	currI = (currI - 1) % nbSongs;
+	(currI == 0) ? currI=nbSongs-1 : currI=(currI - 1) % nbSongs;
 }
 
 void Menu::moveDown() {
@@ -70,9 +69,8 @@ void Menu::moveDown() {
 }
 
 void Menu::choose() {
-	Game currGame(songTab[currI],1); // Difficulté, pourquoi pas dans game que cela se choisit, 
-	isActive = false;    //on lance la partie et on choisit juste avant de jouer, plus facile car dans game on accède a la difficulté
-									//qu'on envoie à Partition
+	Game currGame(songTab[currI],difficulty); 
+	isActive = false;
 }									
 
 Song** Menu::getSongTab() {
@@ -87,3 +85,15 @@ unsigned int Menu::getNbSongs() const {
 	return nbSongs;
 }
 
+
+unsigned int Menu::getDifficulty() const {
+	return difficulty;
+}
+
+void Menu::increaseDiff(){
+	difficulty = (difficulty%3)+1;
+}
+
+void Menu::decreaseDiff(){
+	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
+}

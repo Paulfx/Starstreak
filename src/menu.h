@@ -22,6 +22,7 @@ private :
 	unsigned int nbSongs; //taille du tab
 	bool isActive; //false si menu inactif = une game est active
 	Game currGame; //La partie en cours
+	unsigned int difficulty; 
 
 
 	
@@ -66,6 +67,12 @@ public :
 	unsigned int getCurrI() const;
 
 	unsigned int getNbSongs() const;
+
+	unsigned int getDifficulty() const;
+
+	void increaseDiff();
+
+	void decreaseDiff();
 
 };
 

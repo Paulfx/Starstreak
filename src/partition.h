@@ -37,7 +37,7 @@ class Partition {
          @param difficulty 1 pour facile, 2 moyen et 3 difficile
          
 		*/
-		Partition(const string & filename,int difficulty);
+		Partition(const string & filename,unsigned int difficulty);
 
 		/**@brief Destructeur
 		*/

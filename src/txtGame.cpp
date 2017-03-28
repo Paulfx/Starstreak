@@ -20,11 +20,9 @@ void txtAff(WinTXT & win, Menu & menu) {
 	for(unsigned int i=0;i<menu.getNbSongs();++i) {
 		const char* title = songList[i]->title.c_str();
 		win.print(0,i,title);
-		if(i == currI) {
-			string arrow = "<---";
-			int taille = songList[i]->title.size();
-			win.print(taille,i,arrow.c_str());
-		}
+		string arrow = "<---";
+		int taille = songList[currI]->title.size();
+		win.print(taille,currI,arrow.c_str());
 	}
 
 	win.draw();
@@ -32,15 +30,75 @@ void txtAff(WinTXT & win, Menu & menu) {
 
 
 void diffAff(WinTXT & win, Menu & menu) {
+	
+	Song** songList = menu.getSongTab();
+	const unsigned int difficulty = menu.getDifficulty();
+
+
+	win.clear();
+
+    // Affichage des titres
+	for(unsigned int i=0;i<menu.getNbSongs();++i) {
+		const char* title = songList[i]->title.c_str();
+		win.print(0,i,title);
+	}
+	
+	//// partie difficultés //
 
 	const unsigned int currI = menu.getCurrI();
 
+	string diff = " 123";
+	int taille = songList[currI]->title.size();
+	win.print(taille,currI,diff.c_str());
+
+
+	win.print(taille+difficulty,currI+1,'*');
+
+
+	win.draw();
 }
+
+void diffBoucle(WinTXT & win, Menu & menu) {
+
+	bool ok = true;
+	int c;
+
+	do {
+		diffAff(win,menu);
+
+		#ifdef _WIN32
+        Sleep(100);
+		#else
+		usleep(100000);
+        #endif // WIN32
+
+
+		c = win.getCh();
+		switch (c) {
+			case 'l':
+				menu.increaseDiff();
+				break;
+			case 'j':
+				menu.decreaseDiff();
+				break;
+			case 'm':
+				menu.choose();
+				break;
+			case 'q':
+				ok = false;
+				break;
+		}
+
+	} while (ok);
+
+}
+
+
 
 void txtBoucle (Menu& menu) {
 	// Creation d'une nouvelle fenetre en mode texte
 	// => fenetre de dimension et position (WIDTH,HEIGHT,STARTX,STARTY)
-    WinTXT win (30,menu.getNbSongs()+1);
+    WinTXT win (30,menu.getNbSongs()+10);
 
 	bool ok = true;
 	int c;
@@ -64,6 +122,9 @@ void txtBoucle (Menu& menu) {
 				menu.moveDown();
 				break;
 			case 'm':
+
+				diffBoucle(win,menu);
+
 				menu.choose();
 				break;
 			case 'q':
