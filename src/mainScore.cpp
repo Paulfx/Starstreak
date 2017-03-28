@@ -3,6 +3,12 @@
 #include "keyboard.hpp"
 
 int main(){
+    /*Menu menu("../data/index");
+    menu.afficher();
+    menu.choose();
+    return 0;
+    */
+    
     Score test (30);
     
     line lineTest;
@@ -20,7 +26,8 @@ int main(){
     ktest.setKey(4);
     
     
-    test.updateScore(lineTest,ktest);
+    
+    /*test.updateScore(lineTest,ktest);
     test.updateScore(lineTest,ktest);
     test.updateScore(lineTest,ktest);
     test.updateScore(lineTest,ktest);
@@ -45,8 +52,5 @@ int main(){
     test.updateScore(lineTestFail,ktest);
     
     
-    return 0;
+    return 0;*/
 }
-
-
-//g++ –o score src/mainScore.cpp src/score.cpp -lm
