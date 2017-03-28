@@ -45,7 +45,7 @@ public :
      @param difficulty difficulté de la Game et donc modification de la lecture/ecriture sur le fichier ? 
      @todo
      */
-    Game(Song* song,int difficulty);
+    Game(Song* song,unsigned int difficulty);
     
     /**@brief Destructeur
      */

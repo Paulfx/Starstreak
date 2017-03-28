@@ -7,7 +7,7 @@ Game::Game() {
 }
 
 
-Game::Game(Song* currSong,int difficulty) {
+Game::Game(Song* currSong,unsigned int difficulty) {
 	Partition partition(currSong->filePartition,difficulty);
 
     partition.afficher();
