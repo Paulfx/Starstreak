@@ -30,7 +30,7 @@ Partition::Partition(const string & filename,int difficulty) {
 	partition = new line[nbLine];
 
 	for(unsigned int i=0;i<nbLine;i++) {
-		fichier >> partition[i].data >> partition[i].time;
+		fichier >> partition[i].data >> partition[i].time >> partition[i].onSequence;
 	}
 
 	fichier.close();

@@ -51,8 +51,7 @@ public :
      */
     ~Game();
     
-    bool isFail() {return fail;}
-    
+    bool isFail();
     
 };
     

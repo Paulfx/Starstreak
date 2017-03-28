@@ -16,9 +16,14 @@ Game::Game(Song* currSong,int difficulty) {
 	}*/
 	
 	Score score(partition.getNbLine());
+    fail=true;
 
 }
 
 Game::~Game() {
 
+}
+
+bool Game::isFail() {
+    return fail;
 }

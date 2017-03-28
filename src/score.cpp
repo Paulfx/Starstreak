@@ -8,7 +8,7 @@
 using namespace std;
 
 const int VALUE_NOTE = 50;
-const int ROCKOMETER_MAX = 40;
+const int ROCKMETER_MAX = 40;
 
 
 Score::Score(){
@@ -18,7 +18,7 @@ Score::Score(){
     numberSucces=0;
     numberNotes=0;
     multiplier=1;
-    rockometer=20;
+    rockmeter=20;
 }
 
 Score::Score(const int nbNotes){
@@ -28,18 +28,19 @@ Score::Score(const int nbNotes){
     numberSucces=0;
     numberNotes=nbNotes;
     multiplier=1;
-    rockometer=20;
+    rockmeter=20;
 }
 
 Score::~Score(){
 }
 
-void Score::updateScore(const line currLine,const keyboard& keyState) {
+void Score::updateScore(const line currLine,const keyboard& keyState,bool fail) {
     
     assert(numberSucces<numberNotes);
     assert(multiplier<=4);
-    assert(rockometer<=40);
-    assert(rockometer>0); //si = -1 ou 0 la partie aurait dû s'arreter
+    assert(rockmeter<=40);
+    assert(rockmeter>0); //si = -1 ou 0 la partie aurait dû s'arreter
+    assert(fail==true);
     /*
      test de validité en fonction de l'état du clavier et de la ligne courante
      */
@@ -66,19 +67,19 @@ void Score::updateScore(const line currLine,const keyboard& keyState) {
         if (noteStreak%10 == 0 && noteStreak<40){//de 0 à 40 notes consécutives le multiplicateur est incrémenté toutes les 10 notes
             multiplier++;
         }
-        if (rockometer<ROCKOMETER_MAX){
-            rockometer++;
+        if (rockmeter<ROCKMETER_MAX){
+            rockmeter++;
         }
         totalScore = totalScore + VALUE_NOTE*multiplier;
     }
     else{
         noteStreak=0;
         multiplier=1;
-        rockometer-=2;
+        rockmeter-=2;
     }
     
-    if (rockometer<=0){
-        
+    if (rockmeter<=0){
+        fail=false;
     }
     
 }
