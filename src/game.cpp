@@ -27,3 +27,9 @@ Game::~Game() {
 bool Game::isFail() {
     return fail;
 }
+
+queue<line> Game::getCadre() const { return cadre;}
+
+Song Game::getSong() const { return song;}
+
+Score Game::getScore() const { return score;}

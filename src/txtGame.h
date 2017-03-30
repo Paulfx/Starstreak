@@ -4,6 +4,6 @@
 #include "menu.h"
 #include "struct.h"
 
-void txtBoucle (Menu & menu);
+void menuBoucle (Menu & menu);
 
 #endif

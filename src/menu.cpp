@@ -6,11 +6,11 @@ Menu::Menu() {
 	songTab = NULL;
 	currI=0;
 	nbSongs = 0;
-	isActive = true;
+	active = true;
 	difficulty = 1;
 }
 
-Menu::Menu(const string& filename) : currI(0), isActive(true), difficulty(1){
+Menu::Menu(const string& filename) : currI(0), active(true), difficulty(1){
 	cout<<"Ouverture de : "<<filename<<endl;
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
@@ -70,25 +70,20 @@ void Menu::moveDown() {
 
 void Menu::choose() {
 	Game currGame(songTab[currI],difficulty); 
-	isActive = false;
+	active = false;
 }									
 
-Song** Menu::getSongTab() {
-	return songTab;
-}
+Song** Menu::getSongTab() { return songTab; }
 
-unsigned int Menu::getCurrI() const {
-	return currI;
-}
+unsigned int Menu::getCurrI() const { return currI; }
 
-unsigned int Menu::getNbSongs() const {
-	return nbSongs;
-}
+unsigned int Menu::getNbSongs() const { return nbSongs; }
 
 
-unsigned int Menu::getDifficulty() const {
-	return difficulty;
-}
+unsigned int Menu::getDifficulty() const { return difficulty; }
+
+bool Menu::isActive() const { return active; }
+
 
 void Menu::increaseDiff(){
 	difficulty = (difficulty%3)+1;

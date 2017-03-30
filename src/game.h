@@ -52,6 +52,12 @@ public :
     ~Game();
     
     bool isFail();
+
+    queue<line> getCadre() const;
+
+    Song getSong() const;
+
+    Score getScore() const;
     
 };
     
