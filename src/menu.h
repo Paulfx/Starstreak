@@ -7,7 +7,6 @@
 #include <iostream>
 #include <cassert>
 #include <sstream>
-
 #include "game.h"
 #include "struct.h"
 
