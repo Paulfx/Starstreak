@@ -52,10 +52,15 @@ void Score::updateScore(const line currLine,const keyboard& keyState,bool fail) 
     /*convertion du tab bool en string pour la comparer avec la ligne de jeu courante*/
     
     for (int i=1;i<=5;++i){//la boucle commence à 1 car la 1ere case du tab correspond à la touche "enter" (elle n'apparait dpnc pas dans Line
-        if (tab[i]==true){
+        if (keyState.isNoPress(i)){
+            seqUSER+="0";
+        }
+        else if (keyState.isSimplePress(i)) {
             seqUSER+="1";
         }
-        else seqUSER+="0";
+        else if (keyState.isLongPress(i)) {
+            seqUSER+="2";
+        } 
     }
     if (seqUSER == currLine.data){
         testSucces=1;

@@ -6,15 +6,23 @@
 //
 //
 
-#ifndef Keyboard_hpp
-#define Keyboard_hpp
+#ifndef keyboard_hpp
+#define keyboard_hpp
 
 #include <stdio.h>
-//le keyboard est un tableau de booleen, false la touche est libre, true la touche est enfoncé
-//0 -> enter, [1->5] -> note "AZERT"
+
+
+enum enumPress {noPress, simplePress, longPress}; 
+
+
+//le keyboard est un tableau de enumPress, noPress si la touche est libre, simplePress si la touche vient d'être enfoncée, 
+// longPress si la touche est enfoncée depuis plus de 2 itérations
+
 class keyboard{
     private :
-    bool* keyTab;
+
+    enumPress* keyTab; //0 -> enter, [1->5] -> note "AZERT"
+
     public :
     
     /** @brief Constructeur
@@ -37,6 +45,12 @@ class keyboard{
     */
     bool* getKey() const;
 
+
+    bool isNoPress() const;
+
+    bool isSimplePress() const;
+
+    bool isLongPress() const;
 
 
 
