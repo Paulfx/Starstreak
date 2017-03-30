@@ -13,15 +13,15 @@ using namespace std;
 
 
 int main (int argc, char *argv[]){
-    SDL_Init(SDL_INIT_VIDEO); // Démarrage de la SDL (ici : chargement du système vidéo)
-    //Inserer la gestion d'erreur d'initialisation
-    
-    SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE);
+    sdlGame mySDL;
+    mySDL.init_Window();
+    mySDL.open_Window();
+    //SDL_SetVideoMode(640, 480, 32);
     /*
      La SDL est chargée.
      Vous pouvez mettre ici le contenu de votre programme
      */
-    while(1){
+    while(true){
         
     };
     

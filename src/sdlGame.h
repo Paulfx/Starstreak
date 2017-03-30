@@ -46,18 +46,30 @@ class sdlGame {
     SDL_Window * window;
     SDL_Renderer * renderer;
     TTF_Font * font;
-    
-    /* Image im_pacman;
-    Image im_mur;
-    Image im_pastille;
-    Image im_fantome; 
-     -> declaration des images utilisées-> guitare/fret/etc...
-     */
+ 
     
     public :
     
+    
+    
+    /** @brief Constructeur
+     */
     sdlGame ();
+    
+    /** @brief Destructeur
+     */
     ~sdlGame ();
+    
+    /** @brief Initialisation de la fenetre
+     */
+    void init_Window();
+    
+    /** @brief Ouvre la fenetre SDL
+     */
+    void open_Window();
+    
+
+    
     void sdlLoop ();
     void sdlShow ();
     
