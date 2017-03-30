@@ -1,7 +1,6 @@
 #ifndef SCORE_H
 #define SCORE_H
 
-
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
@@ -9,9 +8,6 @@
 
 #include "partition.h"
 #include "keyboard.hpp"
-
-
-
 
 class Score {
 /**
@@ -27,7 +23,9 @@ private :
     int numberNotes;
     unsigned int multiplier; //valeur (de 1 à 4) établit en fonction de noteStreak qui multiplie la valeur d'une note
     int rockmeter; /*la valeur augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro (ou -1) la partie s'arrête*/
-    
+    bool fail; //True si le joueur a perdu
+
+
 public:
     
     /** 
@@ -48,11 +46,11 @@ public:
     ~Score();
     
     /**
-     @brief La fonction updateScore est appelée à chaque fois qu'une note doit etre jouée. Elle contient un test de validité qui compare la ligne de jeu courante avec létat du clavier. Les différentes valeurs du score seront ensuite mise à jour en fonction du résultat du ce test.
+     @brief La fonction updateScore est appelée à chaque fois qu'une note doit etre jouée. Elle contient un test de validité qui compare la ligne de jeu courante avec l'état du clavier.
+      Les différentes valeurs du score seront ensuite mises à jour en fonction du résultat de ce test.
      */
     void updateScore(const line currLine,const keyboard& keyState,bool fail);
-    
 
-};
+    bool isFail();
 
 #endif

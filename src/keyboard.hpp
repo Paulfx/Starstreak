@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef keyboard_hpp
-#define keyboard_hpp
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
 #include <stdio.h>
 
@@ -18,43 +18,56 @@ enum enumPress {noPress, simplePress, longPress};
 //le keyboard est un tableau de enumPress, noPress si la touche est libre, simplePress si la touche vient d'être enfoncée, 
 // longPress si la touche est enfoncée depuis plus de 2 itérations
 
-class keyboard{
+class Keyboard{
     private :
 
-    enumPress* keyTab; //0 -> enter, [1->5] -> note "AZERT"
+    enumPress* keyTab; //[0->4] -> note "AZERT"
+    bool validation; //True si la touche de validation a été enfoncée, false sinon
 
     public :
     
-    /** @brief Constructeur
+    /** @brief Constructeur de la classe Keyboard
      */
-    
-    keyboard();
+    Keyboard();
     
     /** @brief Destructeur 
      */
-    ~keyboard();
+    ~Keyboard();
     
-    
-    /** @brief Mutateur d'etat avec position de l'element
-     @param i position de l'etat a modifié
-     */
-    void setKey(const unsigned int i);
-    
-    /** @brief Accesseur du tableau d'etat
-     renvoie un pointeur sur tableau de bool
+    /** @brief Accesseur
+    Renvoie true si la touche "i" est enfoncée
     */
-    bool* getKey() const;
+    bool isNoPress(unsigned int i) const;
+    
+    /** @brief Accesseur
+    */    
+    bool isSimplePress(unsigned int i) const;
+    
+    /** @brief Accesseur
+    */
+    bool isLongPress(unsigned int i) const;
 
+    /** @brief Accesseur
+    */
+    bool isValid() const;
+    
+    /** @brief Mutateur
+    */
+    void setNoPress(unsigned int i);
+    
+    /** @brief Mutateur
+    */
+    void setSimplePress(unsigned int i);
+    
+    /** @brief Mutateur
+    */
+    void setLongPress(unsigned int i);
 
-    bool isNoPress() const;
-
-    bool isSimplePress() const;
-
-    bool isLongPress() const;
-
-
+    /** @brief Mutateur
+    */
+    void setValid(bool b);
 
 };
 
 
-#endif /* Keyboard_hpp */
+#endif /* KEYBOARD_H*/

@@ -52,4 +52,7 @@ void Partition::afficher() {
 
 int Partition::getNbLine() {return nbLine;}
 
-line Partition::getLine() {return partition[index];}
+line Partition::getLine() {
+	index+=1;
+	return partition[index];
+}

@@ -124,8 +124,8 @@ void diffBoucle(WinTXT & win, Menu & menu) {
 				break;
 			case 'm':
 				menu.choose();
-				if(!menu.isActive()) {
-					gameBoucle(); //Boucle qui fait tourner le jeu
+				if(!menu.isActive()) { //On vérifie que le menu est inactif
+					gameBoucle(win,menu.getGame()); //Boucle qui fait tourner le jeu
 				}
 				break;
 			case 'q':
@@ -136,22 +136,21 @@ void diffBoucle(WinTXT & win, Menu & menu) {
 	} while (ok);
 }
 
-void gameAff(WinTXT & win, Game& game) {
+void gameAff(WinTXT & win, Game & game) {
 	queue<line> cadre = game.getCadre();
     Song song = game.getSong();
     Score score = game.getScore();
 
-
     win.clear();
 
-
-
-
+    for(unsigned int i=0;i<cadre.size();++i) {
+    	//win.print()
+    }
 
 }
 
 
-void gameBoucle(Game& game) {
+void gameBoucle(WinTXT & win, Game& game) {
 
 	bool ok = true;
 	int c;
@@ -169,20 +168,14 @@ void gameBoucle(Game& game) {
 		c = win.getCh();
 		switch (c) {
 			case 'a':
-				menu.increaseDiff();
 				break;
 			case 'z':
-				menu.decreaseDiff();
 				break;
 			case 'e':
-				menu.choose();
-				if(!menu.isActive()) {
-					gameBoucle(); //Boucle qui fait tourner le jeu
-				}
 				break;
 
 			case 'r':
-				
+
 			case 't':
 
 			case 'q':
@@ -190,7 +183,7 @@ void gameBoucle(Game& game) {
 				break;
 		}
 
-		game.
+		//game.defilement();
 
 	} while (ok);
 

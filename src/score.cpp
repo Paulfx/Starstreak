@@ -35,35 +35,35 @@ Score::~Score(){
 }
 
 void Score::updateScore(const line currLine,const keyboard& keyState,bool fail) {
-    
     assert(numberSucces<numberNotes);
     assert(multiplier<=4);
     assert(rockmeter<=40);
     assert(rockmeter>0); //si = -1 ou 0 la partie aurait dû s'arreter
     assert(fail==true);
+
     /*
      test de validité en fonction de l'état du clavier et de la ligne courante
      */
     bool testSucces=0;
-    
-    bool *tab = keyState.getKey();
-    string seqUSER; //contient les touches appuyées par l'user sous la forme d'une chaine de caractère
-    
-    /*convertion du tab bool en string pour la comparer avec la ligne de jeu courante*/
-    
-    for (int i=1;i<=5;++i){//la boucle commence à 1 car la 1ere case du tab correspond à la touche "enter" (elle n'apparait dpnc pas dans Line
-        if (keyState.isNoPress(i)){
-            seqUSER+="0";
+
+    if (keyState.isValid()) { //Si la touche validation est pressée, on teste la ligne, sinon testSucces reste à false
+        
+        string seqUSER;
+        /*convertion du tab bool en string pour la comparer avec la ligne de jeu courante*/
+        for (int i=0;i<5;++i){//5 touches, 5 indices
+            if (keyState.isNoPress(i)){
+                seqUSER+="0";
+            }
+            else if (keyState.isSimplePress(i)) {
+                seqUSER+="1";
+            }
+            else if (keyState.isLongPress(i)) {
+                seqUSER+="2";
+            } 
         }
-        else if (keyState.isSimplePress(i)) {
-            seqUSER+="1";
+        if (seqUSER == currLine.data){
+            testSucces=1;
         }
-        else if (keyState.isLongPress(i)) {
-            seqUSER+="2";
-        } 
-    }
-    if (seqUSER == currLine.data){
-        testSucces=1;
     }
     
     if (testSucces) {
@@ -87,4 +87,8 @@ void Score::updateScore(const line currLine,const keyboard& keyState,bool fail) 
         fail=false;
     }
     
+}
+
+bool Score::isFail() {
+    return fail;
 }

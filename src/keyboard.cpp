@@ -9,50 +9,39 @@
 #include "keyboard.hpp"
 
 
-keyboard::keyboard(){
+Keyboard::Keyboard(){
     keyTab=new enumPress[6];
     for(int i=0;i<6;i++){
         keyTab[i]=noPress;
     }
+    validation = false;
 }
 
-keyboard::~keyboard(){
+Keyboard::~Keyboard(){
     delete [] keyTab;
 }
 
-
-
-void keyboard::setKey(const unsigned int i){
-    if(keyTab[i]){
-        keyTab[i]=false;
-    }else{
-        keyTab[i]=true;
-    }
-}
-
-
-bool* keyboard::getKey() const{
-    return keyTab;
-}
-
-
-bool isNoPress(i) const { 
+bool Keyboard::isNoPress(unsigned int i) const { 
     if(keyTab[i] == noPress) return true;
     return false; 
 }
 
-bool isSimplePress(i) const {
+bool Keyboard::isSimplePress(unsigned int i) const {
     if(keyTab[i] == simplePress) return true;
     return false;
 }
 
-bool isLongPress(i) const {
+bool Keyboard::isLongPress(unsigned int i) const {
     if(keyTab[i] == longPress) return true;
     return false;
 }
 
-void setNoPress(i) { keyTab[i] = noPress; }
+bool Keyboard::isValid() const {return validation;}
 
-void setSimplePress(i) { keyTab[i] = noPress; }
+void Keyboard::setNoPress(unsigned int i) { keyTab[i] = noPress; }
 
-void setLongPress(i) { keyTab[i] = noPress; }
+void Keyboard::setSimplePress(unsigned int i) { keyTab[i] = noPress; }
+
+void Keyboard::setLongPress(unsigned int i) { keyTab[i] = noPress; }
+
+void Keyboard::setValid(bool b) { validation = b; }

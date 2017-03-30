@@ -24,8 +24,8 @@ private :
     Score score;
     bool creationMode;
     Song song;
-    queue<line> cadre; //Contient le cadre
-    bool fail; //True si le joueur a perdu
+    vector<line> cadre; //Contient le cadre
+    
 
     //int rockometer-valeur qui augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro la Game s'arrête   
     
@@ -62,6 +62,8 @@ public :
     Song getSong() const;
 
     Score getScore() const;
+
+    void defileCadre();
     
 };
     

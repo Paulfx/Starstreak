@@ -70,6 +70,8 @@ public :
 
 	unsigned int getDifficulty() const;
 
+	Game& getGame();
+
 	bool isActive() const;
 
 	void increaseDiff();

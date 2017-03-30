@@ -92,3 +92,5 @@ void Menu::increaseDiff(){
 void Menu::decreaseDiff(){
 	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
 }
+
+Game& Menu::getGame() {return currGame;}
