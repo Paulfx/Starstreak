@@ -34,7 +34,7 @@ Score::Score(const int nbNotes){
 Score::~Score(){
 }
 
-void Score::updateScore(const line currLine,const keyboard& keyState,bool fail) {
+void Score::updateScore(const line currLine,const Keyboard& keyState,bool fail) {
     assert(numberSucces<numberNotes);
     assert(multiplier<=4);
     assert(rockmeter<=40);

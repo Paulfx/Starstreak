@@ -21,9 +21,7 @@ int main (int argc, char *argv[]){
      La SDL est chargée.
      Vous pouvez mettre ici le contenu de votre programme
      */
-    while(true){
-        
-    };
+   SDL_Delay(2000);
     
     SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
     

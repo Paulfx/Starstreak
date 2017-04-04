@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <queue>
+#include <vector>
 
 #include "partition.h"
 #include "struct.h"
@@ -57,7 +58,7 @@ public :
     
     bool isFail();
 
-    queue<line> getCadre() const;
+    vector<line> getCadre() const;
 
     Song getSong() const;
 

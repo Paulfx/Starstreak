@@ -1,7 +1,3 @@
-//Pour l'inclusion+makefile -> les chemins d'accées sont differents donc on doit poser une condition dans le makefile. Je pense que l'include <SDL2> est trop gros pour la precompilation, sinon pas besoin du if defined (__APPLE__) parcecequ'on mettra le meme nom dans le makefile
-
-
-
 
 #ifndef sdlGame_hpp
 #define sdlGame_hpp
@@ -41,12 +37,13 @@ class sdlGame {
     
     private :
     
-    Menu menu;
     
+    SDL_texture * texture;
     SDL_Window * window;
     SDL_Renderer * renderer;
     TTF_Font * font;
  
+    Menu menu;
     
     public :
     

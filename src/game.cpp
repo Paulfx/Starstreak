@@ -21,7 +21,7 @@ Game::~Game() {
 
 }
 
-queue<line> Game::getCadre() const { return cadre;}
+vector<line> Game::getCadre() const { return cadre;}
 
 Song Game::getSong() const { return song;}
 

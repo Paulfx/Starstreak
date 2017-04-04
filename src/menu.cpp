@@ -1,7 +1,5 @@
 #include "menu.h"
 
-using namespace std;
-
 Menu::Menu() {
 	songTab = NULL;
 	currI=0;

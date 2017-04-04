@@ -5,6 +5,12 @@
 
 sdlGame::sdlGame(){
     
+    window=NULL;
+    renderer=NULL;
+    font=NULL;
+    texture=NULL;
+    menu=NULL;
+    
 }
 
 
@@ -33,7 +39,19 @@ void sdlGame::init_Window(){
 }
 
 void sdlGame::open_Window(){
-        	window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,100,100, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0,SDL_WINDOW_FULLSCREEN_DESKTOP);
+    //parametres gestion de position/taille/resolution etc
+    renderer = SDL_CreateRenderer(sdlWindow, -1, 0);
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
+    SDL_RenderSetLogicalSize(sdlRenderer, 640, 480); //taille fenetre
+    SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255); //rend en noir
+    SDL_RenderClear(sdlRenderer);
+    SDL_RenderPresent(sdlRenderer);
+    texture = SDL_CreateTexture(sdlRenderer,
+                                   SDL_PIXELFORMAT_ARGB8888, //
+                                   SDL_TEXTUREACCESS_STREAMING,
+                                   //fluidité sur l'affichage des images
+                                   640, 480); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
 }
 
 
