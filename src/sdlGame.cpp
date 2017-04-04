@@ -40,6 +40,35 @@ void sdlGame::open_Window(){
 
 
 /* void sdlGame (){
+*/
+
+void sdlLoop ();{
+    SDL_Event events;
+    bool quit = false;
+    while (!quit){
+        
+            /*afficheMenuSDL*/
+        while (SDL_PollEvent(&events)) {
+            if (events.type == SDL_QUIT){
+                quit = true;
+            }
+            else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
+                switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
+                    case SDL_SCANCODE_UP: //flèche du haut
+                        menu.moveUp();
+                        break;
+                    case SDL_SCANCODE_DOWN://flèche du bas
+                        menu.moveDown();
+                        break;
+                    case SDL_SCANCODE_RETURN://touche entré
+                        menu.choose();
+                    default :
+                        break;
+                }
+        
+            }
+        }
+        
+        
 
 }
-*/

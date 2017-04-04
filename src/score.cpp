@@ -14,7 +14,7 @@ const int ROCKMETER_MAX = 40;
 Score::Score(){
     totalScore=0;
     noteStreak=0;
-    starPower=0;
+    starPower=0;//1 quand straPower actif
     numberSucces=0;
     numberNotes=0;
     multiplier=1;
@@ -66,6 +66,17 @@ void Score::updateScore(const line currLine,const keyboard& keyState,bool fail) 
         }
     }
     
+    /*gestion du strapower*/
+    
+    /*
+     idée:-donnée membre à rajouter:Bool lastOnSequence/int accumulateurStarPower/int longueur sequence
+     
+     bool lastOnSequence qui permet de savoir de détecté la fin d'une séquence. Si c'est le cas on compare notestreak>=longueurSequence)
+    */
+     if (currLine.onSequence==1){
+        
+    
+    }
     if (testSucces) {
         noteStreak++;
         numberSucces++;
