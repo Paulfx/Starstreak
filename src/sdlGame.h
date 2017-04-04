@@ -38,7 +38,7 @@ class sdlGame {
     private :
     
     
-    SDL_texture * texture;
+    SDL_Texture * texture;
     SDL_Window * window;
     SDL_Renderer * renderer;
     TTF_Font * font;
