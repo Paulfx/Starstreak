@@ -67,7 +67,7 @@ void Menu::moveDown() {
 }
 
 void Menu::choose() {
-	Game currGame(songTab[currI],difficulty); 
+	currGame = new Game(songTab[currI],difficulty); 
 	active = false;
 }									
 
@@ -91,4 +91,4 @@ void Menu::decreaseDiff(){
 	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
 }
 
-Game& Menu::getGame() {return currGame;}
+Game* Menu::getGame() {return currGame;}

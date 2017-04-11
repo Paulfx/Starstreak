@@ -10,34 +10,24 @@
 #include "menu.h"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-void gameAff(WinTXT & win, Game & game) {
-	vector<string> cadre = game.getCadre();
-    Song song = game.getSong();
-    Score score = game.getScore();
+void gameAff(WinTXT & win, Game * game) {
+	const vector<string> cadre = game->getCadre();
+    Song song = game->getSong();
+    Score score = game->getScore();
 
     win.clear();
 
+
+
     for(unsigned int i=0;i<cadre.size();++i) {
-    	win.print(15-i,0,cadre[i].c_str());
+    	win.print(0,i,cadre[i].c_str());
     }
 
+    win.draw();
 }
 
 
-void gameBoucle(WinTXT & win, Game& game) {
+void gameBoucle(WinTXT & win, Game* game) {
 
 	bool ok = true;
 	int c;

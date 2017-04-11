@@ -58,7 +58,7 @@ public :
     
     bool isFail();
 
-    vector<string> getCadre() const;
+    const vector<string> getCadre() const;
 
     Song getSong() const;
 

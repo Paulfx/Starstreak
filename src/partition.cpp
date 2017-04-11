@@ -6,6 +6,7 @@
 Partition::Partition() {
 	partition = NULL;
 	index=0;
+	end = false;
 }
 
 Partition::Partition(const string & filename,unsigned int difficulty) {
@@ -14,6 +15,7 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	assert(fichier.is_open());
 
 	index = 0;
+	end=false;
 
 	string difficultyLine,strNbBeginning;
 	getline(fichier,difficultyLine);
@@ -55,8 +57,17 @@ void Partition::afficher() {
 int Partition::getNbLine() {return nbLine;}
 
 line Partition::getLine() {
-	assert(index<nbLine);
-	line l = partition[index];
-	index+=1;
+	line l;
+	if(index<nbLine) {
+		l = partition[index];
+		index+=1;
+	}
+
+	else if(index == nbLine) {
+		end = true;
+		
+	}
 	return l;
 }
+
+bool Partition::isFinished() {return end;}

@@ -27,6 +27,7 @@ class Partition {
 		unsigned int nbLine;
 		unsigned int duree;
 		unsigned int index; //Indice tenant compte de l'avancée dans partition
+		bool end;
 
 	public :
 		/**
@@ -49,6 +50,8 @@ class Partition {
 		int getNbLine();
 
 		line getLine();
+
+		bool isFinished();
 };
 
 #endif

@@ -12,12 +12,10 @@ Game::Game(Song* currSong,unsigned int difficulty) {
 
 	cout<<"Partition créée"<<endl;
 
-	for (unsigned int i=0;i<4;) {
-		cout<<partition.getLine().data<<endl;
-		//cadre.push_back("partition.getLine().data");	
-	}
+	for (unsigned int i=0 && !partition.isFinished();i<10;++i) {
+		cadre.push_back(partition.getLine().data);
 
-	exit(0);
+	}
 
 	cout<<"Cadre créé"<<endl;
 
@@ -28,7 +26,7 @@ Game::~Game() {
 
 }
 
-vector<string> Game::getCadre() const { return cadre;}
+const vector<string> Game::getCadre() const { return cadre;}
 
 Song Game::getSong() const { return song;}
 
