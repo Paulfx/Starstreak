@@ -29,7 +29,6 @@ private :
     vector<string> cadre; //Contient le cadre
     
 
-    //int rockometer-valeur qui augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro la Game s'arrête   
     
 public :
     

@@ -79,6 +79,8 @@ void sdlGame::sdlLoop(){
                         break;
                     case SDL_SCANCODE_RETURN://touche entré
                         menu.choose();
+                    case SDL_SCANCODE_ESCAPE:
+                        quit=true;
                     default :
                         break;
                 }
