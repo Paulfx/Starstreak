@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <queue>
 #include <vector>
+#include <stdint.h>
 
 #include "partition.h"
 #include "struct.h"
@@ -25,7 +26,7 @@ private :
     Score score;
     bool creationMode;
     Song song;
-    vector<line> cadre; //Contient le cadre
+    vector<string> cadre; //Contient le cadre
     
 
     //int rockometer-valeur qui augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro la Game s'arrête   
@@ -58,13 +59,13 @@ public :
     
     bool isFail();
 
-    vector<line> getCadre() const;
+    vector<string> getCadre() const;
 
     Song getSong() const;
 
     Score getScore() const;
 
-    void defileCadre();
+    void defileCadre(uint32_t time);
     
 };
     

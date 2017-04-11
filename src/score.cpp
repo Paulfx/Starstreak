@@ -73,10 +73,10 @@ void Score::updateScore(const line currLine,const Keyboard& keyState,bool fail) 
      
      bool lastOnSequence qui permet de savoir de détecté la fin d'une séquence. Si c'est le cas on compare notestreak>=longueurSequence)
     */
-     if (currLine.onSequence==1){
+  /*   if (currLine.onSequence==1){
         
     
-    }
+    }*/
     if (testSucces) {
         noteStreak++;
         numberSucces++;

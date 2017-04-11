@@ -30,10 +30,12 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	partition = new line[nbLine];
 
 	for(unsigned int i=0;i<nbLine;i++) {
-		fichier >> partition[i].data >> partition[i].time >> partition[i].onSequence;
+		fichier >> partition[i].data >> partition[i].time;// >> partition[i].onSequence;
 	}
 
 	fichier.close();
+
+	cout<<"Fichier bien ouvert"<<endl;
 
 }
 
@@ -53,6 +55,8 @@ void Partition::afficher() {
 int Partition::getNbLine() {return nbLine;}
 
 line Partition::getLine() {
+	assert(index<nbLine);
+	line l = partition[index];
 	index+=1;
-	return partition[index];
+	return l;
 }

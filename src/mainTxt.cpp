@@ -5,7 +5,7 @@
 int main ( int argc, char** argv ) {
     termClear();
 	Menu menu("../data/index");
-	txtBoucle(menu);
+	menuBoucle(menu);
     termClear();
 	return 0;
 }

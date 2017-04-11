@@ -5,47 +5,47 @@
 #include <unistd.h>
 #endif // WIN32
 #include "winTxt.h"
-
+#include "txtGame.h"
 #include <string>
 #include "menu.h"
-#include "struct.h"
-#include "song.h"
-#include "keyboard.hpp"
 
 
 
 
-void menuAff(WinTXT & win, Menu & menu) {
-	Song** songList = menu.getSongTab();
-	const unsigned int currI = menu.getCurrI();
 
-	win.clear();
 
-    // Affichage des titres
-	for(unsigned int i=0;i<menu.getNbSongs();++i) {
-		const char* title = songList[i]->title.c_str();
-		win.print(0,i,title);
-		string arrow = "<---";
-		int taille = songList[currI]->title.size();
-		win.print(taille,currI,arrow.c_str());
-	}
 
-	win.draw();
+
+
+
+
+
+
+
+
+void gameAff(WinTXT & win, Game & game) {
+	vector<string> cadre = game.getCadre();
+    Song song = game.getSong();
+    Score score = game.getScore();
+
+    win.clear();
+
+    for(unsigned int i=0;i<cadre.size();++i) {
+    	win.print(15-i,0,cadre[i].c_str());
+    }
+
 }
 
 
-void menuBoucle (Menu& menu) {
-	// Creation d'une nouvelle fenetre en mode texte
-	// => fenetre de dimension et position (WIDTH,HEIGHT,STARTX,STARTY)
-    WinTXT win (30,menu.getNbSongs()+10);
+void gameBoucle(WinTXT & win, Game& game) {
 
 	bool ok = true;
 	int c;
 
 	do {
-	    menuAff(win,menu);
+		gameAff(win,game);
 
-        #ifdef _WIN32
+		#ifdef _WIN32
         Sleep(100);
 		#else
 		usleep(100000);
@@ -54,23 +54,29 @@ void menuBoucle (Menu& menu) {
 
 		c = win.getCh();
 		switch (c) {
-			case 'i':
-				menu.moveUp();
+			case 'a':
 				break;
-			case 'k':
-				menu.moveDown();
+			case 'z':
 				break;
-			case 'm':
-				diffBoucle(win,menu); //Boucle permettant le choix de la difficulté
+			case 'e':
 				break;
+
+			case 'r':
+
+			case 't':
+
 			case 'q':
 				ok = false;
 				break;
 		}
 
+		//game.defilement();
+
 	} while (ok);
 
 }
+
+
 
 void diffAff(WinTXT & win, Menu & menu) {
 	
@@ -136,29 +142,39 @@ void diffBoucle(WinTXT & win, Menu & menu) {
 	} while (ok);
 }
 
-void gameAff(WinTXT & win, Game & game) {
-	queue<line> cadre = game.getCadre();
-    Song song = game.getSong();
-    Score score = game.getScore();
 
-    win.clear();
 
-    for(unsigned int i=0;i<cadre.size();++i) {
-    	//win.print()
-    }
+void menuAff(WinTXT & win, Menu & menu) {
+	Song** songList = menu.getSongTab();
+	const unsigned int currI = menu.getCurrI();
 
+	win.clear();
+
+    // Affichage des titres
+	for(unsigned int i=0;i<menu.getNbSongs();++i) {
+		const char* title = songList[i]->title.c_str();
+		win.print(0,i,title);
+		string arrow = "<---";
+		int taille = songList[currI]->title.size();
+		win.print(taille,currI,arrow.c_str());
+	}
+
+	win.draw();
 }
 
 
-void gameBoucle(WinTXT & win, Game& game) {
+void menuBoucle (Menu& menu) {
+	// Creation d'une nouvelle fenetre en mode texte
+	// => fenetre de dimension et position (WIDTH,HEIGHT,STARTX,STARTY)
+    WinTXT win(30,menu.getNbSongs()+10);
 
 	bool ok = true;
 	int c;
 
 	do {
-		gameAff(win,menu);
+	    menuAff(win,menu);
 
-		#ifdef _WIN32
+        #ifdef _WIN32
         Sleep(100);
 		#else
 		usleep(100000);
@@ -167,24 +183,24 @@ void gameBoucle(WinTXT & win, Game& game) {
 
 		c = win.getCh();
 		switch (c) {
-			case 'a':
+			case 'i':
+				menu.moveUp();
 				break;
-			case 'z':
+			case 'k':
+				menu.moveDown();
 				break;
-			case 'e':
+			case 'm':
+				diffBoucle(win,menu); //Boucle permettant le choix de la difficulté
 				break;
-
-			case 'r':
-
-			case 't':
-
 			case 'q':
 				ok = false;
 				break;
 		}
 
-		//game.defilement();
-
 	} while (ok);
 
 }
+
+
+
+
