@@ -6,6 +6,7 @@ CXXFLAGS=-Wall -ggdb
 LIB = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 INCLUDE = -I/usr/local/include/SDL2 -I/usr/local/include -Isrc
 
+
 #dit au makefile de chercher les .cpp dans le dossier dir
 #vpath %.cpp src
 
@@ -32,7 +33,7 @@ test : obj/mainTest.o obj/partition.o obj/keyboard
 	g++ -o bin/$@ $^ -std=c++11
 
 SDL: $(OBJET) obj/sdlGame.o obj/mainSDL.o # ////
-	g++ -o bin/$@ $^ -std=c++11	$(INCLUDE) $(LIB)
+	g++ -o bin/$@ $^ -std=c++11 $(INCLUDE) $(LIB)
 
 
 obj/%.o : src/%.cpp

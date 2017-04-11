@@ -1,16 +1,16 @@
 #include "score.h"
 #include "menu.h"
 #include "partition.h"
-#include "keyboard.hpp"
+#include "keyboard.h"
 
 int main(){
-    keyboard ktest;
-    ktest.setKey(0);
-    ktest.setKey(2);
-    ktest.setKey(4);
-    Menu menu("../data/index");
-    menu.afficher();
-    menu.choose();
+//    keyboard ktest;
+//    ktest.setKey(0);
+//    ktest.setKey(2);
+//    ktest.setKey(4);
+//    Menu menu("../data/index");
+//    menu.afficher();
+//    menu.choose();
     
     //Score test (30);
     
