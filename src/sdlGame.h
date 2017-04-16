@@ -66,7 +66,7 @@ class sdlGame {
      */
     void open_Window();
     
-
+    SDL_Texture* surfaceNote(SDL_renderer * renderer,int i);
     
     void sdlLoop ();
     void sdlShow ();
