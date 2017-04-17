@@ -17,7 +17,6 @@
 /**
  @class Game 
  @brief Classe qui contient les informations d'une partie (la chanson en cours, la partition associée, le score).
- S'occupe du cadre déroulant des notes.
  */
 class Game {
     
