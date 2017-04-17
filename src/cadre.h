@@ -6,13 +6,19 @@
 class Note {
 
 private :
-	int posX,posY;
-	int couleur;
+	const int posX;
+	int posY;
+	int color; //0=vert , 1=rouge, 2=jaune, 3=bleu, 4=marron
+	bool longDuration; //True si la note est longue (noéte "2")
 
 public :
 	Note();
+	Note(const int x, int y, int c, bool long);
+	const int getPosX() const;
+	int getPosY() const;
+	int getColor() const;
+	void scroll(int movement);
 
-	Note(int posX, int posY, int couleur);
 };
 
 /**@class Cadre
@@ -24,20 +30,24 @@ private :
 	int tabPos [5]; //Position des colonnes
 	int cspeed; // Ou plutot temps de défilement, représente le temps(constant) entre l'arrivée d'une note dans le cadre
 				// et son arrivée dans la zone de validation
-	Partition* partition;
-	vector<Note> noteTab;
+	int initialY;
+	int beginningValid; //Position en Y du début de la zone de validation
+	int endValid; //Position en Y de la fin de la zone de validation
+//	Partition* partition;
+	const int movingY;
+	vector<Note*> noteTab;
 
 public :
 	
 	Cadre();
 
-	Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, int speed, const Partition& currPart);
+	Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, int speed, int initY, int beginV, int endV);
 	
 
 	/**@brief met à jour le cadre.
 	@param time représente le temps écoulé (en ms) depuis le lancement du son
 	*/
-	void update(uint32_t time); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
+	void update(uint32_t time, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
 
 
 

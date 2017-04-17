@@ -29,7 +29,10 @@ partition: obj/partition.o obj/mainPartition.o
 score: $(OBJET) obj/mainScore.o obj/keyboard.o
 	g++ -o bin/$@ $^  -std=c++11
 
-test : obj/mainTest.o obj/partition.o obj/keyboard
+test : obj/mainTest.o obj/partition.o obj/keyboard.o
+	g++ -o bin/$@ $^ -std=c++11
+
+cadre : obj/mainCadre.o obj/cadre.o obj/partition.o
 	g++ -o bin/$@ $^ -std=c++11
 
 SDL: $(OBJET) obj/sdlGame.o obj/mainSDL.o # ////

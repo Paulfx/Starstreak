@@ -1,7 +1,7 @@
 #ifndef PARTITION_H
 #define PARTITION_H
 
-
+#include "struct.h"
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
@@ -9,15 +9,6 @@
 
 
 using namespace std;
-
-
-typedef struct { //Une ligne de jeu = données (eg "1001") + temps jusqu'à la prochaine ligne
-	string data; 
-	float time;
-    //bool onSequence;
-}line;
-
-
 
 class Partition {
 

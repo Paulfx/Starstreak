@@ -22,7 +22,7 @@ class Game {
     
 private :
     
-   // Partition partition;
+    Partition partition;
     Score score;
     bool creationMode;
     Song* song;
@@ -64,7 +64,7 @@ public :
 
     Score getScore() const;
 
-  //  void defileCadre(uint32_t time);
+    void update();
     
 };
     
