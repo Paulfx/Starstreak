@@ -17,7 +17,7 @@ Game::Game(Song* currSong,unsigned int difficulty) {
 
 
 
-	Cadre cadre(0,1,2,3,4,10);
+	Cadre cadre(0,1,2,3,4,10,partition);
 
 
 /*
