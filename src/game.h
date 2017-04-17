@@ -12,6 +12,7 @@
 #include "partition.h"
 #include "struct.h"
 #include "score.h"
+#include "cadre.h"
 
 /**
  @class Game 
@@ -22,11 +23,11 @@ class Game {
     
 private :
     
-    Partition partition;
+   // Partition partition;
     Score score;
     bool creationMode;
-    Song song;
-    vector<string> cadre; //Contient le cadre
+    Song* song;
+  //  vector<string> cadre; //Contient le cadre
     
 
     
@@ -54,17 +55,17 @@ public :
     
     /**@brief fonction qui traite les lignes dans la file en fonction du temps
      */
-    void exeGame ();//peut etre inutile
+    //void exeGame ();//peut etre inutile
     
-    bool isFail();
+    //bool isFail();
 
-    const vector<string> getCadre() const;
+    const vector<Note> getCadre() const;
 
     Song getSong() const;
 
     Score getScore() const;
 
-    void defileCadre(uint32_t time);
+  //  void defileCadre(uint32_t time);
     
 };
     
