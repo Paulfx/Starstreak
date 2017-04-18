@@ -1,4 +1,5 @@
 #include "cadre.h"
+#include <cassert>
 
 const float DURATION_FRAME = 16; //en ms
 
@@ -7,14 +8,14 @@ const float DURATION_FRAME = 16; //en ms
 
 Note::Note() {}
 
-Note::Note(const int x, int y, int c, bool longBool) {
+Note::Note(int x, int y, int c, bool longBool) {
 	posX = x;
 	posY = y;
 	color = c;
 	longDuration = longBool;
 }
 
-const int Note::getPosX() const { return posX;}
+int Note::getPosX() const { return posX;}
 int Note::getPosY() const { return posY;}
 int Note::getColor() const { return color;}
 void Note::scroll(int movement) {posY+=movement;}
@@ -35,13 +36,39 @@ Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, int speed, int initY,
 	endValid = endV;
 	//partition = currPart;
 
-	moving = (endValid - initY) / (cspeed / DURATION_FRAME); //qtité de déplacement pour déplacer en cspeed milliseconds la note
+	movingY = (endValid - initY) / (cspeed / DURATION_FRAME); //qtité de déplacement pour déplacer en cspeed milliseconds la note
 															//jusqu'à la fin du cadre
 }
 
-void Cadre::update(uint32_t time, const line& currLine) {
+bool Cadre::update(uint32_t time, const line& currLine) {
 	assert(currLine.time > time);
+	bool ajout=false;
+
 	//On fait avancer les notes existantes
+	scrollCadre();
+
+	
+
+	//Ajout de la ligne, si c'est le moment
+	float actualTime = currLine.time - time;
+	Note* note;
+
+	if( actualTime < (cspeed + DURATION_FRAME) && actualTime < (cspeed + DURATION_FRAME) ) {
+		//On ajoute les notes de la ligne au cadre
+		ajout=true;
+		for(unsigned int i=0;i<5;++i){
+			if(currLine.data[i] == '1') { note= new Note(tabPos[i],initialY,i,false); }
+			else if(currLine.data[i] == '2') { note = new Note(tabPos[i],initialY,i,true); }
+			noteTab.push_back(note);
+		}
+
+	}
+	return ajout;
+}
+
+
+void Cadre::scrollCadre() {
+	Note* tmpNote;
 	for(unsigned int i=0;i<noteTab.size();++i) {
 		noteTab[i]->scroll(movingY);
 		if(noteTab[i]->getPosY() > endValid) { //La note n'est plus dans le cadre, on l'efface
@@ -50,18 +77,13 @@ void Cadre::update(uint32_t time, const line& currLine) {
 			delete tmpNote;
 		}
 	}
-
-	//Ajout de la ligne, si c'est le moment
-	float actualTime = currLine.time - time;
-
-	if( actualTime < (cspeed + DURATION_FRAME) && actualTime < (cspeed + DURATION_FRAME) ) {
-		//On doit afficher la ligne
-		for(unsigned int i=0;i<5;++i){
-			if(currLine.data[i] == "1") { Note* note= new Note(tabPos[i],initialY,i,false); }
-			else if() { Note* note = new Note(tabPos[i],initialY,i,true); }
-			noteTab.push_back(note);
-		}
-
-	}
-
 }
+
+int Cadre::getNbNote() const { return noteTab.size();}
+
+Note* Cadre::getPtrNote(int i) { 
+	assert(i<noteTab.size());
+	return noteTab[i];
+}
+
+bool Cadre::isEmpty() const { return noteTab.empty();}

@@ -2,19 +2,21 @@
 #define _CADRE_H
 
 #include "partition.h"
+#include <vector>
+#include <string>
 
 class Note {
 
 private :
-	const int posX;
+	int posX;
 	int posY;
 	int color; //0=vert , 1=rouge, 2=jaune, 3=bleu, 4=marron
 	bool longDuration; //True si la note est longue (noéte "2")
 
 public :
 	Note();
-	Note(const int x, int y, int c, bool long);
-	const int getPosX() const;
+	Note(int x, int y, int c, bool longBool);
+	int getPosX() const;
 	int getPosY() const;
 	int getColor() const;
 	void scroll(int movement);
@@ -34,7 +36,7 @@ private :
 	int beginningValid; //Position en Y du début de la zone de validation
 	int endValid; //Position en Y de la fin de la zone de validation
 //	Partition* partition;
-	const int movingY;
+	int movingY;
 	vector<Note*> noteTab;
 
 public :
@@ -46,10 +48,17 @@ public :
 
 	/**@brief met à jour le cadre.
 	@param time représente le temps écoulé (en ms) depuis le lancement du son
+	@return true si currLine est ajoutée au cadre, false sinon
 	*/
-	void update(uint32_t time, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
+	bool update(uint32_t time, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
 
+	void scrollCadre();
 
+	int getNbNote() const;
+
+	Note* getPtrNote(int i);
+
+	bool isEmpty() const;
 
 };
 

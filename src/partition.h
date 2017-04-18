@@ -40,7 +40,7 @@ class Partition {
 
 		int getNbLine();
 
-		line getLine();
+		bool getLine(line& currLine);
 
 		bool isFinished();
 };

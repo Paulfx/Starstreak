@@ -3,6 +3,7 @@
 
 #include <string>
 
+using namespace std;
 
 typedef struct {
 	string title,filePartition,fileMusic,fileImage;

@@ -23,7 +23,7 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	for (unsigned int i=0;i<difficulty;i++) {
 		getline(ss,strNbBeginning,','); //Séparation de la ligne selon la virgule
 	}
-	int nbBeginning = std::stoi(strNbBeginning.c_str());
+	int nbBeginning = std::stoi(strNbBeginning.c_str()); //nbr de caractère avant le début de la partition
 
 	fichier.seekg(nbBeginning,ios::beg); // On se déplace au début de la partition
 
@@ -55,7 +55,7 @@ void Partition::afficher() {
 }
 
 int Partition::getNbLine() {return nbLine;}
-
+/*
 line Partition::getLine() {
 	line l;
 	if(index<nbLine) {
@@ -65,9 +65,19 @@ line Partition::getLine() {
 
 	else if(index == nbLine) {
 		end = true;
-		
 	}
 	return l;
+}
+*/
+
+bool Partition::getLine(line& currLine) {
+	assert(index<=nbLine);
+	if(index==nbLine) return false;
+	
+	index++;
+	currLine=partition[index];
+	cout<<currLine.data;
+	return true;
 }
 
 bool Partition::isFinished() {return end;}
