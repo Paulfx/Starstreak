@@ -7,20 +7,25 @@ using namespace std;
 
 int main() {
 
-	Cadre cadre(0,1,2,3,4,2000,0,100,150);
+	Cadre cadre(0,1,2,3,4,500,0,100,150);
 
 	Partition part("../data/songs/sth",1);
 	int tps = 0;
 	bool ligneAjoutee = false;
-	line currLine= part.getLine();
-	cout<<currLine.data;
-	while(!part.isFinished()) {
+	line* currLine= part.getLine();
+	
+	while(true) {
 		tps+=16;//ms
 		if(ligneAjoutee) {
 			currLine=part.getLine();
 		}
+		cout<<"FINI : "<<part.isFinished()<<endl;
+
+		if(part.isFinished()) break;
 
 		ligneAjoutee=cadre.update(tps,currLine);
+
+
 
 		cout<<"------------------------------------"<<endl<<"Nombre de notes : "<<cadre.getNbNote()<<endl;
 		for(unsigned int i=0;i<cadre.getNbNote();++i) {

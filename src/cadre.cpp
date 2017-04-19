@@ -40,25 +40,25 @@ Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, int speed, int initY,
 															//jusqu'à la fin du cadre
 }
 
-bool Cadre::update(uint32_t time, const line& currLine) {
-	assert(currLine.time > time);
+bool Cadre::update(uint32_t time, line* currLine) {
+	cout<<currLine->time<<endl<<time<<endl;
+
+	assert(currLine->time > time);
 	bool ajout=false;
 
 	//On fait avancer les notes existantes
 	scrollCadre();
 
-	
-
 	//Ajout de la ligne, si c'est le moment
-	float actualTime = currLine.time - time;
+	float actualTime = currLine->time - time;
 	Note* note;
 
 	if( actualTime < (cspeed + DURATION_FRAME) && actualTime > (cspeed - DURATION_FRAME) ) {
 		//On ajoute les notes de la ligne au cadre
 		ajout=true;
 		for(unsigned int i=0;i<5;++i){
-			if(currLine.data[i] == '1') { note= new Note(tabPos[i],initialY,i,false);noteTab.push_back(note); }
-			else if(currLine.data[i] == '2') { note = new Note(tabPos[i],initialY,i,true);noteTab.push_back(note); }
+			if(currLine->data[i] == '1') { note= new Note(tabPos[i],initialY,i,false);noteTab.push_back(note); }
+			else if(currLine->data[i] == '2') { note = new Note(tabPos[i],initialY,i,true);noteTab.push_back(note); }
 			
 		}
 

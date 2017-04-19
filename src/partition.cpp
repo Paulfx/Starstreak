@@ -28,6 +28,7 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	fichier.seekg(nbBeginning,ios::beg); // On se déplace au début de la partition
 
 	fichier >> nbLine;
+	cout<<"NOMBRE "<<nbLine<<endl;
 	fichier >> duree;
 	partition = new line[nbLine];
 
@@ -70,10 +71,10 @@ line Partition::getLine() {
 }
 */
 
-line Partition::getLine() {
+line* Partition::getLine() {
 	assert(index<nbLine);
 	index++;
-	return partition[index];
+	return &partition[index];
 }
 
 bool Partition::isFinished() {
