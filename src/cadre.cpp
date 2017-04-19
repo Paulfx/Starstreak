@@ -53,13 +53,13 @@ bool Cadre::update(uint32_t time, const line& currLine) {
 	float actualTime = currLine.time - time;
 	Note* note;
 
-	if( actualTime < (cspeed + DURATION_FRAME) && actualTime < (cspeed + DURATION_FRAME) ) {
+	if( actualTime < (cspeed + DURATION_FRAME) && actualTime > (cspeed - DURATION_FRAME) ) {
 		//On ajoute les notes de la ligne au cadre
 		ajout=true;
 		for(unsigned int i=0;i<5;++i){
-			if(currLine.data[i] == '1') { note= new Note(tabPos[i],initialY,i,false); }
-			else if(currLine.data[i] == '2') { note = new Note(tabPos[i],initialY,i,true); }
-			noteTab.push_back(note);
+			if(currLine.data[i] == '1') { note= new Note(tabPos[i],initialY,i,false);noteTab.push_back(note); }
+			else if(currLine.data[i] == '2') { note = new Note(tabPos[i],initialY,i,true);noteTab.push_back(note); }
+			
 		}
 
 	}

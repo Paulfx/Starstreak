@@ -70,14 +70,13 @@ line Partition::getLine() {
 }
 */
 
-bool Partition::getLine(line& currLine) {
-	assert(index<=nbLine);
-	if(index==nbLine) return false;
-	
+line Partition::getLine() {
+	assert(index<nbLine);
 	index++;
-	currLine=partition[index];
-	cout<<currLine.data;
-	return true;
+	return partition[index];
 }
 
-bool Partition::isFinished() {return end;}
+bool Partition::isFinished() {
+	if(index==nbLine) return true;
+	return false;
+}
