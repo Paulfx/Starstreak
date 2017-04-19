@@ -173,13 +173,24 @@ void sdlGame::sdlGameLoop(){
     SDL_Event events;
     bool quitGame = false;
     while(!quitGame){
-        //appel actionsAutomatiques (q)
+        /*mise en place de la partie*/
+        
+        //SDL_MIXER (lancement de la chanson)
+        timeBegin = SDL_GetTicks();
+        
+        
+        
+        
         
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
             }
-            else if
+            else if {
+                //boucle avec rafraichissement (=> actions automatiques)
+                    //defiler cadre
+                    //score
+            }
     }
 }
 
