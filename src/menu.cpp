@@ -52,6 +52,20 @@ Menu::~Menu() {
 	songTab = NULL;
 }
 
+
+//Fonction D'affichage pour la SDL
+//Recuperation des noms de chansons disponibles un a un dans un vector
+//Affichage et selection dans sdlgame
+vector<string> Menu::getList(){
+    vector<string> ListSong;
+    ListSong.reserve(nbSongs);
+    for(unsigned int i=0;i<nbSongs;++i) {
+        ListSong[i]=songTab[i]->title;
+    }
+    return ListSong;
+}
+
+
 void Menu::afficher() {
 	for(unsigned int i=0;i<nbSongs;++i) {
 		cout<<songTab[i]->title<<endl;

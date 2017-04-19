@@ -2,7 +2,7 @@
 #include "sdlGame.h"
 
 
-
+const int TAILLE_SPRITE=32;
 
 
 // ============= IMAGE =============== //
@@ -62,7 +62,6 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
 // ============= GAME =============== //
 
 sdlGame::sdlGame(){
-    
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
@@ -94,7 +93,7 @@ sdlGame::sdlGame(){
                                 640, 480); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
     
     
-    
+    im_background.loadFromFile("/../data/Batman.jpg",renderer);
     
     
 }
@@ -143,12 +142,34 @@ SDL_Texture* sdlGame::surfaceNote(SDL_Renderer * renderer,int i){
 }
 */
 
+void sdlGame::sdlShowMenu(){
+    SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
+    SDL_RenderClear(renderer);
+    
+    int x,y;
+    for(x=0;x<640;x++){
+        for(y=0;y<480;y++){
+            im_background.draw(renderer,x*640,y*480,640,480);
+        }
+    }
+    
+}
+
+void sdlGame::sdlShowGame(){
+    
+}
 
 
-/* void sdlGame (){
-*/
 
-void sdlGameLoop(){
+
+void sdlGame::sdlTest(){
+        sdlShowMenu();
+        SDL_RenderPresent(renderer);
+}
+
+
+
+void sdlGame::sdlGameLoop(){
     SDL_Event events;
     bool quitGame = false;
     while(!quitGame){
@@ -162,7 +183,7 @@ void sdlGameLoop(){
     }
 }
 
-void sdlGame::sdlLoop(){
+void sdlGame::sdlMenuLoop(){
     SDL_Event events;
     bool quit = false;
     while (!quit){
@@ -192,7 +213,6 @@ void sdlGame::sdlLoop(){
         }
     }
 }
-
 
 
 

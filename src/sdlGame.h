@@ -46,8 +46,7 @@ class sdlGame {
  
     Menu menu;
     
-    // Insertion d'image plus tard : background, menu, icone etc etc
-    Image note[5]; //-> les 5 cellules
+    Image im_background;
     
     
     public :
@@ -65,8 +64,13 @@ class sdlGame {
     
     //SDL_Texture* surfaceNote(SDL_Renderer * renderer,int i);
     
-    void sdlLoop ();
-    void sdlShow ();
+    void sdlMenuLoop();
+    void sdlShowMenu ();
+    
+    void sdlGameLoop ();
+    void sdlShowGame();
+    
+    void sdlTest();
     
 };
 

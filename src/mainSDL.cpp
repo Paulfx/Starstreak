@@ -24,9 +24,8 @@ int main (int argc, char *argv[]){
     //chunksize, used per output sample
     */
     sdlGame mySDL;
-    while(1){
-        SDL_Delay(100);
-    }
+    mySDL.sdlTest();
+    
 
     
     
