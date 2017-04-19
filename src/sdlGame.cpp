@@ -148,6 +148,20 @@ SDL_Texture* sdlGame::surfaceNote(SDL_Renderer * renderer,int i){
 /* void sdlGame (){
 */
 
+void sdlGameLoop(){
+    SDL_Event events;
+    bool quitGame = false;
+    while(!quitGame){
+        //appel actionsAutomatiques (q)
+        
+        while (SDL_PollEvent(&events)) {
+            if (events.type == SDL_QUIT){
+                quitGame = true;
+            }
+            else if
+    }
+}
+
 void sdlGame::sdlLoop(){
     SDL_Event events;
     bool quit = false;
@@ -168,7 +182,8 @@ void sdlGame::sdlLoop(){
                         break;
                     case SDL_SCANCODE_RETURN://touche entré
                         menu.choose();
-                    case SDL_SCANCODE_ESCAPE:
+                        //sdlGameLoop();
+                    case SDL_SCANCODE_ESCAPE://touche echap
                         quit=true;
                     default :
                         break;

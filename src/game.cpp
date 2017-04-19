@@ -18,8 +18,6 @@ Game::Game(Song* currSong,unsigned int difficulty) {
 
 
 	//Cadre cadre(0,1,2,3,4,10);
-
-
 /*
 	for (unsigned int i=0 && !partition.isFinished();i<10;++i) {
 		cadre.push_back(partition.getLine().data);
