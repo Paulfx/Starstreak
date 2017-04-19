@@ -61,21 +61,55 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
 
 // ============= GAME =============== //
 
+
+
+
 sdlGame::sdlGame(){
-    // Initialisation de la SDL
+    // INITIALISATION
+    //SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
     }
     
+    
+    //TTF
     if (TTF_Init() != 0) {
         cout << "Erreur lors de l'initialisation de la SDL_ttf : " << SDL_GetError() << endl;SDL_Quit();exit(1);
     }
+    //chemin + taille de police
+    //Police du menu
+    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 65);
     
+    
+    //IMAGE
     int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
     if( !(IMG_Init(imgFlags) & imgFlags)) {
         cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;SDL_Quit();exit(1);
     }
+    
+    
+    
+    //Initialisation du menu
     Menu menu("../data/index");
+    
+    
+    //Initialisation de la liste de songs du menu
+    //Une surface pour chaque nom de chanson stocké dans un tab
+    //On affichera le tab avec un certain decalage -> utile pour le movedown
+    SDL_Color couleurNoire = {0, 0, 0};
+    vector<string> ListSong=menu.getList();
+    int nbSongs=menu.getNbSongs();
+    SDL_Surface tabList[nbSongs];
+    for(unsigned int i=0;i<nbSongs();i++){
+        tabList[i] = TTF_RenderText_Blended(fontMenu, ListSong[i], couleurNoire);
+    }
+    
+    /* 
+     TODO: affichage des surface avec espacement et affichage du curseur avec le meme increment (position pas acces)
+            
+     */
+    
+    
     
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE); //SDL_WINDOW_FULLSCREEN_DESKTOP
@@ -96,51 +130,27 @@ sdlGame::sdlGame(){
     im_background.loadFromFile("/../data/Batman.jpg",renderer);
     
     
+    
+    
+    
+    
+    
+    
 }
 
 
 sdlGame::~sdlGame(){
     
+    
+    
+    //Fermeture TTF
+    TTF_CloseFont(fontMenu);
+    TTF_Quit();
+    
     IMG_Quit();
     SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
     
 }
-
-
-// a chaque debut de loop on appel SDL affiche
-
-
-/*
-SDL_Texture* sdlGame::surfaceNote(SDL_Renderer * renderer,int i){
-    
-    //Initialisation pour lecture de format JPG,PNG par sdl_image (1.2 ?)
-    int flags=IMG_INIT_JPG|IMG_INIT_PNG;
-    int initted=IMG_Init(flags);
-    if((initted&flags) != flags) {
-        printf("IMG_Init: Failed to init required jpg and png support!\n");
-        printf("IMG_Init: %s\n", IMG_GetError());
-        // handle error
-    }
-    
-    SDL_Texture* tex;
-    //switch sur le i -> affichage de note differente (couleur principalement)
-    SDL_RWops *rwop; //SDL_RW sur sdl_image permet la lecture du .png
-    rwop=SDL_RWFromFile("/../data/Batman.jpg", "rb");
-    SDL_Surface * image;
-    image=IMG_LoadJPG_RW(rwop);
-    tex= SDL_CreateTextureFromSurface(renderer,image);
-    
-    Uint32 format;
-    int access = 0;
-    int largeur = 0;
-    int hauteur = 0;
-    SDL_QueryTexture(tex,&format, &access, &largeur, &hauteur);
-    
-    SDL_Rect dest = { 640/2 - largeur/2,480/2 - hauteur/2, largeur, hauteur};
-    SDL_RenderCopy(renderer,pTexture,NULL,&dest);
-
-}
-*/
 
 void sdlGame::sdlShowMenu(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
@@ -152,6 +162,7 @@ void sdlGame::sdlShowMenu(){
             im_background.draw(renderer,x*640,y*480,640,480);
         }
     }
+    
     
 }
 

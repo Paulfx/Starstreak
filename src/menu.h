@@ -76,7 +76,10 @@ public :
 	void increaseDiff();
 
 	void decreaseDiff();
-
+    /** @brief Renvoie le tab des noms de chansons
+     
+     
+     */
     vector<string> getList();
 
 };

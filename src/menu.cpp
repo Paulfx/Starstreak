@@ -80,6 +80,9 @@ void Menu::moveDown() {
 	currI = (currI + 1) % nbSongs;
 }
 
+
+//Synchro affichage + coeur
+//songTab et le vector String sont initialisé dans le même ordre.
 void Menu::choose() {
 	currGame = new Game(songTab[currI],difficulty); 
 	active = false;

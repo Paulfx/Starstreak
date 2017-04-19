@@ -42,7 +42,7 @@ class sdlGame {
     SDL_Texture * texture;
     SDL_Window * window;
     SDL_Renderer * renderer;
-    TTF_Font * font;
+    TTF_Font * fontMenu; //Police pour le menu
  
     Menu menu;
     
