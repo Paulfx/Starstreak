@@ -46,6 +46,10 @@ class sdlGame {
  
     Menu menu;
     
+    // Insertion d'image plus tard : background, menu, icone etc etc
+    Image note[5]; //-> les 5 cellules
+    
+    
     public :
     
     
@@ -58,15 +62,8 @@ class sdlGame {
      */
     ~sdlGame ();
     
-    /** @brief Initialisation de la fenetre
-     */
-    void init_Window();
     
-    /** @brief Ouvre la fenetre SDL
-     */
-    void open_Window();
-    
-    SDL_Texture* surfaceNote(SDL_renderer * renderer,int i);
+    //SDL_Texture* surfaceNote(SDL_Renderer * renderer,int i);
     
     void sdlLoop ();
     void sdlShow ();

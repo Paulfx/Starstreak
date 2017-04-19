@@ -36,7 +36,7 @@ Game::~Game() {
 
 const vector<string> Game::getCadre() const { return cadre;}
 
-Song Game::getSong() const { return song;}
+Song Game::getSong() const { return *song;}
 
 Score Game::getScore() const { return score;}
 

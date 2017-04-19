@@ -26,7 +26,7 @@ private :
     Score score;
     bool creationMode;
     Song* song;
-  //  vector<string> cadre; //Contient le cadre
+    vector<string> cadre; // contient le cadre, modification donc pas de pointeur
     
 
     
@@ -58,13 +58,15 @@ public :
     
     //bool isFail();
 
-    const vector<Note> getCadre() const;
+    const vector<string> getCadre() const;
 
     Song getSong() const;
 
     Score getScore() const;
 
     void update();
+    
+    void defileCadre(uint32_t time);
     
 };
     

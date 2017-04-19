@@ -63,22 +63,6 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
 
 sdlGame::sdlGame(){
     
-    window=NULL;
-    renderer=NULL;
-    font=NULL;
-    texture=NULL;
-    Menu menu("../data/index");
-}
-
-
-sdlGame::~sdlGame(){
-    
-}
-
-
-
-
-void sdlGame::init_Window(){
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
@@ -92,10 +76,9 @@ void sdlGame::init_Window(){
     if( !(IMG_Init(imgFlags) & imgFlags)) {
         cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;SDL_Quit();exit(1);
     }
-
-}
-
-void sdlGame::open_Window(){
+    Menu menu("../data/index");
+    
+    //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE); //SDL_WINDOW_FULLSCREEN_DESKTOP
     //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
@@ -105,18 +88,30 @@ void sdlGame::open_Window(){
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
     texture = SDL_CreateTexture(renderer,
-                                   SDL_PIXELFORMAT_ARGB8888, //
-                                   SDL_TEXTUREACCESS_STREAMING,
-                                   //fluidité sur l'affichage des images
-                                   640, 480); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
+                                SDL_PIXELFORMAT_ARGB8888, //
+                                SDL_TEXTUREACCESS_STREAMING,
+                                //fluidité sur l'affichage des images
+                                640, 480); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
+    
+    
+    
+    
+    
 }
 
+
+sdlGame::~sdlGame(){
+    
+    IMG_Quit();
+    SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
+    
+}
 
 
 // a chaque debut de loop on appel SDL affiche
 
 
-
+/*
 SDL_Texture* sdlGame::surfaceNote(SDL_Renderer * renderer,int i){
     
     //Initialisation pour lecture de format JPG,PNG par sdl_image (1.2 ?)
@@ -143,10 +138,10 @@ SDL_Texture* sdlGame::surfaceNote(SDL_Renderer * renderer,int i){
     SDL_QueryTexture(tex,&format, &access, &largeur, &hauteur);
     
     SDL_Rect dest = { 640/2 - largeur/2,480/2 - hauteur/2, largeur, hauteur};
-    SDL_RenderCopy(Renderer,pTexture,NULL,&dest);
+    SDL_RenderCopy(renderer,pTexture,NULL,&dest);
 
 }
-
+*/
 
 
 
@@ -182,3 +177,7 @@ void sdlGame::sdlLoop(){
         }
     }
 }
+
+
+
+
