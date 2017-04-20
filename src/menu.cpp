@@ -58,9 +58,9 @@ Menu::~Menu() {
 //Affichage et selection dans sdlgame
 vector<string> Menu::getList(){
     vector<string> ListSong;
-    ListSong.reserve(nbSongs);
+    ListSong.reserve(nbSongs); //pas sur qu'il y en ait besoin avec push_back
     for(unsigned int i=0;i<nbSongs;++i) {
-        ListSong[i]=songTab[i]->title;
+        ListSong.push_back(songTab[i]->title);
     }
     return ListSong;
 }

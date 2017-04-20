@@ -73,13 +73,19 @@ sdlGame::sdlGame(){
     
     
     //TTF
-    if (TTF_Init() != 0) {
+    if (TTF_Init() == -1) {
         cout << "Erreur lors de l'initialisation de la SDL_ttf : " << SDL_GetError() << endl;SDL_Quit();exit(1);
     }
     //chemin + taille de police
     //Police du menu
-    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 65);
+    fontMenu= NULL;
+
     
+    fontMenu=TTF_OpenFont("default.ttf", 50);
+    if(fontMenu==NULL) {
+        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        // handle error
+    }
     
     //IMAGE
     int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
@@ -90,21 +96,10 @@ sdlGame::sdlGame(){
     
     
     //Initialisation du menu
-    Menu menu("../data/index");
+    //Menu menu("../data/index");
     
     
-    //Initialisation de la liste de songs du menu
-    //Une surface pour chaque nom de chanson stocké dans un tab
-    //On affichera le tab avec un certain decalage -> utile pour le movedown
-    SDL_Color couleurNoire = {0, 0, 0};
-    vector<string> ListSong=menu.getList();
-    int nbSongs=menu.getNbSongs();
-    SDL_Surface tabList[nbSongs];
-    for(unsigned int i=0;i<nbSongs();i++){
-        tabList[i] = TTF_RenderText_Blended(fontMenu, ListSong[i], couleurNoire);
-    }
-    
-    /* 
+       /* 
      TODO: affichage des surface avec espacement et affichage du curseur avec le meme increment (position pas acces)
             
      */
@@ -139,19 +134,7 @@ sdlGame::sdlGame(){
 }
 
 
-sdlGame::~sdlGame(){
-    
-    
-    
-    //Fermeture TTF
-    TTF_CloseFont(fontMenu);
-    TTF_Quit();
-    
-    IMG_Quit();
-    SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
-    
-}
-
+//Affichage du menu
 void sdlGame::sdlShowMenu(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
@@ -163,23 +146,65 @@ void sdlGame::sdlShowMenu(){
         }
     }
     
+    //Initialisation de la liste de songs du menu
+    //Une surface pour chaque nom de chanson stocké dans un tab
+    //On affichera le tab avec un certain decalage -> utile pour le movedown
+
+    int nbSongs=10;
+    //menu.getNbSongs();
+    
+    
+    //Decla des 3 composants de la liste
+    SDL_Surface* tabSurfaceList[nbSongs];
+    SDL_Texture* tabTextureList[nbSongs];
+    SDL_Rect tabRectList[nbSongs];
+    
+    
+    
+    SDL_Color couleurNoire = {0, 0, 0};
+    
+    //Recuperation de la liste des songs
+    vector<string> ListSong=menu.getList();
+    //Tampon car bug sur le vectorString -> prend des caractères
+    string tamp;
+    
+    
+    for(unsigned int i=0;i<nbSongs;i++){
+        tamp=ListSong[i];
+        tabSurfaceList[i] = TTF_RenderText_Blended(fontMenu,"Ntm", couleurNoire);
+        tabTextureList[i]= SDL_CreateTextureFromSurface(renderer, tabSurfaceList[i]);
+        tabRectList[i].x=25*i;
+        tabRectList[i].y=100;
+        tabRectList[i].w=300;
+        tabRectList[i].h=20;
+    }
+    //Affiche la liste
+    for(unsigned int j=0;j<nbSongs;j++){
+        SDL_RenderCopy(renderer, tabTextureList[j], NULL, &tabRectList[j]);
+    }
+    
     
 }
 
+
+//Affichage du jeu
 void sdlGame::sdlShowGame(){
     
 }
 
 
 
-
+//Essai de loop+affichage
 void sdlGame::sdlTest(){
+
         sdlShowMenu();
         SDL_RenderPresent(renderer);
+        SDL_Delay(10000);
 }
 
 
-
+//Seconde Loop
+// Correspond au jeu
 void sdlGame::sdlGameLoop(){
     SDL_Event events;
     bool quitGame = false;
@@ -187,24 +212,23 @@ void sdlGame::sdlGameLoop(){
         /*mise en place de la partie*/
         
         //SDL_MIXER (lancement de la chanson)
-        timeBegin = SDL_GetTicks();
-        
-        
-        
-        
-        
+        //timeBegin = SDL_GetTicks();
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
-            }
-            else if {
-                //boucle avec rafraichissement (=> actions automatiques)
+            }else if(1) {
+            //boucle avec rafraichissement (=> actions automatiques)
                     //defiler cadre
                     //score
             }
+        }
     }
 }
 
+
+
+//Premiere Loop
+// Correspond au menu, la loop du jeu sera appelé dedans (aprés choose)
 void sdlGame::sdlMenuLoop(){
     SDL_Event events;
     bool quit = false;
@@ -236,5 +260,21 @@ void sdlGame::sdlMenuLoop(){
     }
 }
 
+
+
+
+
+sdlGame::~sdlGame(){
+    
+    
+    
+    //Fermeture TTF
+    //TTF_CloseFont(fontMenu);  -> erreur d'allocation
+    TTF_Quit();
+    
+    IMG_Quit();
+    SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
+    
+}
 
 
