@@ -158,7 +158,7 @@ void sdlGame::sdlShowMenu(){
        
         tamp=menu->getTitleSong(i);
         cout <<tamp <<endl;
-        SurfaceList = TTF_RenderText_Blended(fontMenu,"tamp", couleurNoire);
+        SurfaceList = TTF_RenderText_Blended(fontMenu,tamp.c_str(), couleurNoire);
         if(SurfaceList==NULL){
         	cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
         	
@@ -170,7 +170,7 @@ void sdlGame::sdlShowMenu(){
         }
         SurfaceList=NULL;
         rec.x=25*i;
-        rec.y=100;
+        rec.y=25*i;
         rec.w=300;
         rec.h=20;
 
