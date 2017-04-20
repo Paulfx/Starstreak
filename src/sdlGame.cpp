@@ -98,15 +98,8 @@ sdlGame::sdlGame(){
     
     //Initialisation du menu
     Menu menu("../data/index");
-    
-    
-       /* 
-     TODO: affichage des surface avec espacement et affichage du curseur avec le meme increment (position pas acces)
-            
-     */
-    
-    
-    
+   
+     
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE); //SDL_WINDOW_FULLSCREEN_DESKTOP
     //parametres gestion de position/taille/resolution etc
@@ -141,21 +134,18 @@ void sdlGame::sdlShowMenu(){
     SDL_RenderClear(renderer);
     
     int x,y;
-    for(x=0;x<640;x++){
-        for(y=0;y<480;y++){
-            im_background.draw(renderer,x*640,y*480,640,480);
-        }
-    }
-    
+
+    im_background.draw(renderer,0,0,640,480);
+ 
     //Initialisation de la liste de songs du menu
     //Une surface pour chaque nom de chanson stocké dans un tab
     //On affichera le tab avec un certain decalage -> utile pour le movedown
-
+	cout << "FDP";
     int nbSongs=menu.getNbSongs();
     
     
     //Decla des 3 composants de la liste
-    SDL_Surface* tabSurfaceList[nbSongs];
+    SDL_Surface* SurfaceList;
     SDL_Texture* tabTextureList[nbSongs];
     SDL_Rect tabRectList[nbSongs];
     
@@ -169,18 +159,30 @@ void sdlGame::sdlShowMenu(){
     string tamp;
     
     
-    for(unsigned int i=0;i<nbSongs;i++){
+    for(int i=0;i<nbSongs;i++){
         tamp=ListSong[i];
-        tabSurfaceList[i] = TTF_RenderText_Blended(fontMenu,"Ntm", couleurNoire);
-        tabTextureList[i]= SDL_CreateTextureFromSurface(renderer, tabSurfaceList[i]);
+        SurfaceList = TTF_RenderText_Blended(fontMenu,"Ntm", couleurNoire);
+        if(SurfaceList==NULL){
+        	printf("Erreur lors de la creation de la surface : %s",SDL_GetError());
+        	
+        }
+        tabTextureList[i]= SDL_CreateTextureFromSurface(renderer,SurfaceList);
+         if(tabTextureList[i]==NULL){
+        	printf("Erreur lors de la creation de la texture : %s",SDL_GetError());
+        	
+        }
+        SurfaceList=NULL;
         tabRectList[i].x=25*i;
         tabRectList[i].y=100;
         tabRectList[i].w=300;
         tabRectList[i].h=20;
     }
+    cout << "NTM";
     //Affiche la liste
-    for(unsigned int j=0;j<nbSongs;j++){
-        SDL_RenderCopy(renderer, tabTextureList[j], NULL, &tabRectList[j]);
+    for(int j=0;j<nbSongs;j++){
+        if(SDL_RenderCopy(renderer, tabTextureList[j], NULL, &tabRectList[j])!=0){
+        	printf("Erreur lors de l'update du renderer : %s",SDL_GetError());
+        }
     }
     
     
