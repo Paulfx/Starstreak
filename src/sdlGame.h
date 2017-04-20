@@ -46,9 +46,6 @@ class sdlGame {
     //SDL_Mixer * ????
     Menu menu;
     
-    
-    int nbSongs;
-    
     Image im_background;
     
     

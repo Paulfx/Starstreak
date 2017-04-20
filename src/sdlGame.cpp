@@ -102,7 +102,6 @@ sdlGame::sdlGame(){
     
     //Initialisation du menu
     Menu menu("../data/index");
-    nbSongs=menu.getNbSongs();
      
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE); //SDL_WINDOW_FULLSCREEN_DESKTOP
@@ -153,7 +152,7 @@ void sdlGame::sdlShowMenu(){
     SDL_Color couleurNoire = {0, 0, 0};
     string tamp;
   
-    for(int i=0;i<nbSongs;i++){
+    for(unsigned int i=0;i<menu.getNbSongs();i++){
        
         tamp=menu.getTitleSong(i);
         cout <<tamp <<endl;
