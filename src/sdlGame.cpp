@@ -101,7 +101,7 @@ sdlGame::sdlGame(){
 
     
     //Initialisation du menu
-    Menu menu("../data/index");
+    menu= new Menu("../data/index");
      
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE); //SDL_WINDOW_FULLSCREEN_DESKTOP
@@ -151,10 +151,12 @@ void sdlGame::sdlShowMenu(){
     
     SDL_Color couleurNoire = {0, 0, 0};
     string tamp;
-  
-    for(unsigned int i=0;i<menu.getNbSongs();i++){
+    
+    cout<<menu->getNbSongs();
+
+    for(unsigned int i=0;i<menu->getNbSongs();i++){
        
-        tamp=menu.getTitleSong(i);
+        tamp=menu->getTitleSong(i);
         cout <<tamp <<endl;
         SurfaceList = TTF_RenderText_Blended(fontMenu,"tamp", couleurNoire);
         if(SurfaceList==NULL){
@@ -211,7 +213,7 @@ void sdlGame::sdlGameLoop(){
         //SDL_MIXER (lancement de la chanson)
         
         Mix_Music *music;
-        string aMusic=menu.getGame()->getSong().fileMusic;
+        string aMusic=menu->getGame()->getSong().fileMusic;
         const char *accesMusic = aMusic.c_str();
         music=Mix_LoadMUS(accesMusic);
         if (!music){
@@ -274,19 +276,19 @@ void sdlGame::sdlMenuLoop(){
                         if (Mix_PlayMusic(soudMove,1)==-1) {
                             cout<<"Mix_PlayMusic error"<<Mix_GetError()<<endl;
                         }
-                        menu.moveUp();
+                        menu->moveUp();
                         break;
                     case SDL_SCANCODE_DOWN://flèche du bas
                         if (Mix_PlayMusic(soudMove,1)==-1) {
                             cout<<"Mix_PlayMusic error"<<Mix_GetError()<<endl;
                         }
-                        menu.moveDown();
+                        menu->moveDown();
                         break;
                     case SDL_SCANCODE_RETURN://touche entré
                         if (Mix_PlayMusic(soudAccept,1)==-1) {
                             cout<<"Mix_PlayMusic error"<<Mix_GetError()<<endl;
                         }
-                        menu.choose();
+                        menu->choose();
                         //sdlGameLoop();
                     case SDL_SCANCODE_ESCAPE://touche echap
                         quit=true;
