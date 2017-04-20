@@ -80,8 +80,9 @@ public :
      
      
      */
-    vector<string> * getList();
+    string getList();
 
+    string getTitleSong(int i);
 };
 
 #endif

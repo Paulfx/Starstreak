@@ -25,6 +25,7 @@ Menu::Menu(const string& filename) : currI(0), active(true), difficulty(1){
 
 	cout << "Coucou de l'init menu avec filename : " << nbSongs << endl;
 	cout << "Adresse : "<< &nbSongs << endl << endl;
+    
 	songTab = new Song*[nbSongs];
 	while(getline(fichier,line)) {
 		if(!line.empty()) {
@@ -60,30 +61,29 @@ Menu::~Menu() {
 
 
 //Fonction D'affichage pour la SDL
-//Recuperation des noms de chansons disponibles un a un dans un vector
-//Affichage et selection dans sdlgame
-vector<string> * Menu::getList(){
-    vector<string> * ListSong= new vector<string>;
-    
-    
-    
+//Recuperation des noms de chansons disponibles un a un dans un vector -> pointeur ?
+//
+/*
+string Menu::getList(){
+
     cout << "Adresse : "<< &nbSongs << endl;
     cout << "coucou from getList :" << nbSongs << endl;
     //ListSong.reserve(nbSongs); //pas sur qu'il y en ait besoin avec push_back
+    
+    
+    
+    string ListSong[nbSongs];
     int i=0;
     while(songTab[i]!=NULL){
-    	ListSong->push_back(songTab[i]->title);
+        ListSong[i]=(songTab[i]->title);
     	i++;
     }
     
-    
- /*   
-    for(unsigned int i=0;i<nbSongs;++i) {
-        ListSong.push_back(songTab[i]->title);
-    }
-    
-*/
 return ListSong;
+}*/
+
+string Menu::getTitleSong(int i){
+    return songTab[i]->title;
 }
 
 
@@ -101,9 +101,6 @@ void Menu::moveDown() {
 	currI = (currI + 1) % nbSongs;
 }
 
-
-//Synchro affichage + coeur
-//songTab et le vector String sont initialisé dans le même ordre.
 void Menu::choose() {
 	currGame = new Game(songTab[currI],difficulty); 
 	active = false;

@@ -142,13 +142,7 @@ void sdlGame::sdlShowMenu(){
 
     im_background.draw(renderer,0,0,640,480);
  
-    //Initialisation de la liste de songs du menu
-    //Une surface pour chaque nom de chanson stocké dans un tab
-    //On affichera le tab avec un certain decalage -> utile pour le movedown
 
-    //int nbSongs=menu.getNbSongs();
-    
-    //cout << endl << nbSongs << endl; 
     //Decla des 3 composants de la liste
     SDL_Surface * SurfaceList;
     SDL_Texture * tabTextureList[nbSongs];
@@ -157,21 +151,12 @@ void sdlGame::sdlShowMenu(){
     
     
     SDL_Color couleurNoire = {0, 0, 0};
-    
-    //Recuperation de la liste des songs
-    vector<string> * ListSong;
-    //ListSong.resize(nbSongs);
-    ListSong=menu.getList();
-   
-   
-  
-   
-    
-    //Tampon car bug sur le vectorString -> prend des caractères
     string tamp;
   
     for(int i=0;i<nbSongs;i++){
-        cout <<"NTM" <<endl;
+       
+        tamp=menu.getTitleSong(i);
+        cout <<tamp <<endl;
         SurfaceList = TTF_RenderText_Blended(fontMenu,"tamp", couleurNoire);
         if(SurfaceList==NULL){
         	printf("Erreur lors de la creation de la surface : %s",SDL_GetError());
@@ -189,7 +174,7 @@ void sdlGame::sdlShowMenu(){
         tabRectList[i].h=20;
     }
 
-    //Affiche la liste
+    //Copie de chaque texture dans chaque rec sur le render -> un a un 
     for(int j=0;j<nbSongs;j++){
         if(SDL_RenderCopy(renderer, tabTextureList[j], NULL, &tabRectList[j])!=0){
         	printf("Erreur lors de l'update du renderer : %s",SDL_GetError());
