@@ -26,9 +26,8 @@ class Partition {
 		Partition();
 
 		/**@brief Constructeur
-         @param filename 
-         @param difficulty 1 pour facile, 2 moyen et 3 difficile
-         
+         @param filename : nom du fichier contenant la partition
+         @param difficulty : 1 pour facile, 2 moyen et 3 difficile
 		*/
 		Partition(const string & filename,unsigned int difficulty);
 
@@ -36,11 +35,12 @@ class Partition {
 		*/
 		~Partition();
 
-		void afficher();
-
 		int getNbLine();
 
-		line* getLine();
+		/**@brief Renvoie une référence vers la prochaine ligne de partition
+			Incrémente index
+		*/
+		line& getLine();
 
 		bool isFinished();
 };

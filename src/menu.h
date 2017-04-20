@@ -8,7 +8,7 @@
 #include <cassert>
 #include <sstream>
 #include "game.h"
-//#include "struct.h"
+#include "struct.h"
 
 using namespace std;
 
@@ -21,7 +21,8 @@ private :
 	unsigned int nbSongs; //taille du tab
 	bool active; //false si menu inactif = une game est active
 	Game* currGame; //La partie en cours
-	unsigned int difficulty; 
+	unsigned int difficulty;
+	bool mode;
 
 
 	
@@ -46,8 +47,6 @@ public :
 	*/
 	~Menu();
 
-	void afficher();
-
 	/**@brief Modifie le currPtr de manière à remonter dans le menu
 	*/
 	void moveUp();
@@ -61,7 +60,7 @@ public :
 	*/
 	void choose();
 
-	Song** getSongTab();
+	Song& getCurrSong();
 
 	unsigned int getCurrI() const;
 
@@ -76,13 +75,16 @@ public :
 	void increaseDiff();
 
 	void decreaseDiff();
-    /** @brief Renvoie le tab des noms de chansons
-     
-     
+
+
+	bool getMode() const;
+
+	/** @brief Renvoie le tab des noms de chansons
      */
     string getList();
 
     string getTitleSong(int i);
+
 };
 
 #endif

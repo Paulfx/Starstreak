@@ -6,12 +6,10 @@ Menu::Menu() {
 	nbSongs = 0;
 	active = true;
 	difficulty = 1;
-	
-	
-	cout << endl << "COUCOU de l'init menu sans filename" << endl << endl ;
+	mode=false;
 }
 
-Menu::Menu(const string& filename) : currI(0), active(true), difficulty(1){
+Menu::Menu(const string& filename) : currI(0), active(true), difficulty(1), mode(false){
 	cout<<"Ouverture de : "<<filename<<endl;
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
@@ -22,10 +20,6 @@ Menu::Menu(const string& filename) : currI(0), active(true), difficulty(1){
 	string word;
 
 	fichier>>nbSongs;
-
-	cout << "Coucou de l'init menu avec filename : " << nbSongs << endl;
-	cout << "Adresse : "<< &nbSongs << endl << endl;
-    
 	songTab = new Song*[nbSongs];
 	while(getline(fichier,line)) {
 		if(!line.empty()) {
@@ -59,6 +53,46 @@ Menu::~Menu() {
 	songTab = NULL;
 }
 
+void Menu::moveUp() {
+	(currI == 0) ? currI=nbSongs-1 : currI=(currI - 1) % nbSongs;
+}
+
+void Menu::moveDown() {
+	currI = (currI + 1) % nbSongs;
+}
+
+
+//Synchro affichage + coeur
+//songTab et le vector String sont initialisé dans le même ordre.
+void Menu::choose() {
+	currGame = new Game(*songTab[currI],difficulty,mode); 
+	active = false;
+}									
+
+Song& Menu::getCurrSong() { return *songTab[currI]; }
+
+unsigned int Menu::getCurrI() const { return currI; }
+
+unsigned int Menu::getNbSongs() const { return nbSongs; }
+
+
+unsigned int Menu::getDifficulty() const { return difficulty; }
+
+bool Menu::isActive() const { return active; }
+
+
+void Menu::increaseDiff(){
+	difficulty = (difficulty%3)+1;
+}
+
+void Menu::decreaseDiff(){
+	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
+}
+
+Game* Menu::getGame() {return currGame;} //surement inutile, à bouger
+
+bool Menu::getMode() const { return mode;}
+
 
 //Fonction D'affichage pour la SDL
 //Recuperation des noms de chansons disponibles un a un dans un vector -> pointeur ?
@@ -85,48 +119,3 @@ return ListSong;
 string Menu::getTitleSong(int i){
     return songTab[i]->title;
 }
-
-
-void Menu::afficher() {
-	for(unsigned int i=0;i<nbSongs;++i) {
-		cout<<songTab[i]->title<<endl;
-	}
-}
-
-void Menu::moveUp() {
-	(currI == 0) ? currI=nbSongs-1 : currI=(currI - 1) % nbSongs;
-}
-
-void Menu::moveDown() {
-	currI = (currI + 1) % nbSongs;
-}
-
-void Menu::choose() {
-	currGame = new Game(songTab[currI],difficulty); 
-	active = false;
-}									
-
-Song** Menu::getSongTab() { return songTab; }
-
-unsigned int Menu::getCurrI() const { return currI; }
-
-unsigned int Menu::getNbSongs() const { 
-cout << "Adresse : "<< &nbSongs << endl;
-cout << "coucou de get nbSongs : " << nbSongs << endl;
-return nbSongs; }
-
-
-unsigned int Menu::getDifficulty() const { return difficulty; }
-
-bool Menu::isActive() const { return active; }
-
-
-void Menu::increaseDiff(){
-	difficulty = (difficulty%3)+1;
-}
-
-void Menu::decreaseDiff(){
-	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
-}
-
-Game* Menu::getGame() {return currGame;}

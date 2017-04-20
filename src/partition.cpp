@@ -40,41 +40,25 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 
 	cout<<"Fichier bien ouvert"<<endl;
 
+	cout<<"TAILLE : "<<nbLine<<endl;
+
+
 }
 
 Partition::~Partition() {
 	if(partition != NULL) {
 		delete [] partition;
-		partition = NULL;
+		//partition = NULL;
 	}
-}
-
-void Partition::afficher() {
-	for (unsigned int i = 0 ; i<nbLine; i++) {
-		cout<<partition[i].data<<endl;
-	}
-}
+}	
 
 int Partition::getNbLine() {return nbLine;}
-/*
-line Partition::getLine() {
-	line l;
-	if(index<nbLine) {
-		l = partition[index];
-		index+=1;
-	}
 
-	else if(index == nbLine) {
-		end = true;
-	}
-	return l;
-}
-*/
-
-line* Partition::getLine() {
+line& Partition::getLine() {
 	assert(index<nbLine);
+	line& tmp = partition[index];
 	index++;
-	return &partition[index];
+	return tmp;
 }
 
 bool Partition::isFinished() {

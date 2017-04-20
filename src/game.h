@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 #include "partition.h"
-//#include "struct.h"
+#include "struct.h"
 #include "score.h"
 #include "cadre.h"
 
@@ -22,11 +22,11 @@ class Game {
     
 private :
     
-    Partition partition;
-    Score score;
+    Partition* partition;
+    Score* score;
     bool creationMode;
-    Song* song;
-    vector<string> cadre; // contient le cadre, modification donc pas de pointeur
+    Song song;
+    Cadre* cadre;
     
 
     
@@ -46,26 +46,33 @@ public :
      @param difficulty difficulté de la Game et donc modification de la lecture/ecriture sur le fichier ? 
      @todo
      */
-    Game(Song* song,unsigned int difficulty);
+    Game(Song& song,unsigned int difficulty,bool mode);
     
     /**@brief Destructeur
      */
     ~Game();
     
-    /**@brief fonction qui traite les lignes dans la file en fonction du temps
-     */
+    /**@brief accesseur de l'attribut song, instance de la classe Song
+    @return une référence vers song
+    */
+    Song& getSong();
+
+    /**@brief accesseur de l'attribut score, instance de la classe Score
+    @return une référence vers score
+    */
+    Score& getScore();
+
+    /**@brief accesseur de l'attribut partition, instance de la classe Partition
+    @return une référence vers partition 
+    */
+    Partition& getPartition();
+
+    /**@brief accesseur de l'attribut cadre, instance de la classe Cadre
+    @return une référence vers cadre 
+    */
+    Cadre& getCadre();
     
-    //bool isFail();
-
-    const vector<string> getCadre() const;
-
-    Song getSong() const;
-
-    Score getScore() const;
-
     void update();
-    
-    void defileCadre(uint32_t time);
     
 };
     
