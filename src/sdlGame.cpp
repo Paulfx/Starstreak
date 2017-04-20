@@ -253,6 +253,18 @@ void sdlGame::sdlGameLoop(){
 void sdlGame::sdlMenuLoop(){
     SDL_Event events;
     bool quit = false;
+    
+    Mix_Music *soudMove;
+    soudMove=Mix_LoadMUS("../data/theme/sounds/move.ogg");
+    if(!soudMove){
+        cout<<"erreur ouverture effet de séléction"<<Mix_GetError()<<endl;
+    }
+    Mix_Music *soudAccept;
+    soudAccept=Mix_LoadMUS("../data/theme/sounds/action.ogg");
+    if(!soudAccept){
+        cout<<"erreur ouverture effet de validation"<<Mix_GetError()<<endl;
+    }
+    
     while (!quit){
         
             /*afficheMenuSDL*/
@@ -263,12 +275,21 @@ void sdlGame::sdlMenuLoop(){
             else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                 switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                     case SDL_SCANCODE_UP: //flèche du haut
+                        if (Mix_PlayMusic(soudMove,1)==-1) {
+                            cout<<"Mix_PlayMusic error"<<Mix_GetError()<<endl;
+                        }
                         menu.moveUp();
                         break;
                     case SDL_SCANCODE_DOWN://flèche du bas
+                        if (Mix_PlayMusic(soudMove,1)==-1) {
+                            cout<<"Mix_PlayMusic error"<<Mix_GetError()<<endl;
+                        }
                         menu.moveDown();
                         break;
                     case SDL_SCANCODE_RETURN://touche entré
+                        if (Mix_PlayMusic(soudAccept,1)==-1) {
+                            cout<<"Mix_PlayMusic error"<<Mix_GetError()<<endl;
+                        }
                         menu.choose();
                         //sdlGameLoop();
                     case SDL_SCANCODE_ESCAPE://touche echap
