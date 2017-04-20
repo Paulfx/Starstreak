@@ -116,6 +116,7 @@ string Menu::getList(){
 return ListSong;
 }*/
 
-string Menu::getTitleSong(int i){
+string Menu::getTitleSong(unsigned int i){
+	assert(i<nbSongs);
     return songTab[i]->title;
 }

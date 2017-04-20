@@ -83,7 +83,7 @@ public :
      */
     string getList();
 
-    string getTitleSong(int i);
+    string getTitleSong(unsigned int i);
 
 };
 
