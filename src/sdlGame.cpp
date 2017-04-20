@@ -95,6 +95,7 @@ sdlGame::sdlGame(){
     
     
     
+    
     //Initialisation du menu
     Menu menu("../data/index");
     
@@ -212,6 +213,29 @@ void sdlGame::sdlGameLoop(){
         
         //SDL_MIXER (lancement de la chanson)
         //timeBegin = SDL_GetTicks();
+        
+        //SDL_MIXER (lancement de la chanson)
+        
+        Mix_Music *music;
+        string aMusic=menu.getGame()->getSong().fileMusic;
+        const char *accesMusic = aMusic.c_str();
+        music=Mix_LoadMUS(accesMusic);
+        if (!music){
+            cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
+        }
+        
+        if (Mix_PlayMusic(music,1)==-1) {
+            cout<<"Mix_PlayMusic error"<<endl;
+        }
+        
+        
+        
+        
+        //float timeBegin = SDL_GetTicks();
+        
+        
+        
+
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
