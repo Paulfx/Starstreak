@@ -93,7 +93,10 @@ sdlGame::sdlGame(){
         cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;SDL_Quit();exit(1);
     }
     
-    
+    //MIXER
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS,1024)==-1){
+        cout<<Mix_GetError()<<endl;
+    }
     
     
     //Initialisation du menu
@@ -214,7 +217,6 @@ void sdlGame::sdlGameLoop(){
         /*mise en place de la partie*/
         
         //SDL_MIXER (lancement de la chanson)
-        //timeBegin = SDL_GetTicks();
         
         //SDL_MIXER (lancement de la chanson)
         
@@ -229,7 +231,6 @@ void sdlGame::sdlGameLoop(){
         if (Mix_PlayMusic(music,1)==-1) {
             cout<<"Mix_PlayMusic error"<<endl;
         }
-        
         
         
         
@@ -249,7 +250,6 @@ void sdlGame::sdlGameLoop(){
         }
     }
 }
-
 
 
 //Premiere Loop
@@ -296,7 +296,7 @@ sdlGame::~sdlGame(){
     //Fermeture TTF
     //TTF_CloseFont(fontMenu);  -> erreur d'allocation
     TTF_Quit();
-    
+    Mix_CloseAudio();
     IMG_Quit();
     SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
     
