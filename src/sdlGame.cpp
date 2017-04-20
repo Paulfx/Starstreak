@@ -55,7 +55,7 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
     }
     
     ok = SDL_RenderCopy(renderer,texture,NULL,&r);
-    assert(ok == 0);
+    //assert(ok == 0);
 }
 
 
@@ -98,13 +98,15 @@ sdlGame::sdlGame(){
         cout<<Mix_GetError()<<endl;
     }
     
+
     
     //Initialisation du menu
     Menu menu("../data/index");
-   
+    nbSongs=menu.getNbSongs();
      
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE); //SDL_WINDOW_FULLSCREEN_DESKTOP
+ 
     //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
@@ -136,20 +138,20 @@ void sdlGame::sdlShowMenu(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     
-    int x,y;
+
 
     im_background.draw(renderer,0,0,640,480);
  
     //Initialisation de la liste de songs du menu
     //Une surface pour chaque nom de chanson stocké dans un tab
     //On affichera le tab avec un certain decalage -> utile pour le movedown
-	cout << "FDP";
-    int nbSongs=menu.getNbSongs();
+
+    //int nbSongs=menu.getNbSongs();
     
-    
+    //cout << endl << nbSongs << endl; 
     //Decla des 3 composants de la liste
-    SDL_Surface* SurfaceList;
-    SDL_Texture* tabTextureList[nbSongs];
+    SDL_Surface * SurfaceList;
+    SDL_Texture * tabTextureList[nbSongs];
     SDL_Rect tabRectList[nbSongs];
     
     
@@ -157,14 +159,20 @@ void sdlGame::sdlShowMenu(){
     SDL_Color couleurNoire = {0, 0, 0};
     
     //Recuperation de la liste des songs
-    vector<string> ListSong=menu.getList();
+    vector<string> * ListSong;
+    //ListSong.resize(nbSongs);
+    ListSong=menu.getList();
+   
+   
+  
+   
+    
     //Tampon car bug sur le vectorString -> prend des caractères
     string tamp;
-    
-    
+  
     for(int i=0;i<nbSongs;i++){
-        tamp=ListSong[i];
-        SurfaceList = TTF_RenderText_Blended(fontMenu,"Ntm", couleurNoire);
+        cout <<"NTM" <<endl;
+        SurfaceList = TTF_RenderText_Blended(fontMenu,"tamp", couleurNoire);
         if(SurfaceList==NULL){
         	printf("Erreur lors de la creation de la surface : %s",SDL_GetError());
         	
@@ -180,7 +188,7 @@ void sdlGame::sdlShowMenu(){
         tabRectList[i].w=300;
         tabRectList[i].h=20;
     }
-    cout << "NTM";
+
     //Affiche la liste
     for(int j=0;j<nbSongs;j++){
         if(SDL_RenderCopy(renderer, tabTextureList[j], NULL, &tabRectList[j])!=0){
@@ -204,7 +212,7 @@ void sdlGame::sdlTest(){
 
         sdlShowMenu();
         SDL_RenderPresent(renderer);
-        SDL_Delay(10000);
+        SDL_Delay(5000);
 }
 
 
@@ -217,6 +225,7 @@ void sdlGame::sdlGameLoop(){
         /*mise en place de la partie*/
         
         //SDL_MIXER (lancement de la chanson)
+        //timeBegin = SDL_GetTicks();
         
         //SDL_MIXER (lancement de la chanson)
         
@@ -231,6 +240,7 @@ void sdlGame::sdlGameLoop(){
         if (Mix_PlayMusic(music,1)==-1) {
             cout<<"Mix_PlayMusic error"<<endl;
         }
+        
         
         
         
@@ -250,6 +260,7 @@ void sdlGame::sdlGameLoop(){
         }
     }
 }
+
 
 
 //Premiere Loop

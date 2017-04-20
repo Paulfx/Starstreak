@@ -6,6 +6,9 @@ Menu::Menu() {
 	nbSongs = 0;
 	active = true;
 	difficulty = 1;
+	
+	
+	cout << endl << "COUCOU de l'init menu sans filename" << endl << endl ;
 }
 
 Menu::Menu(const string& filename) : currI(0), active(true), difficulty(1){
@@ -19,6 +22,9 @@ Menu::Menu(const string& filename) : currI(0), active(true), difficulty(1){
 	string word;
 
 	fichier>>nbSongs;
+
+	cout << "Coucou de l'init menu avec filename : " << nbSongs << endl;
+	cout << "Adresse : "<< &nbSongs << endl << endl;
 	songTab = new Song*[nbSongs];
 	while(getline(fichier,line)) {
 		if(!line.empty()) {
@@ -56,13 +62,28 @@ Menu::~Menu() {
 //Fonction D'affichage pour la SDL
 //Recuperation des noms de chansons disponibles un a un dans un vector
 //Affichage et selection dans sdlgame
-vector<string> Menu::getList(){
-    vector<string> ListSong;
-    ListSong.reserve(nbSongs); //pas sur qu'il y en ait besoin avec push_back
+vector<string> * Menu::getList(){
+    vector<string> * ListSong= new vector<string>;
+    
+    
+    
+    cout << "Adresse : "<< &nbSongs << endl;
+    cout << "coucou from getList :" << nbSongs << endl;
+    //ListSong.reserve(nbSongs); //pas sur qu'il y en ait besoin avec push_back
+    int i=0;
+    while(songTab[i]!=NULL){
+    	ListSong->push_back(songTab[i]->title);
+    	i++;
+    }
+    
+    
+ /*   
     for(unsigned int i=0;i<nbSongs;++i) {
         ListSong.push_back(songTab[i]->title);
     }
-    return ListSong;
+    
+*/
+return ListSong;
 }
 
 
@@ -92,7 +113,10 @@ Song** Menu::getSongTab() { return songTab; }
 
 unsigned int Menu::getCurrI() const { return currI; }
 
-unsigned int Menu::getNbSongs() const { return nbSongs; }
+unsigned int Menu::getNbSongs() const { 
+cout << "Adresse : "<< &nbSongs << endl;
+cout << "coucou de get nbSongs : " << nbSongs << endl;
+return nbSongs; }
 
 
 unsigned int Menu::getDifficulty() const { return difficulty; }

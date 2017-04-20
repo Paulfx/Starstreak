@@ -80,7 +80,7 @@ public :
      
      
      */
-    vector<string> getList();
+    vector<string> * getList();
 
 };
 

@@ -46,6 +46,9 @@ class sdlGame {
     //SDL_Mixer * ????
     Menu menu;
     
+    //weird je sais mais bug sinon, acces memoire chelou en dehors de l'initialisation de sdlGame
+    int nbSongs;
+    
     Image im_background;
     
     
