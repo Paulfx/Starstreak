@@ -169,9 +169,9 @@ void sdlGame::sdlShowMenu(){
         	
         }
         SurfaceList=NULL;
-        rec.x=25*i;
-        rec.y=25*i;
-        rec.w=300;
+        rec.x=150;
+        rec.y=100+25*i;
+        rec.w=10*tamp.size();
         rec.h=20;
 
         if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
