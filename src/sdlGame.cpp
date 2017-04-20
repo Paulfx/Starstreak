@@ -83,7 +83,7 @@ sdlGame::sdlGame(){
     
     fontMenu=TTF_OpenFont("../data/theme/police/default.ttf", 50);
     if(fontMenu==NULL) {
-        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
         // handle error
     }
     
@@ -145,8 +145,8 @@ void sdlGame::sdlShowMenu(){
 
     //Decla des 3 composants de la liste
     SDL_Surface * SurfaceList;
-    SDL_Texture * tabTextureList[nbSongs];
-    SDL_Rect tabRectList[nbSongs];
+    SDL_Texture * tex;
+    SDL_Rect rec;
     
     
     
@@ -159,25 +159,22 @@ void sdlGame::sdlShowMenu(){
         cout <<tamp <<endl;
         SurfaceList = TTF_RenderText_Blended(fontMenu,"tamp", couleurNoire);
         if(SurfaceList==NULL){
-        	printf("Erreur lors de la creation de la surface : %s",SDL_GetError());
+        	cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
         	
         }
-        tabTextureList[i]= SDL_CreateTextureFromSurface(renderer,SurfaceList);
-         if(tabTextureList[i]==NULL){
-        	printf("Erreur lors de la creation de la texture : %s",SDL_GetError());
+        tex= SDL_CreateTextureFromSurface(renderer,SurfaceList);
+         if(tex==NULL){
+        	cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
         	
         }
         SurfaceList=NULL;
-        tabRectList[i].x=25*i;
-        tabRectList[i].y=100;
-        tabRectList[i].w=300;
-        tabRectList[i].h=20;
-    }
+        rec.x=25*i;
+        rec.y=100;
+        rec.w=300;
+        rec.h=20;
 
-    //Copie de chaque texture dans chaque rec sur le render -> un a un 
-    for(int j=0;j<nbSongs;j++){
-        if(SDL_RenderCopy(renderer, tabTextureList[j], NULL, &tabRectList[j])!=0){
-        	printf("Erreur lors de l'update du renderer : %s",SDL_GetError());
+        if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
+            cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
         }
     }
     
