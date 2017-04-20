@@ -81,7 +81,7 @@ sdlGame::sdlGame(){
     fontMenu= NULL;
 
     
-    fontMenu=TTF_OpenFont("default.ttf", 50);
+    fontMenu=TTF_OpenFont("../data/theme/police/default.ttf", 50);
     if(fontMenu==NULL) {
         printf("TTF_OpenFont: %s\n", TTF_GetError());
         // handle error
@@ -96,7 +96,7 @@ sdlGame::sdlGame(){
     
     
     //Initialisation du menu
-    //Menu menu("../data/index");
+    Menu menu("../data/index");
     
     
        /* 
@@ -122,7 +122,7 @@ sdlGame::sdlGame(){
                                 640, 480); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
     
     
-    im_background.loadFromFile("/../data/Batman.jpg",renderer);
+    im_background.loadFromFile("../data/Batman.jpg",renderer);
     
     
     
@@ -150,8 +150,7 @@ void sdlGame::sdlShowMenu(){
     //Une surface pour chaque nom de chanson stocké dans un tab
     //On affichera le tab avec un certain decalage -> utile pour le movedown
 
-    int nbSongs=10;
-    //menu.getNbSongs();
+    int nbSongs=menu.getNbSongs();
     
     
     //Decla des 3 composants de la liste
