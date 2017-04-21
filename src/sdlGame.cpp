@@ -314,7 +314,7 @@ void sdlGame::sdlMenuLoop(){
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
                         menu->choose();
-                        //sdlGameLoop();
+                        sdlGameLoop();
                     case SDL_SCANCODE_ESCAPE://touche echap
                         quit=true;
                         Mix_HaltChannel(1);//arrete le musique du menu 
