@@ -278,13 +278,16 @@ void sdlGame::sdlMenuLoop(){
     while (!quit){
         
             /*afficheMenuSDL*/
+        
+        if (Mix_PlayChannel(1,soudMenu,2)==-1) {
+                cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+            }
+        
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quit = true;
             }
-            if (Mix_PlayChannel(1,soudMenu,2)==-1) {
-                cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-            }
+            
             else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                 switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                     case SDL_SCANCODE_UP: //flèche du haut
