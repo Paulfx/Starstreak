@@ -25,6 +25,7 @@ int main (int argc, char *argv[]){
     */
     sdlGame mySDL;
     mySDL.sdlTest();
+    mySDL.sdlMenuLoop();
     
 
     
