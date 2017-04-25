@@ -207,8 +207,9 @@ void sdlGame::sdlGameLoop(){
     
                 /*mise en place de la partie*/
     
-    /*SDL_MIXER (lancement de la chanson)*/
-   
+    /*SDL_MIXER (lancement de la chanson et bruitages)*/
+    Mix_AllocateChannels(5);
+    
     
     Mix_Music *music;
     
@@ -281,14 +282,15 @@ void sdlGame::sdlMenuLoop(){
         cout<<"erreur ouverture musique menu"<<Mix_GetError()<<endl;
     }
     
+    if (Mix_PlayChannel(1,soudMenu,2)==-1) {
+                cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+            }
     
     while (!quit){
         
             /*afficheMenuSDL*/
         
-        if (Mix_PlayChannel(1,soudMenu,2)==-1) {
-                cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-            }
+        /*TODO:condition pour relancer la musique en cas de retour au menu*/
         
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
@@ -313,6 +315,7 @@ void sdlGame::sdlMenuLoop(){
                         if (Mix_PlayChannel(4,soudAccept,0)==-1) {
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
+			Mix_HaltChannel(1);
                         menu->choose();
                         sdlGameLoop();
                     case SDL_SCANCODE_ESCAPE://touche echap
