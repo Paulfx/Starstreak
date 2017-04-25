@@ -9,7 +9,7 @@ Menu::Menu() {
 	mode=false;
 }
 
-Menu::Menu(const string& filename) : currI(0), active(true), difficulty(-1), mode(false){
+Menu::Menu(const string& filename) : currI(0), active(true), difficulty(0), mode(false){
 	cout<<"Ouverture de : "<<filename<<endl;
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
@@ -64,12 +64,12 @@ void Menu::moveDown() {
 
 //Synchro affichage + coeur
 //songTab et le vector String sont initialisé dans le même ordre.
-/*
+
 void Menu::choose() {
 	currGame = new Game(*songTab[currI],difficulty,mode); 
 	active = false;
-}									
-*/
+}
+
 Song& Menu::getCurrSong() { return *songTab[currI]; }
 
 unsigned int Menu::getCurrI() const { return currI; }

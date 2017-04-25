@@ -43,7 +43,7 @@ class sdlGame {
     SDL_Renderer * renderer;
     TTF_Font * fontMenu; //Police pour le menu
     //SDL_Mixer * ????
-    SDL_DisplayMode currentMode; //currentMode : structure contenant taille de l'écran : w (width) et h (height)
+    //SDL_DisplayMode currentMode; //currentMode : structure contenant taille de l'écran : w (width) et h (height)
     Menu* menu;
     
     int height,width;

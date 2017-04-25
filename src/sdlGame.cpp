@@ -32,10 +32,11 @@ void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
     SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(surface,SDL_PIXELFORMAT_ARGB8888,0);
     SDL_FreeSurface(surface);
     surface = surfaceCorrectPixelFormat;
-    
     texture = SDL_CreateTextureFromSurface(renderer,surface);
     if (texture == NULL) {
+        
         cout << "Error: problem to create the texture of "<< filename<< endl;
+        cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
         exit(1);
     }
 }
@@ -86,7 +87,7 @@ sdlGame::sdlGame(){
     //chemin + taille de police
     //Police du menu
     fontMenu= NULL;
-    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 150);
+    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 50);
     if(fontMenu==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
         // handle error
@@ -108,20 +109,19 @@ sdlGame::sdlGame(){
     
     
 
-    
+
     //Initialisation du menu
     menu= new Menu("../data/index");
      
     //Ouverture de la fenetre
-    window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,height,width,SDL_WINDOW_FULLSCREEN_DESKTOP
-);
+    window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,0,0,SDL_WINDOW_FULLSCREEN_DESKTOP);
     
     SDL_GetWindowSize(window, &width, &height);
-
+    
     //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
-    //SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
-    //SDL_RenderSetLogicalSize(renderer, 640, 480); //taille fenetre
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
+    SDL_RenderSetLogicalSize(renderer,width, height); //taille fenetre
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
@@ -130,16 +130,11 @@ sdlGame::sdlGame(){
                                 SDL_TEXTUREACCESS_STREAMING,
                                 //fluidité sur l'affichage des images
                                 0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
-    
-    
+    if(renderer){
     im_background.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
-    
-    
-    
-    
-    
-    
-    
+    }else {
+        cout << "Erreur dans l'initialisation du renderer" << endl;
+    }
     
 }
 
@@ -148,24 +143,6 @@ sdlGame::sdlGame(){
 void sdlGame::sdlShowMenu(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
-    
-/*
-    //MENU 1 (JOUER CREER QUITTER)
-    //MENU 2 (Selection de song)
-    //MENU 3 (difficulté)
- 
-    if(){
-        
-    }else{ //On est soit sur la selection de song soit sur la difficulté.
-        
-        
-    }
-    
-  */
-    
-    
-    
-    
     
     
     
@@ -190,7 +167,7 @@ void sdlGame::sdlShowMenu(){
        
         tempTitle=menu->getTitleSong(i);
         cout <<tempTitle <<endl;
-        SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(), couleurNoire);
+        SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(), couleurBlanche);
         if(SurfaceList==NULL){
         	cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
         	
@@ -201,9 +178,9 @@ void sdlGame::sdlShowMenu(){
         	
         }
         SurfaceList=NULL;
-        rec.x=(int)((1/3)*(width));//427;//(int)((1/3)*(width));
-        rec.y=266+i*50;//(1/3)*(height)+50*i+5;
-        rec.w=50*tamp.size();
+        rec.x=30;
+        rec.y=25+i*50;//(1/3)*(height)+50*i+5;
+        rec.w=20*tempTitle.size();
         rec.h=50;
         if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
@@ -309,13 +286,13 @@ void sdlGame::sdlGameLoop(){
 
 
 
-
+*/
 
 
     }
 
 
-*/
+
 
 }
 
