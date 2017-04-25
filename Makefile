@@ -3,7 +3,7 @@ CXXFLAGS=-Wall -ggdb
 
 #UNIX -> OSX + LINUX 
 
-LIB = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
+LIB = -L/usr/local/Cellar/sdl2/2.0.5/lib/ -L/usr/local/Cellar/sdl2_ttf/2.0.14/lib/  -L/usr/local/Cellar/sdl2_mixer/2.0.1/lib/ -L/usr/local/Cellar/sdl2_image/2.0.1_2/lib/ -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 INCLUDE = -I/usr/local/include/SDL2 -I/usr/local/include -Isrc
 
 
