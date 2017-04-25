@@ -13,7 +13,6 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	cout<<"Ouverture de : "<<filename<<endl;
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
-
 	index = 0;
 	end=false;
 
@@ -28,7 +27,6 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	fichier.seekg(nbBeginning,ios::beg); // On se déplace au début de la partition
 
 	fichier >> nbLine;
-	cout<<"NOMBRE "<<nbLine<<endl;
 	fichier >> duree;
 	partition = new line[nbLine];
 
@@ -37,10 +35,6 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	}
 
 	fichier.close();
-
-	cout<<"Fichier bien ouvert"<<endl;
-
-	cout<<"TAILLE : "<<nbLine<<endl;
 
 
 }

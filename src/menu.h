@@ -68,7 +68,7 @@ public :
 
 	unsigned int getDifficulty() const;
 
-	Game* getGame();
+	Game& getGame();
 
 	bool isActive() const;
 

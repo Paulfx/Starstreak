@@ -10,16 +10,17 @@ class Note {
 private :
 	int posX;
 	int posY;
-	int color; //0=vert , 1=rouge, 2=jaune, 3=bleu, 4=marron
+	int color; //0=vert , 1=rouge, 2=jaune, 3=bleu, 4=orange
 	bool longDuration; //True si la note est longue (noéte "2")
+	float speed;
 
 public :
 	Note();
-	Note(int x, int y, int c, bool longBool);
+	Note(int x, int y, int c, bool longBool, float speedNote);
 	int getPosX() const;
 	int getPosY() const;
 	int getColor() const;
-	void scroll(int movement);
+	void scroll(float delta);
 
 };
 
@@ -30,35 +31,40 @@ class Cadre {
 
 private :
 	int tabPos [5]; //Position des colonnes
-	int cspeed; // Ou plutot temps de défilement, représente le temps(constant) entre l'arrivée d'une note dans le cadre
-				// et son arrivée dans la zone de validation
+	float timeUntil; // Représente le temps(constant) entre l'arrivée d'une note dans le cadre
+				   // et son arrivée dans la zone de validation en secondes
+	float speed; //Vitesse des notes par secondes
 	int initialY;
-	int beginningValid; //Position en Y du début de la zone de validation
+	int beginValid; //Position en Y du début de la zone de validation
 	int endValid; //Position en Y de la fin de la zone de validation
 //	Partition* partition;
-	int movingY;
+	//int movingY;
 	vector<Note*> noteTab;
+
+	float timeLine; //Tps de la ligne moins delta en secondes
+
 
 public :
 	
 	Cadre();
 
-	Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, int speed, int initY, int beginV, int endV);
+	Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY, int beginV, int endV);
 	
-
 	/**@brief met à jour le cadre.
 	@param time représente le temps écoulé (en ms) depuis le lancement du son
 	@return true si currLine est ajoutée au cadre, false sinon
 	*/
-	bool update(unsigned int time, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
+	bool update(float delta, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
 
-	void scrollCadre();
+	void scrollCadre(float delta);
 
 	unsigned int getNbNote() const;
 
 	Note& getNote(unsigned int i);
 
 	bool isEmpty() const;
+
+	int getBeginValid() const;
 
 };
 

@@ -8,58 +8,88 @@ const float DURATION_FRAME = 16; //en ms
 
 Note::Note() {}
 
-Note::Note(int x, int y, int c, bool longBool) {
+Note::Note(int x, int y, int c, bool longBool, float speedNote) {
 	posX = x;
 	posY = y;
 	color = c;
 	longDuration = longBool;
+	speed=speedNote;
 }
 
 int Note::getPosX() const { return posX;}
 int Note::getPosY() const { return posY;}
 int Note::getColor() const { return color;}
-void Note::scroll(int movement) {posY+=movement;}
+void Note::scroll(float delta) {posY+=delta*speed;}
 
 /*-------------CLASSE CADRE-------------*/
 
 Cadre::Cadre() {}
 
-Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, int speed, int initY, int beginV, int endV){
+Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY, int beginV, int endV){
 	tabPos[0] = pos0; 
 	tabPos[1] = pos1;
 	tabPos[2] = pos2;
 	tabPos[3] = pos3;
 	tabPos[4] = pos4;
-	cspeed = speed;
+	timeUntil = time; //Temps en secondes
 	initialY = initY;
-	beginningValid = beginV;
+	beginValid = beginV;
 	endValid = endV;
 	//partition = currPart;
-	movingY = (endValid - initY) / (cspeed / DURATION_FRAME); //qtité de déplacement pour déplacer en cspeed milliseconds la note
+	//movingY = (endValid - initY) / (cspeed / DURATION_FRAME); //qtité de déplacement pour déplacer en cspeed milliseconds la note
 															//jusqu'à la fin du cadre
 
-	
+	speed=(float)(beginValid + (float)(endValid-beginValid)/2 - initialY)/timeUntil;
+	assert(speed!=0);
+	cout<<"SPEED :"<<speed;
+	timeLine=0;
 }
 
-bool Cadre::update(unsigned int time, const line& currLine) {
-	cout<<currLine.time<<endl<<time<<endl;
+/*
 
-	assert(currLine.time > time);
+float time_seconds = SDL_GetTicks() / 1000.f;
+while(1){
+    float new_time = SDL_GetTicks() / 1000.f;
+    float delta = new_time - time_seconds;
+    time_seconds = new_time;
+    updateGamePhysics(delta);
+    SDL_RenderClear(renderer);
+    renderGamebjects();
+    SDL_RenderPresent(renderer); //Will wait here
+}
+
+
+delta représente le temps depuis le dernier appel de la fonction en SECONDES
+
+*/
+
+bool Cadre::update(float delta, const line& currLine) {
+	cout<<timeLine<<endl<<delta<<endl;
+
+	if (timeLine==0) timeLine = currLine.time/1000.f;//conversion en secondes
+	
 	bool ajout=false;
 
 	//On fait avancer les notes existantes
-	scrollCadre();
+	scrollCadre(delta);
 
 	//Ajout de la ligne, si c'est le moment
-	float actualTime = currLine.time - time;
+	//float actualTime = currLine.time - time; //Actual time représente le temps qu'il reste avant de devoir jouer la ligne
+	
+	timeLine-=delta;
+	assert(timeLine>timeUntil-delta);
+	assert(timeUntil-delta>0);
+
+
 	Note* note;
 
-	if( actualTime < (cspeed + DURATION_FRAME) && actualTime > (cspeed - DURATION_FRAME) ) {
+	if( timeLine < (timeUntil + delta) && timeLine > (timeUntil - delta) ) {
 		//On ajoute les notes de la ligne au cadre
 		ajout=true;
+		timeLine=0; //On réinitialise timeLine
 		for(unsigned int i=0;i<5;++i){
-			if(currLine.data[i] == '1') { note= new Note(tabPos[i],initialY,i,false);noteTab.push_back(note); }
-			else if(currLine.data[i] == '2') { note = new Note(tabPos[i],initialY,i,true);noteTab.push_back(note); }
+			if(currLine.data[i] == '1') { note= new Note(tabPos[i],initialY,i,false,speed);noteTab.push_back(note); }
+			else if(currLine.data[i] == '2') { note = new Note(tabPos[i],initialY,i,true,speed);noteTab.push_back(note); }
 			
 		}
 
@@ -68,10 +98,10 @@ bool Cadre::update(unsigned int time, const line& currLine) {
 }
 
 
-void Cadre::scrollCadre() {
+void Cadre::scrollCadre(float delta) {
 	Note* tmpNote;
 	for(unsigned int i=0;i<noteTab.size();++i) {
-		noteTab[i]->scroll(movingY);
+		noteTab[i]->scroll(delta);
 		if(noteTab[i]->getPosY() > endValid) { //La note n'est plus dans le cadre, on l'efface
 			tmpNote = noteTab[i];
 			noteTab.erase(noteTab.begin() + i);
@@ -88,3 +118,5 @@ Note& Cadre::getNote(unsigned int i) {
 }
 
 bool Cadre::isEmpty() const { return noteTab.empty();}
+
+int Cadre::getBeginValid() const { return beginValid;}

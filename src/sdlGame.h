@@ -43,13 +43,19 @@ class sdlGame {
     SDL_Renderer * renderer;
     TTF_Font * fontMenu; //Police pour le menu
     //SDL_Mixer * ????
-    SDL_DisplayMode currentMode; //currentMode : structure contenant taille de l'écran : w (width) et h (height)
+    //SDL_DisplayMode currentMode; //currentMode : structure contenant taille de l'écran : w (width) et h (height)
     Menu* menu;
     
     int height,width;
 
     Image im_background;
     
+
+    /* PARTIE GAME*/
+
+    Image im_note0, im_note1, im_note2, im_note3, im_note4, im_ligneValidation;
+
+
 
     
     public :
@@ -68,9 +74,9 @@ class sdlGame {
     //SDL_Texture* surfaceNote(SDL_Renderer * renderer,int i);
     
     void sdlMenuLoop();
-    void sdlShowMenu ();
+    void sdlShowMenu();
     
-    void sdlGameLoop ();
+    void sdlGameLoop();
     void sdlShowGame();
     
     void sdlTest();

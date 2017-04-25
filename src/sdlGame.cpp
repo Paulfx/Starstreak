@@ -134,13 +134,13 @@ sdlGame::sdlGame(){
     
     im_background.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
     
+    im_note0.loadFromFile("../data/theme/notes/vert.png",renderer);
+    im_note1.loadFromFile("../data/theme/notes/rouge.png",renderer);
+    im_note2.loadFromFile("../data/theme/notes/jaune.png",renderer);
+    im_note3.loadFromFile("../data/theme/notes/bleu.png",renderer);
+    im_note4.loadFromFile("../data/theme/notes/orange.png",renderer);
     
-    
-    
-    
-    
-    
-    
+    im_ligneValidation.loadFromFile("../data/theme/notes/ligneValidation.png",renderer);
 }
 
 
@@ -203,7 +203,7 @@ void sdlGame::sdlShowMenu(){
         SurfaceList=NULL;
         rec.x=(int)((1/3)*(width));//427;//(int)((1/3)*(width));
         rec.y=266+i*50;//(1/3)*(height)+50*i+5;
-        rec.w=50*tamp.size();
+        rec.w=50*tempTitle.size();
         rec.h=50;
         if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
@@ -217,19 +217,6 @@ void sdlGame::sdlShowMenu(){
 }
 
 
-//Affichage du jeu
-void sdlGame::sdlShowGame(){
-    
-
-
-
-
-    
-
-}
-
-
-
 //Essai de loop+affichage
 void sdlGame::sdlTest(){
 
@@ -239,19 +226,44 @@ void sdlGame::sdlTest(){
 }
 
 
+//Affichage du jeu
+void sdlGame::sdlShowGame(){
+    
+    SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
+    SDL_RenderClear(renderer);
+
+    Cadre& cadre = menu->getGame().getCadre();
+
+    im_ligneValidation.draw(renderer,0,cadre.getBeginValid());
+
+    for(unsigned int i=0;i<cadre.getNbNote();++i) {
+        Note& note = cadre.getNote(i);
+        int color = note.getColor();
+        switch(color) {
+            case 0 : im_note0.draw(renderer,note.getPosX(),note.getPosY());break;
+            case 1 : im_note1.draw(renderer,note.getPosX(),note.getPosY());break;
+            case 2 : im_note2.draw(renderer,note.getPosX(),note.getPosY());break;
+            case 3 : im_note3.draw(renderer,note.getPosX(),note.getPosY());break;
+            case 4 : im_note4.draw(renderer,note.getPosX(),note.getPosY());break;
+            default:break;
+        }
+    }
+
+}
+
+
 //Seconde Loop
 // Correspond au jeu
 void sdlGame::sdlGameLoop(){
     SDL_Event events;
     bool quitGame = false;
     
-                /*mise en place de la partie*/
+    Game& game = menu->getGame();
     
     /*SDL_MIXER (lancement de la chanson)*/
-   
     Mix_Music *music;
     string aMusic="../data/mp3/";
-    aMusic+=menu->getGame()->getSong().fileMusic;
+    aMusic+=game.getSong().fileMusic;
     const char *accesMusic = aMusic.c_str();//Mix_load n'accepte de cont char donc convertion
     cout<<"lancement de :"<<accesMusic<<endl;
     music=Mix_LoadMUS(accesMusic);
@@ -261,75 +273,34 @@ void sdlGame::sdlGameLoop(){
     if (Mix_PlayMusic(music,1)==-1) {
         cout<<"Mix_PlayMusic error"<<endl;
     }
-    
-    unsigned int time = SDL_GetTicks();
-    unsigned int actualTime;
+
+    float time_seconds = SDL_GetTicks() / 1000.f;
     while(!quitGame){
-        /* PAUL LE FAIT TRQL TQT ET JE COUPE EN DEUX CLASSES
-        
-        actualTime = SDL_GetTicks() - time;
-         
-        if(ligneAjoutee) {
-            currLine=menu->getGame().getPartition().getLine();
-        }
-        
-        if(menu->getGame().getPartition().isFinished()) break;
+        float new_time = SDL_GetTicks() / 1000.f;
+        float delta = new_time - time_seconds;
+        time_seconds = new_time;
 
-        ligneAjoutee=menu->getGame().getCadre().update(tps,currLine);
-
-
-
-        cout<<"------------------------------------"<<endl<<"Nombre de notes : "<<menu->getGame().getCadre().getNbNote()<<endl;
-        for(unsigned int i=0;i<menu->getGame().getCadre().getNbNote();++i) {
-            cout<<"Note numéro : "<<i<<"  Position X : "<<menu->getGame().getCadre().getNote(i).getPosX()<<endl;
-            cout<<"  Position Y : "<<menu->getGame().getCadre().getNote(i).getPosY()<<endl;
-        }
-
-    }
-    
-    //On finit de dérouler le cadre jusqu'à ce que toutes les notes soient passées
-    while(!menu->getGame().getCadre().isEmpty()) {
-        menu->getGame().getCadre().scrollCadre();
-
-        for(unsigned int i=0;i<menu->getGame().getCadre().getNbNote();++i) {
-            cout<<"Note numéro : "<<i<<"  Position X : "<<menu->getGame().getCadre().getNote(i).getPosX()<<endl;
-            cout<<"  Position Y : "<<menu->getGame().getCadre().getNote(i).getPosY()<<endl;
-        }
-    }
-
-        
+        game.update(delta);
 
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
             }
+            
+            else if (events.type == SDL_KEYDOWN){
+                switch(events.key.keysym.scancode) {
+                    case SDL_SCANCODE_Q:
+                        quitGame=true;
+                        break;
+                    default:break;
+                }
+            }
         }
-    
 
-
-
-
-
-
-
+        sdlShowGame();
+        SDL_RenderPresent(renderer);
     }
-
-
-*/
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -27,8 +27,9 @@ private :
     bool creationMode;
     Song song;
     Cadre* cadre;
-    
 
+    bool ligneAjoutee;
+    line currLine;
     
 public :
     
@@ -72,7 +73,7 @@ public :
     */
     Cadre& getCadre();
     
-    void update();
+    void update(float delta);
     
 };
     

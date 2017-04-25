@@ -64,12 +64,12 @@ void Menu::moveDown() {
 
 //Synchro affichage + coeur
 //songTab et le vector String sont initialisé dans le même ordre.
-/*
+
 void Menu::choose() {
 	currGame = new Game(*songTab[currI],difficulty,mode); 
 	active = false;
 }									
-*/
+
 Song& Menu::getCurrSong() { return *songTab[currI]; }
 
 unsigned int Menu::getCurrI() const { return currI; }
@@ -90,7 +90,7 @@ void Menu::decreaseDiff(){
 	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
 }
 
-Game* Menu::getGame() {return currGame;} //surement inutile, à bouger
+Game& Menu::getGame() {return *currGame;} //surement inutile, à bouger
 
 bool Menu::getMode() const { return mode;}
 
