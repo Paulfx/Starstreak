@@ -162,7 +162,7 @@ void sdlGame::sdlShowMenu(){
     
     
     SDL_Color couleurNoire = {0, 0, 0};
-    string tamp;
+    string tempTitle;
     
     cout<<menu->getNbSongs();
     
@@ -226,6 +226,12 @@ void sdlGame::sdlShowMenu(){
 //Affichage du jeu
 void sdlGame::sdlShowGame(){
     
+
+
+
+
+    
+
 }
 
 
@@ -267,29 +273,74 @@ void sdlGame::sdlGameLoop(){
         cout<<"Mix_PlayMusic error"<<endl;
     }
     
-    
+    unsigned int time = SDL_GetTicks();
+    unsigned int actualTime;
     while(!quitGame){
+        /* PAUL LE FAIT TRQL TQT ET JE COUPE EN DEUX CLASSES
         
+        actualTime = SDL_GetTicks() - time;
+         
+        if(ligneAjoutee) {
+            currLine=menu->getGame().getPartition().getLine();
+        }
         
-        
-        
-        
-        //float timeBegin = SDL_GetTicks();
-        
-        
+        if(menu->getGame().getPartition().isFinished()) break;
+
+        ligneAjoutee=menu->getGame().getCadre().update(tps,currLine);
+
+
+
+        cout<<"------------------------------------"<<endl<<"Nombre de notes : "<<menu->getGame().getCadre().getNbNote()<<endl;
+        for(unsigned int i=0;i<menu->getGame().getCadre().getNbNote();++i) {
+            cout<<"Note numéro : "<<i<<"  Position X : "<<menu->getGame().getCadre().getNote(i).getPosX()<<endl;
+            cout<<"  Position Y : "<<menu->getGame().getCadre().getNote(i).getPosY()<<endl;
+        }
+
+    }
+    
+    //On finit de dérouler le cadre jusqu'à ce que toutes les notes soient passées
+    while(!menu->getGame().getCadre().isEmpty()) {
+        menu->getGame().getCadre().scrollCadre();
+
+        for(unsigned int i=0;i<menu->getGame().getCadre().getNbNote();++i) {
+            cout<<"Note numéro : "<<i<<"  Position X : "<<menu->getGame().getCadre().getNote(i).getPosX()<<endl;
+            cout<<"  Position Y : "<<menu->getGame().getCadre().getNote(i).getPosY()<<endl;
+        }
+    }
+
         
 
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
-            }else if(1) {
-            //boucle avec rafraichissement (=> actions automatiques)
-                    //defiler cadre
-                    //score
             }
         }
+    
+
+
+
+
+
+
+
     }
+
+
+*/
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -367,6 +418,9 @@ void sdlGame::sdlMenuLoop(){
             }
         }
     }
+
+  //  SDL_menu_quit();
+
 }
 
 

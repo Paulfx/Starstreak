@@ -41,7 +41,7 @@ Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, int speed, int initY,
 	
 }
 
-bool Cadre::update(uint32_t time, const line& currLine) {
+bool Cadre::update(unsigned int time, const line& currLine) {
 	cout<<currLine.time<<endl<<time<<endl;
 
 	assert(currLine.time > time);

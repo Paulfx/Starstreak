@@ -1,4 +1,3 @@
-
 #ifndef sdlGame_hpp
 #define sdlGame_hpp
 
@@ -51,7 +50,7 @@ class sdlGame {
 
     Image im_background;
     
-    
+
     
     public :
     

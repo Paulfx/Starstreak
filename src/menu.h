@@ -21,7 +21,7 @@ private :
 	unsigned int nbSongs; //taille du tab
 	bool active; //false si menu inactif = une game est active
 	Game* currGame; //La partie en cours
-	unsigned int difficulty;
+	unsigned int difficulty;// 1, 2 ou 3
 	bool mode;
 
 

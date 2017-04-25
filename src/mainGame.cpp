@@ -10,7 +10,7 @@ int main() {
 
 	//Partition& part = game.getPartition();
 	//Cadre& game.getCadre() = game.getgame.getCadre()();
-	int tps = 0;
+	unsigned int tps = 0;
 	bool ligneAjoutee = false;
 	line currLine= game.getPartition().getLine();
 
