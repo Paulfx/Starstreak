@@ -66,6 +66,13 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
 
 sdlGame::sdlGame(){
     // INITIALISATION
+    
+    
+    
+
+ 
+    
+    
     //SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
@@ -98,18 +105,34 @@ sdlGame::sdlGame(){
         cout<<Mix_GetError()<<endl;
     }
     
-
+    //Recuperation taille desktop pour le fullscreen
+    Uint32 f;
+   
+    if (SDL_GetDesktopDisplayMode(0, &currentMode) != 0) {
+        SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+    }
+    
+    
+    cout << endl << "###### currentMode.h = " << currentMode.h;
+    cout << endl << "###### currentMode.w = " << currentMode.w;
+    
+    
+    
+    
+    
+    
     
     //Initialisation du menu
     menu= new Menu("../data/index");
      
     //Ouverture de la fenetre
-    window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE); //SDL_WINDOW_FULLSCREEN_DESKTOP
+    window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,currentMode.h,currentMode.w,SDL_WINDOW_FULLSCREEN_DESKTOP
+);
  
     //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
-    SDL_RenderSetLogicalSize(renderer, 640, 480); //taille fenetre
+    //SDL_RenderSetLogicalSize(renderer, 640, 480); //taille fenetre
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
@@ -117,10 +140,10 @@ sdlGame::sdlGame(){
                                 SDL_PIXELFORMAT_ARGB8888, //
                                 SDL_TEXTUREACCESS_STREAMING,
                                 //fluidité sur l'affichage des images
-                                640, 480); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
+                                0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
     
     
-    im_background.loadFromFile("../data/Batman.jpg",renderer);
+    im_background.loadFromFile("../data/BackgroundRock.jpg",renderer);
     
     
     
@@ -139,7 +162,7 @@ void sdlGame::sdlShowMenu(){
     
 
 
-    im_background.draw(renderer,0,0,640,480);
+    im_background.draw(renderer,0,0,currentMode.w,currentMode.h);
  
 
     //Decla des 3 composants de la liste
@@ -153,7 +176,35 @@ void sdlGame::sdlShowMenu(){
     string tamp;
     
     cout<<menu->getNbSongs();
+    
+    
+    //taille du couloir de pointeur = 1/20
+    
+    int DivRecMenu=1/3*(currentMode.w)/menu->getNbSongs();
 
+    //######### Ici On pourrait faire des test sur le nb de chanson et la taille de l'ecran pour savoir si il faut un menu deroulant sur la selection de chanson.
+    SDL_Surface * Surfont=SDL_CreateRGBSurface(0,
+                              (14/120)*currentMode.w, //(1/2-1/3-1/20)
+                              (1/3)*currentMode.h,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0);
+    SDL_Rect RecFont;
+    RecFont.x=1/3*currentMode.w;
+    RecFont.y=1/3*currentMode.h;
+    RecFont.w=1/3*currentMode.w;
+    RecFont.h=1/3*currentMode.h;
+    
+    SDL_Texture * TexFont=SDL_CreateTextureFromSurface(renderer,Surfont);
+    
+    if(SDL_RenderCopy(renderer,TexFont,NULL,&RecFont)!=0){
+        cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+    }
+;
+    
+    
     for(unsigned int i=0;i<menu->getNbSongs();i++){
        
         tamp=menu->getTitleSong(i);
@@ -169,8 +220,8 @@ void sdlGame::sdlShowMenu(){
         	
         }
         SurfaceList=NULL;
-        rec.x=150;
-        rec.y=100+25*i;
+        rec.x=(1/3)*(currentMode.w)+5;
+        rec.y=(1/3)*(currentMode.h)+25*i+5;
         rec.w=10*tamp.size();
         rec.h=20;
 
@@ -207,9 +258,8 @@ void sdlGame::sdlGameLoop(){
     
                 /*mise en place de la partie*/
     
-    /*SDL_MIXER (lancement de la chanson et bruitages)*/
-    Mix_AllocateChannels(5);
-    
+    /*SDL_MIXER (lancement de la chanson)*/
+   
     
     Mix_Music *music;
     
@@ -282,15 +332,14 @@ void sdlGame::sdlMenuLoop(){
         cout<<"erreur ouverture musique menu"<<Mix_GetError()<<endl;
     }
     
-    if (Mix_PlayChannel(1,soudMenu,2)==-1) {
-                cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-            }
     
     while (!quit){
         
             /*afficheMenuSDL*/
         
-        /*TODO:condition pour relancer la musique en cas de retour au menu*/
+        if (Mix_PlayChannel(1,soudMenu,2)==-1) {
+                cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+            }
         
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
@@ -315,7 +364,6 @@ void sdlGame::sdlMenuLoop(){
                         if (Mix_PlayChannel(4,soudAccept,0)==-1) {
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
-			Mix_HaltChannel(1);
                         menu->choose();
                         sdlGameLoop();
                     case SDL_SCANCODE_ESCAPE://touche echap

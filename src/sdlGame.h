@@ -44,6 +44,7 @@ class sdlGame {
     SDL_Renderer * renderer;
     TTF_Font * fontMenu; //Police pour le menu
     //SDL_Mixer * ????
+    SDL_DisplayMode currentMode; //Permet d'avoir acces à la resolution de l'ecran de partouuuuuuut
     Menu* menu;
     
     Image im_background;
