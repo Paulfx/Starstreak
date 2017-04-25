@@ -86,7 +86,7 @@ sdlGame::sdlGame(){
     //chemin + taille de police
     //Police du menu
     fontMenu= NULL;
-    fontMenu=TTF_OpenFont("../data/theme/police/default.ttf", 50);
+    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 150);
     if(fontMenu==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
         // handle error
@@ -120,7 +120,7 @@ sdlGame::sdlGame(){
 
     //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
+    //SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
     //SDL_RenderSetLogicalSize(renderer, 640, 480); //taille fenetre
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
     SDL_RenderClear(renderer);
@@ -132,7 +132,7 @@ sdlGame::sdlGame(){
                                 0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
     
     
-    im_background.loadFromFile("../data/BackgroundRock.jpg",renderer);
+    im_background.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
     
     
     
@@ -149,8 +149,26 @@ void sdlGame::sdlShowMenu(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     
-
-
+/*
+    //MENU 1 (JOUER CREER QUITTER)
+    //MENU 2 (Selection de song)
+    //MENU 3 (difficulté)
+ 
+    if(){
+        
+    }else{ //On est soit sur la selection de song soit sur la difficulté.
+        
+        
+    }
+    
+  */
+    
+    
+    
+    
+    
+    
+    
     im_background.draw(renderer,0,0,width,height);
  
 
@@ -162,38 +180,12 @@ void sdlGame::sdlShowMenu(){
     
     
     SDL_Color couleurNoire = {0, 0, 0};
+    SDL_Color couleurBlanche = {255, 255, 255};
     string tempTitle;
     
     cout<<menu->getNbSongs();
     
-    
-    //taille du couloir de pointeur = 1/20
-    
-    int DivRecMenu=1/3*(width)/menu->getNbSongs();
 
-    //######### Ici On pourrait faire des test sur le nb de chanson et la taille de l'ecran pour savoir si il faut un menu deroulant sur la selection de chanson.
-    SDL_Surface * Surfont=SDL_CreateRGBSurface(0,
-                              (14/120)*width, //(1/2-1/3-1/20)
-                              (1/3)*height,
-                              0,
-                              0,
-                              0,
-                              0,
-                              0);
-    SDL_Rect RecFont;
-    RecFont.x=1/3*width;
-    RecFont.y=1/3*height;
-    RecFont.w=1/3*width;
-    RecFont.h=1/3*height;
-    
-    SDL_Texture * TexFont=SDL_CreateTextureFromSurface(renderer,Surfont);
-    
-    if(SDL_RenderCopy(renderer,TexFont,NULL,&RecFont)!=0){
-        cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
-    }
-;
-    
-    
     for(unsigned int i=0;i<menu->getNbSongs();i++){
        
         tempTitle=menu->getTitleSong(i);
@@ -209,15 +201,17 @@ void sdlGame::sdlShowMenu(){
         	
         }
         SurfaceList=NULL;
-        rec.x=(1/3)*(width)+5;
-        rec.y=(1/3)*(height)+25*i+5;
-        rec.w=10*tempTitle.size();
-        rec.h=20;
-
+        rec.x=(int)((1/3)*(width));//427;//(int)((1/3)*(width));
+        rec.y=266+i*50;//(1/3)*(height)+50*i+5;
+        rec.w=50*tamp.size();
+        rec.h=50;
         if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
         }
     }
+    
+    
+    
     
     
 }
