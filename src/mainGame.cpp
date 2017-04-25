@@ -15,6 +15,8 @@ int main() {
 	line currLine= game.getPartition().getLine();
 
 	while(true) {
+
+
 		tps+=16;//ms
 		if(ligneAjoutee) {
 			currLine=game.getPartition().getLine();

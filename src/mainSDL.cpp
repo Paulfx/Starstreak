@@ -27,11 +27,7 @@ int main (int argc, char *argv[]){
     mySDL.sdlTest();
     mySDL.sdlMenuLoop();
     
-
     
-    
-    
-    mySDL.~sdlGame(); // destructeur ?
     return 0;
     
 }

@@ -86,8 +86,6 @@ sdlGame::sdlGame(){
     //chemin + taille de police
     //Police du menu
     fontMenu= NULL;
-
-    
     fontMenu=TTF_OpenFont("../data/theme/police/default.ttf", 50);
     if(fontMenu==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
@@ -106,29 +104,20 @@ sdlGame::sdlGame(){
     }
     
     //Recuperation taille desktop pour le fullscreen
-    Uint32 f;
-   
-    if (SDL_GetDesktopDisplayMode(0, &currentMode) != 0) {
-        SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
-    }
+
     
     
-    cout << endl << "###### currentMode.h = " << currentMode.h;
-    cout << endl << "###### currentMode.w = " << currentMode.w;
-    
-    
-    
-    
-    
-    
+
     
     //Initialisation du menu
     menu= new Menu("../data/index");
      
     //Ouverture de la fenetre
-    window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,currentMode.h,currentMode.w,SDL_WINDOW_FULLSCREEN_DESKTOP
+    window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,height,width,SDL_WINDOW_FULLSCREEN_DESKTOP
 );
- 
+    
+    SDL_GetWindowSize(window, &width, &height);
+
     //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
@@ -162,7 +151,7 @@ void sdlGame::sdlShowMenu(){
     
 
 
-    im_background.draw(renderer,0,0,currentMode.w,currentMode.h);
+    im_background.draw(renderer,0,0,width,height);
  
 
     //Decla des 3 composants de la liste
@@ -180,22 +169,22 @@ void sdlGame::sdlShowMenu(){
     
     //taille du couloir de pointeur = 1/20
     
-    int DivRecMenu=1/3*(currentMode.w)/menu->getNbSongs();
+    int DivRecMenu=1/3*(width)/menu->getNbSongs();
 
     //######### Ici On pourrait faire des test sur le nb de chanson et la taille de l'ecran pour savoir si il faut un menu deroulant sur la selection de chanson.
     SDL_Surface * Surfont=SDL_CreateRGBSurface(0,
-                              (14/120)*currentMode.w, //(1/2-1/3-1/20)
-                              (1/3)*currentMode.h,
+                              (14/120)*width, //(1/2-1/3-1/20)
+                              (1/3)*height,
                               0,
                               0,
                               0,
                               0,
                               0);
     SDL_Rect RecFont;
-    RecFont.x=1/3*currentMode.w;
-    RecFont.y=1/3*currentMode.h;
-    RecFont.w=1/3*currentMode.w;
-    RecFont.h=1/3*currentMode.h;
+    RecFont.x=1/3*width;
+    RecFont.y=1/3*height;
+    RecFont.w=1/3*width;
+    RecFont.h=1/3*height;
     
     SDL_Texture * TexFont=SDL_CreateTextureFromSurface(renderer,Surfont);
     
@@ -220,8 +209,8 @@ void sdlGame::sdlShowMenu(){
         	
         }
         SurfaceList=NULL;
-        rec.x=(1/3)*(currentMode.w)+5;
-        rec.y=(1/3)*(currentMode.h)+25*i+5;
+        rec.x=(1/3)*(width)+5;
+        rec.y=(1/3)*(height)+25*i+5;
         rec.w=10*tamp.size();
         rec.h=20;
 
