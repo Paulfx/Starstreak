@@ -255,20 +255,15 @@ void sdlGame::sdlGameLoop(){
     
     /*SDL_MIXER (lancement de la chanson)*/
    
-    
     Mix_Music *music;
-    
     string aMusic="../data/mp3/";
     aMusic+=menu->getGame()->getSong().fileMusic;
-    const char *accesMusic = aMusic.c_str();
+    const char *accesMusic = aMusic.c_str();//Mix_load n'accepte de cont char donc convertion
     cout<<"lancement de :"<<accesMusic<<endl;
-    
     music=Mix_LoadMUS(accesMusic);
-    
     if (!music){
         cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
     }
-    
     if (Mix_PlayMusic(music,1)==-1) {
         cout<<"Mix_PlayMusic error"<<endl;
     }
@@ -395,7 +390,7 @@ void sdlGame::sdlMenuLoop(){
                         menu->moveUp();
                         break;
                     case SDL_SCANCODE_DOWN://flèche du bas
-                        if (Mix_PlayChannel(3,soudMove,1)==-1) {
+                        if (Mix_PlayChannel(3,soudMove,0)==-1) {
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
                         menu->moveDown();
