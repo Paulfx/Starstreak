@@ -107,7 +107,7 @@ sdlGame::sdlGame(){
     //Recuperation taille desktop pour le fullscreen
 
     
-    
+
 
 
     //Initialisation du menu
@@ -116,8 +116,8 @@ sdlGame::sdlGame(){
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,0,0,SDL_WINDOW_FULLSCREEN_DESKTOP);
     
-    SDL_GetWindowSize(window, &width, &height);
     
+    SDL_GetWindowSize(window, &width, &height);
     //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
@@ -130,10 +130,10 @@ sdlGame::sdlGame(){
                                 SDL_TEXTUREACCESS_STREAMING,
                                 //fluidité sur l'affichage des images
                                 0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
+    cout << width << "######"<< endl << height ;
     if(renderer){
         im_backgroundMenu.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
-        
-        
+
         im_ptrMenu.loadFromFile("../data/theme/Select.png",renderer);
         
         
@@ -204,7 +204,7 @@ void sdlGame::sdlShowMenu(){
     
     
     
-    
+        SDL_RenderPresent(renderer);//ligne a rajouter dans showMenu ? (fin)
 }
 
 
@@ -308,6 +308,8 @@ void sdlGame::sdlMenuLoop(){
                         /*SDL_Mixer init*/
     Mix_AllocateChannels(5);
     
+    
+
     /* bruitages de naviguation + musique de fond*/
     Mix_Chunk *soundMove;
     soundMove=Mix_LoadWAV("../data/theme/sounds/move.ogg");
@@ -333,6 +335,14 @@ void sdlGame::sdlMenuLoop(){
                         /*Debut de la boucle Menu*/
     
     while (!quit){
+        
+        
+        
+        sdlShowMenu();
+        
+        
+        
+        
         
         Mix_Resume(1);
         while (SDL_PollEvent(&events)) {
