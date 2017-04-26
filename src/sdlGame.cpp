@@ -131,8 +131,13 @@ sdlGame::sdlGame(){
                                 //fluidité sur l'affichage des images
                                 0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
     if(renderer){
-        im_background.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
-
+        im_backgroundMenu.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
+        
+        
+        im_ptrMenu.loadFromFile("../data/theme/PointeurEclairNoir.jpg",renderer);
+        
+        
+        
         im_note0.loadFromFile("../data/theme/notes/vert.png",renderer);
         im_note1.loadFromFile("../data/theme/notes/rouge.png",renderer);
         im_note2.loadFromFile("../data/theme/notes/jaune.png",renderer);
@@ -152,10 +157,11 @@ void sdlGame::sdlShowMenu(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     
+    int posPtr=menu->getCurrI()%10;
     
+    im_backgroundMenu.draw(renderer,0,0,width,height);
     
-    im_background.draw(renderer,0,0,width,height);
- 
+    im_ptrMenu.draw(renderer,500,25+posPtr*50,40,40);
 
     //Decla des 3 composants de la liste
     SDL_Surface * SurfaceList;
@@ -205,9 +211,13 @@ void sdlGame::sdlShowMenu(){
 //Essai de loop+affichage
 void sdlGame::sdlTest(){
 
-        sdlShowMenu();
+    sdlMenuLoop();
+    
+    
+       /* sdlShowMenu();
         SDL_RenderPresent(renderer);
         SDL_Delay(5000);
+        */
 }
 
 
@@ -322,6 +332,11 @@ void sdlGame::sdlMenuLoop(){
         
             /*afficheMenuSDL*/
         
+        sdlShowMenu();
+        SDL_RenderPresent(renderer);//ligne a rajouter dans showMenu ? (fin)
+        
+        
+        //Si la musique du menu n'est pas en cours, on la lance/erreur.
         if (Mix_PlayChannel(1,soudMenu,2)==-1) {
                 cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
             }

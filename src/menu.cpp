@@ -53,11 +53,14 @@ Menu::~Menu() {
 	songTab = NULL;
 }
 
+
+//On ne peut qu'afficher 10 chanson dans le cadre de selection -> il faudra faire un modulo 10 pour recuperer la position ou la chanson pointer (sdlGame l-160)
 void Menu::moveUp() {
 	(currI == 0) ? currI=nbSongs-1 : currI=(currI - 1) % nbSongs;
 }
 
 void Menu::moveDown() {
+    //%nbSongs evite de faire le test si on est en bas
 	currI = (currI + 1) % nbSongs;
 }
 

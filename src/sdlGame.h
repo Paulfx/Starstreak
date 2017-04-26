@@ -48,8 +48,11 @@ class sdlGame {
     
     int height,width;
 
-    Image im_background;
     
+    
+    /* ######### IMAGE ######## */
+    Image im_backgroundMenu;
+    Image im_ptrMenu;
 
     /* PARTIE GAME*/
 

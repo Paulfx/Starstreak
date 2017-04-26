@@ -24,7 +24,6 @@ int main (int argc, char *argv[]){
     //chunksize, used per output sample
     */
     sdlGame mySDL;
-    mySDL.sdlTest();
     mySDL.sdlMenuLoop();
     
     
