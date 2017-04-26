@@ -305,42 +305,36 @@ void sdlGame::sdlMenuLoop(){
     SDL_Event events;
     bool quit = false;
     
-    
-        /*SDL_Mixer*/
+                        /*SDL_Mixer init*/
     Mix_AllocateChannels(5);
     
-        /* bruitages de naviguation + musique de fond*/
-    Mix_Chunk *soudMove;
-    soudMove=Mix_LoadWAV("../data/theme/sounds/move.ogg");
-    if(!soudMove){
-        cout<<"erreur ouverture effet de séléction"<<Mix_GetError()<<endl;
+    /* bruitages de naviguation + musique de fond*/
+    Mix_Chunk *soundMove;
+    soundMove=Mix_LoadWAV("../data/theme/sounds/move.ogg");
+    if(!soundMove){
+        cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
     }
-    Mix_Chunk *soudAccept;
-    soudAccept=Mix_LoadWAV("../data/theme/sounds/action.ogg");
-    if(!soudAccept){
-        cout<<"erreur ouverture effet de validation"<<Mix_GetError()<<endl;
+    Mix_Chunk *soundAccept;
+    soundAccept=Mix_LoadWAV("../data/theme/sounds/action.ogg");
+    if(!soundAccept){
+        cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
     }
-        /*musique de fond dans le menu*/
-    Mix_Chunk *soudMenu;
-    soudMenu=Mix_LoadWAV("../data/theme/sounds/menu.ogg");
-    if(!soudMenu){
-        cout<<"erreur ouverture musique menu"<<Mix_GetError()<<endl;
+    /*musique de fond dans le menu*/
+    Mix_Chunk *soundMenu;
+    soundMenu=Mix_LoadWAV("../data/theme/sounds/menu.ogg");
+    if(!soundMenu){
+        cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
     }
+    if (Mix_PlayChannel(1,soundMenu,2)==-1) {
+        cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+    }
+    Mix_Pause(1);
     
+                        /*Debut de la boucle Menu*/
     
     while (!quit){
         
-            /*afficheMenuSDL*/
-        
-        sdlShowMenu();
-        SDL_RenderPresent(renderer);//ligne a rajouter dans showMenu ? (fin)
-        
-        
-        //Si la musique du menu n'est pas en cours, on la lance/erreur.
-        if (Mix_PlayChannel(1,soudMenu,2)==-1) {
-                cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-            }
-        
+        Mix_Resume(1);
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quit = true;
@@ -349,19 +343,19 @@ void sdlGame::sdlMenuLoop(){
             else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                 switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                     case SDL_SCANCODE_UP: //flèche du haut
-                        if (Mix_PlayChannel(2,soudMove,0)==-1) {
+                        if (Mix_PlayChannel(2,soundMove,0)==-1) {
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
                         menu->moveUp();
                         break;
                     case SDL_SCANCODE_DOWN://flèche du bas
-                        if (Mix_PlayChannel(3,soudMove,0)==-1) {
+                        if (Mix_PlayChannel(3,soundMove,0)==-1) {
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
                         menu->moveDown();
                         break;
                     case SDL_SCANCODE_RETURN://touche entré
-                        if (Mix_PlayChannel(4,soudAccept,0)==-1) {
+                        if (Mix_PlayChannel(4,soundAccept,0)==-1) {
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
                         menu->choose();
@@ -369,9 +363,9 @@ void sdlGame::sdlMenuLoop(){
                     case SDL_SCANCODE_ESCAPE://touche echap
                         quit=true;
                         Mix_HaltChannel(1);//arrete le musique du menu 
-                        Mix_FreeChunk(soudAccept);
-                        Mix_FreeChunk(soudMove);
-                        Mix_FreeChunk(soudMenu);
+                        Mix_FreeChunk(soundAccept);
+                        Mix_FreeChunk(soundMove);
+                        Mix_FreeChunk(soundMenu);
                     default :
                         break;
                 }
