@@ -134,7 +134,7 @@ sdlGame::sdlGame(){
         im_backgroundMenu.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
         
         
-        im_ptrMenu.loadFromFile("../data/theme/PointeurEclairNoir.jpg",renderer);
+        im_ptrMenu.loadFromFile("../data/theme/Select.png",renderer);
         
         
         
@@ -161,7 +161,7 @@ void sdlGame::sdlShowMenu(){
     
     im_backgroundMenu.draw(renderer,0,0,width,height);
     
-    im_ptrMenu.draw(renderer,500,25+posPtr*50,40,40);
+    im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
 
     //Decla des 3 composants de la liste
     SDL_Surface * SurfaceList;

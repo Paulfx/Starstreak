@@ -23,7 +23,10 @@ private :
 	Game* currGame; //La partie en cours
 	unsigned int difficulty;// 1, 2 ou 3
 	bool mode;
-
+    //Variable state en plus (int) qui permet de se reperer dans le menu
+    //MENU 0 JOUER CREER QUITTER
+    //MENU 1 JOUER/CREER
+    //MENU 3 DIFFICULTER + compte a rebours ? 
 
 	
 public :
