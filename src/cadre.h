@@ -45,25 +45,44 @@ private :
 
 
 public :
-	
+	/** @brief 
+     */
 	Cadre();
-
+    
+    
+    /** @brief
+     */
 	Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY, int beginV, int endV);
 	
+    
 	/**@brief met à jour le cadre.
 	@param time représente le temps écoulé (en ms) depuis le lancement du son
 	@return true si currLine est ajoutée au cadre, false sinon
 	*/
 	bool update(float delta, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
 
+    
+    /** @brief
+     */
 	void scrollCadre(float delta);
-
+    
+    
+    /** @brief
+     */
 	unsigned int getNbNote() const;
 
+    /** @brief
+     */
 	Note& getNote(unsigned int i);
 
+    
+    /** @brief
+     */
 	bool isEmpty() const;
 
+    
+    /** @brief
+     */
 	int getBeginValid() const;
 
 };

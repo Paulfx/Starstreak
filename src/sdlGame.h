@@ -48,6 +48,8 @@ class sdlGame {
     
     int height,width;
 
+    
+    int posPtr;
     int stateMenu;
     // Etat du menu :
         //par default on est dans le premier (0)
@@ -56,7 +58,9 @@ class sdlGame {
         //3 -> Creation (Bouton non cliquable)
     
     /* ######### IMAGE ######## */
-    Image im_backgroundMenu;
+    Image im_backgroundMenu0;
+    Image im_backgroundMenu1;
+    Image im_backgroundMenu2;
     Image im_ptrMenu;
 
     /* PARTIE GAME*/
@@ -81,13 +85,29 @@ class sdlGame {
     
     //SDL_Texture* surfaceNote(SDL_Renderer * renderer,int i);
     
+    
+    
+    /** @brief Mouvement et appel a ShowMenu
+     */
     void sdlMenuLoop();
+    
+    /** @brief  Affiche le menu de selection de chanson
+     */
     void sdlShowMenu();
     
+    /** @brief Mouvement en interaction du jeux
+     */
     void sdlGameLoop();
+    /** @brief  Affichage de l'etat actuel du jeux 
+     */
     void sdlShowGame();
-    
     void sdlTest();
+    
+    
+    //fonction moove du pointeur indepandant de currI
+    //Static ? modification des données private en static possible ?
+    void moveUpPtr();
+    void moveDownPtr();
     
 };
 
