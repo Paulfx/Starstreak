@@ -1,6 +1,12 @@
 
 #include "sdlGame.h"
 
+//TODO :
+    //Menu deroulant pour le select
+    //Menu difficulté (2)
+    //Menu 0
+
+
 
 const int TAILLE_SPRITE=32;
 
@@ -117,8 +123,7 @@ sdlGame::sdlGame(){
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,0,0,SDL_WINDOW_FULLSCREEN_DESKTOP);
     
     
-    SDL_GetWindowSize(window, &width, &height);
-    //parametres gestion de position/taille/resolution etc
+    SDL_GetWindowSize(window, &width, &height);    //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
     SDL_RenderSetLogicalSize(renderer,width, height); //taille fenetre
@@ -130,7 +135,6 @@ sdlGame::sdlGame(){
                                 SDL_TEXTUREACCESS_STREAMING,
                                 //fluidité sur l'affichage des images
                                 0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
-    cout << width << "######"<< endl << height ;
     if(renderer){
         im_backgroundMenu.loadFromFile("../data/theme/BackgroundMenu.jpg",renderer);
 
@@ -157,11 +161,29 @@ void sdlGame::sdlShowMenu(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     
-    int posPtr=menu->getCurrI()%10;
-    
     im_backgroundMenu.draw(renderer,0,0,width,height);
+  
     
-    im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
+    int beginShowTitle=0;
+    int endShowTitle=10;
+
+    int posPtr;
+    
+  
+    //Menu Deroulant
+    if((menu->getCurrI())>9){
+        beginShowTitle=menu->getCurrI()%10;
+        endShowTitle=menu->getCurrI();
+        posPtr=9;
+        im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
+        
+    }else{
+        posPtr=menu->getCurrI()%10;//%menu->getNbSongs();
+        im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
+    }
+    
+    
+ 
 
     //Decla des 3 composants de la liste
     SDL_Surface * SurfaceList;
@@ -170,15 +192,17 @@ void sdlGame::sdlShowMenu(){
     
     
     
+    
+    
+    
     SDL_Color couleurNoire = {0, 0, 0};
     SDL_Color couleurBlanche = {255, 255, 255};
     string tempTitle;
     
     cout<<menu->getNbSongs();
-    
-
-    for(unsigned int i=0;i<menu->getNbSongs();i++){
-       
+    int i=beginShowTitle;
+    int posTitle=0;
+    while(i<endShowTitle){
         tempTitle=menu->getTitleSong(i);
         cout <<tempTitle <<endl;
         SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(), couleurBlanche);
@@ -193,12 +217,14 @@ void sdlGame::sdlShowMenu(){
         }
         SurfaceList=NULL;
         rec.x=30;
-        rec.y=25+i*50;//(1/3)*(height)+50*i+5;
+        rec.y=25+posTitle*50;//(1/3)*(height)+50*i+5;
         rec.w=20*tempTitle.size();
         rec.h=50;
         if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
         }
+        i++;
+        posTitle++;
     }
     
     

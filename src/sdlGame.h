@@ -48,7 +48,12 @@ class sdlGame {
     
     int height,width;
 
-    
+    int stateMenu;
+    // Etat du menu :
+        //par default on est dans le premier (0)
+        //1 -> Selection chanson
+        //2 -> Difficulté
+        //3 -> Creation (Bouton non cliquable)
     
     /* ######### IMAGE ######## */
     Image im_backgroundMenu;
