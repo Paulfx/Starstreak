@@ -19,12 +19,13 @@ enum enumPress {noPress, simplePress, longPress};
 // longPress si la touche est enfoncée depuis plus de 2 itérations
 
 class Keyboard{
-    private :
+
+private :
 
     enumPress* keyTab; //[0->4] -> note "AZERT"
     bool validation; //True si la touche de validation a été enfoncée, false sinon
 
-    public :
+public :
     
     /** @brief Constructeur de la classe Keyboard
      */

@@ -7,11 +7,11 @@
 //
 
 #include "keyboard.h"
-
+#include <cassert>
 
 Keyboard::Keyboard(){
-    keyTab=new enumPress[6];
-    for(int i=0;i<6;i++){
+    keyTab=new enumPress[5];
+    for(int i=0;i<5;i++){
         keyTab[i]=noPress;
     }
     validation = false;
@@ -21,7 +21,8 @@ Keyboard::~Keyboard(){
     delete [] keyTab;
 }
 
-bool Keyboard::isNoPress(unsigned int i) const { 
+bool Keyboard::isNoPress(unsigned int i) const {
+    assert(i<5);
     if(keyTab[i] == noPress) return true;
     return false; 
 }

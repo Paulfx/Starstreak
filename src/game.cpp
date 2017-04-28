@@ -32,6 +32,8 @@ Game::Game(const Song& currSong,unsigned int difficulty,bool mode) {
 	score = new Score(partition->getNbLine());
 	cout<<"Score créé"<<endl;
 
+	keyboard = new Keyboard();
+	cout<<"Keyboard créé"<<endl;
 
 	ligneAjoutee=false;
 	currLine=partition->getLine();
@@ -44,6 +46,7 @@ Game::~Game() {
 	delete partition;
 	delete cadre;
 	delete score;
+	delete keyboard;
 }
 
 const Song& Game::getSong() { return song;}
@@ -54,6 +57,8 @@ Cadre& Game::getCadre() { return *cadre;}
 
 Partition& Game::getPartition() { return *partition;}
 
+Keyboard& Game::getKeyboard() { return *keyboard;}
+
 void Game::update(float delta) {
 
 	if(!partition->isFinished()) {
@@ -61,15 +66,18 @@ void Game::update(float delta) {
 		if(ligneAjoutee) {
 			currLine=partition->getLine();
 		}
-		cout<<"FINI : "<<partition->isFinished()<<endl;
 
 		ligneAjoutee=cadre->update(delta,currLine);
-
-
+		Note* note;
+		vector<Note*> needPlayTab; //Contiendra les notes qui doivent être jouée
 		for(unsigned int i=0;i<cadre->getNbNote();++i) {
-			cout<<"Note numéro : "<<i<<"  Position X : "<<cadre->getNote(i).getPosX()<<endl;
-			cout<<"  Position Y : "<<cadre->getNote(i).getPosY()<<endl;
+
+			note = cadre->getPtrNote(i);
+			if(note->getNeedPlay()) { //Si la note doit être jouée
+				needPlayTab.push_back(note);
+			}
 		}
+		score->update(needPlayTab,*keyboard);
 
 
 	}

@@ -58,7 +58,10 @@ public :
      */
 	Note& getNote(unsigned int i);
 
-    
+	/** @brief
+     */
+    Note* getPtrNote(unsigned int i);
+
     /** @brief
      */
 	bool isEmpty() const;

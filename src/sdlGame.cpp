@@ -24,6 +24,7 @@ SdlGame::SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * rend
 
 SdlGame::~SdlGame() {
     //Libération images
+    delete game;
 }
 
 

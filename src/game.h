@@ -30,6 +30,7 @@ private :
     bool creationMode;
     Song song;
     Cadre* cadre;
+    Keyboard* keyboard;
 
     bool ligneAjoutee;
     line currLine;
@@ -75,6 +76,8 @@ public :
     @return une référence vers cadre 
     */
     Cadre& getCadre();
+
+    Keyboard& getKeyboard();
     
     void update(float delta);
     

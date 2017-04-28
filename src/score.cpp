@@ -15,7 +15,7 @@ Score::Score(){
     totalScore=0;
     noteStreak=0;
     starPower=0;//1 quand straPower actif
-    numberSucces=0;
+    numberSuccess=0;
     numberNotes=0;
     multiplier=1;
     rockmeter=20;
@@ -25,7 +25,7 @@ Score::Score(const int nbNotes){
     totalScore=0;
     noteStreak=0;
     starPower=0;
-    numberSucces=0;
+    numberSuccess=0;
     numberNotes=nbNotes;
     multiplier=1;
     rockmeter=20;
@@ -34,12 +34,12 @@ Score::Score(const int nbNotes){
 Score::~Score(){
 }
 
-void Score::updateScore(const line currLine,const Keyboard& keyState,bool fail) {
-    assert(numberSucces<numberNotes);
+void Score::updateScore(const line currLine,const Keyboard& keyState) {
+    assert(numberSuccess<numberNotes);
     assert(multiplier<=4);
     assert(rockmeter<=40);
     assert(rockmeter>0); //si = -1 ou 0 la partie aurait dû s'arreter
-    assert(fail==true);
+    assert(fail==false);
 
     /*
      test de validité en fonction de l'état du clavier et de la ligne courante
@@ -79,7 +79,7 @@ void Score::updateScore(const line currLine,const Keyboard& keyState,bool fail) 
     }*/
     if (testSucces) {
         noteStreak++;
-        numberSucces++;
+        numberSuccess++;
         if (noteStreak%10 == 0 && noteStreak<40){//de 0 à 40 notes consécutives le multiplicateur est incrémenté toutes les 10 notes
             multiplier++;
         }
@@ -95,7 +95,7 @@ void Score::updateScore(const line currLine,const Keyboard& keyState,bool fail) 
     }
     
     if (rockmeter<=0){
-        fail=false;
+        fail=true;
     }
     
 }
@@ -104,3 +104,56 @@ bool Score::isFail() {
     return fail;
 }
 
+void Score::update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard) {
+    unsigned int i,j;
+    bool play = false;
+    for(i=0;i<5;++i) { //i<keyboard.nbNote ==> dépend de la difficulté ?
+        //Si une note doit être jouée
+        for(j=0;j<tabNeedPlay.size() && tabNeedPlay[j]->getColor() == i;++j){ //Pour toutes les notes dans la colonne i
+            play=true;
+            if(!tabNeedPlay[j]->isPlayed()) {
+                if(keyboard.isSimplePress(i)) {//Appui simple
+                    tabNeedPlay[j]->setPlayed();
+                    success();
+                }
+
+                /*else if(keyboard.isDoublePress(i) && tabNeedPlay[j]->) TODO : LONG PRESS */
+
+                if(keyboard.isNoPress(i)) {//Pas d'appui
+                    failure();
+                }
+            }
+        }
+        //Sinon, si aucune note ne doit être jouée
+        if(!play) {
+            if(!keyboard.isNoPress(i)) failure(); //Si le joueur a apppuyé, echec
+        }
+        play=false;
+    }
+
+}
+
+void Score::success() {
+    noteStreak++;
+    numberSuccess++;
+    if (noteStreak%10 == 0 && noteStreak<40){//de 0 à 40 notes consécutives le multiplicateur est incrémenté toutes les 10 notes
+        multiplier++;
+    }
+    if (rockmeter<ROCKMETER_MAX){
+        rockmeter++;
+    }
+    totalScore = totalScore + VALUE_NOTE*multiplier;
+}
+
+void Score::failure() {
+    noteStreak=0;
+    multiplier=1;
+    rockmeter-=2;
+    if (rockmeter<=0){
+        fail=true;
+    }
+}
+
+int Score::getTotalScore() const{return totalScore;}
+int Score::getNoteStreak() const{return noteStreak;}
+int Score::getNumberSuccess() const{return numberSuccess;}

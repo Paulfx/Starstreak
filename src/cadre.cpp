@@ -103,6 +103,11 @@ Note& Cadre::getNote(unsigned int i) {
 	return *noteTab[i];
 }
 
+Note* Cadre::getPtrNote(unsigned int i) {
+	assert(i<noteTab.size());
+	return noteTab[i];
+}
+
 bool Cadre::isEmpty() const { return noteTab.empty();}
 
 int Cadre::getBeginValid() const { return beginValid;}
