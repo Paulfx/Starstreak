@@ -58,6 +58,37 @@ SdlMenu::SdlMenu(){
         cout<<Mix_GetError()<<endl;
     }
     
+/*SDL_Mixer init*/
+    Mix_AllocateChannels(5);
+    
+    
+
+    /* bruitages de naviguation + musique de fond*/
+    
+    soundMove=Mix_LoadWAV("../data/theme/sounds/move.ogg");
+    if(!soundMove){
+        cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
+    }
+    
+    soundAccept=Mix_LoadWAV("../data/theme/sounds/action.ogg");
+    if(!soundAccept){
+        cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
+    }
+    /*musique de fond dans le menu*/
+    
+    soundMenu=Mix_LoadWAV("../data/theme/sounds/menu.ogg");
+    if(!soundMenu){
+        cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
+    }
+    if (Mix_PlayChannel(1,soundMenu,2)==-1) {
+        cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+    }
+    Mix_Pause(1);
+
+
+
+
+
     posPtr=0;
     stateMenu=0;
 
@@ -71,6 +102,8 @@ SdlMenu::SdlMenu(){
     SDL_GetWindowSize(window, &width, &height);    //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
+    
+
     SDL_RenderSetLogicalSize(renderer,width, height); //taille fenetre
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
     SDL_RenderClear(renderer);
@@ -81,8 +114,6 @@ SdlMenu::SdlMenu(){
                                 //fluidité sur l'affichage des images
                                 0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
     if(renderer){
-        
-        
         
         im_backgroundMenu0.loadFromFile("../data/theme/BackgroundMenu0.jpg",renderer);
         im_backgroundMenu1.loadFromFile("../data/theme/BackgroundMenu1.jpg",renderer);
@@ -215,32 +246,7 @@ void SdlMenu::sdlLoop(){
     SDL_Event events;
     bool quit = false;
     
-                        /*SDL_Mixer init*/
-    Mix_AllocateChannels(5);
     
-    
-
-    /* bruitages de naviguation + musique de fond*/
-    Mix_Chunk *soundMove;
-    soundMove=Mix_LoadWAV("../data/theme/sounds/move.ogg");
-    if(!soundMove){
-        cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
-    }
-    Mix_Chunk *soundAccept;
-    soundAccept=Mix_LoadWAV("../data/theme/sounds/action.ogg");
-    if(!soundAccept){
-        cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
-    }
-    /*musique de fond dans le menu*/
-    Mix_Chunk *soundMenu;
-    soundMenu=Mix_LoadWAV("../data/theme/sounds/menu.ogg");
-    if(!soundMenu){
-        cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
-    }
-    if (Mix_PlayChannel(1,soundMenu,2)==-1) {
-        cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-    }
-    Mix_Pause(1);
     
                         /*Debut de la boucle Menu*/ 
     
@@ -278,29 +284,20 @@ void SdlMenu::sdlLoop(){
                                     }
                                     case 1:{//SET MODE CREATE + state -> set mode dans la partie 2
                                         quit=true;
-                                        Mix_HaltChannel(1);//arrete le musique du menu MAIS CA DANS FONCTION !
-                                        Mix_FreeChunk(soundAccept); 
-                                        Mix_FreeChunk(soundMove);
-                                        Mix_FreeChunk(soundMenu);
+                                        soundQuit();
                                         cout <<endl <<"Pas encore implementé, une mise à jour arrive prochainement, stay tuned"<< endl;
                                         break;
                                     }
                                     case 2: {//QUIT
                                         quit=true;
-                                        Mix_HaltChannel(1);//arrete le musique du menu
-                                        Mix_FreeChunk(soundAccept);
-                                        Mix_FreeChunk(soundMove); //LA MEME CHOSE
-                                        Mix_FreeChunk(soundMenu);
+                                        soundQuit();
                                         break;
                                     }
                                 }
                                 break;
                             case SDL_SCANCODE_ESCAPE:
                                 quit=true;
-                                Mix_HaltChannel(1);//arrete le musique du menu
-                                Mix_FreeChunk(soundAccept);
-                                Mix_FreeChunk(soundMove);
-                                Mix_FreeChunk(soundMenu); //PAREIL
+                                soundQuit();
                                 break;
                             default:
                                 break;
@@ -314,6 +311,7 @@ void SdlMenu::sdlLoop(){
                 while (SDL_PollEvent(&events)) {
                 if (events.type == SDL_QUIT){
                     quit = true;
+                    soundQuit();
                 }
                 
                     else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
@@ -349,10 +347,7 @@ void SdlMenu::sdlLoop(){
                             break;
                             case SDL_SCANCODE_ESCAPE://touche echap
                                 quit=true;
-                                Mix_HaltChannel(1);//arrete le musique du menu
-                                Mix_FreeChunk(soundAccept);
-                                Mix_FreeChunk(soundMove);
-                                Mix_FreeChunk(soundMenu); //MEME FONCTION
+                                soundQuit();
                                 break;
                             default :
                                 break;
@@ -363,10 +358,7 @@ void SdlMenu::sdlLoop(){
             }
             case 2: {//Difficulty loop
                 quit=true;
-                Mix_HaltChannel(1);//arrete le musique du menu
-                Mix_FreeChunk(soundAccept);
-                Mix_FreeChunk(soundMove); //MEME FONCTION
-                Mix_FreeChunk(soundMenu);
+                soundQuit();
                 cout <<endl <<"Pas encore implementé, une mise à jour arrive prochainement, stay tuned"<< endl;
                 break;
             }
@@ -378,6 +370,13 @@ void SdlMenu::sdlLoop(){
 
 }
 
+
+void SdlMenu::soundQuit() {
+    Mix_HaltChannel(1);//arrete le musique du menu MAIS CA DANS FONCTION !
+    Mix_FreeChunk(soundAccept); 
+    Mix_FreeChunk(soundMove);
+    Mix_FreeChunk(soundMenu);
+}
 
 
 

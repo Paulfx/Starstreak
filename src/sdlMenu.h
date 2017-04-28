@@ -51,6 +51,11 @@ private :
     Image im_backgroundMenu1;
     Image im_backgroundMenu2;
     Image im_ptrMenu;
+
+/* son */
+    Mix_Chunk *soundMove;
+    Mix_Chunk *soundAccept;
+    Mix_Chunk *soundMenu;
     
 public :
     
@@ -75,6 +80,7 @@ public :
     
     void sdlTest();
     
+    void soundQuit();
     
     //fonction moove du pointeur indepandant de currI
     //Static ? modification des données private en static possible ?
