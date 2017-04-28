@@ -27,7 +27,6 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	fichier.seekg(nbBeginning,ios::beg); // On se déplace au début de la partition
 
 	fichier >> nbLine;
-	fichier >> duree;
 	partition = new line[nbLine];
 
 	for(unsigned int i=0;i<nbLine;i++) {

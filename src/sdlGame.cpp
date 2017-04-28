@@ -88,9 +88,11 @@ void SdlGame::sdlLoop(){
             }
             else if (events.type == SDL_KEYDOWN){
                 switch(events.key.keysym.scancode) {
-                    case SDL_SCANCODE_Q:
+                    case SDL_SCANCODE_A:
                         quitGame=true;
                         break;
+                    
+
                     default:break;
                 }
             }
