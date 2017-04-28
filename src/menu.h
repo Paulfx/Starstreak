@@ -8,7 +8,7 @@
 #include <cassert>
 #include <sstream>
 #include "game.h"
-#include "struct.h"
+#include "class.h"
 
 using namespace std;
 

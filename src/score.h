@@ -8,6 +8,7 @@
 
 #include "partition.h"
 #include "keyboard.h"
+#include "class.h"
 
 class Score {
 /**

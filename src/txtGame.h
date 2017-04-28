@@ -2,7 +2,7 @@
 #define _TXTGAME_H
 
 #include "menu.h"
-#include "struct.h"
+#include "class.h"
 
 void menuBoucle (Menu & menu);
 

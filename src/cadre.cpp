@@ -4,25 +4,6 @@
 const float DURATION_FRAME = 16; //en ms
 
 
-/*-------------CLASSE NOTE-------------*/
-
-Note::Note() {}
-
-Note::Note(int x, int y, int c, bool longBool, float speedNote) {
-	posX = x;
-	posY = y;
-	color = c;
-	longDuration = longBool;
-	speed=speedNote;
-}
-
-int Note::getPosX() const { return posX;}
-int Note::getPosY() const { return posY;}
-int Note::getColor() const { return color;}
-void Note::scroll(float delta) {posY+=delta*speed;}
-
-/*-------------CLASSE CADRE-------------*/
-
 Cadre::Cadre() {}
 
 Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY, int beginV, int endV){
@@ -100,9 +81,14 @@ bool Cadre::update(float delta, const line& currLine) {
 
 void Cadre::scrollCadre(float delta) {
 	Note* tmpNote;
+	unsigned int posY;
 	for(unsigned int i=0;i<noteTab.size();++i) {
 		noteTab[i]->scroll(delta);
-		if(noteTab[i]->getPosY() > endValid) { //La note n'est plus dans le cadre, on l'efface
+		posY = noteTab[i]->getPosY();
+		if(posY >= beginValid && posY <=endValid) {
+			noteTab[i]->setNeedPlay(); //La note doit être jouée
+		}
+		else if(posY > endValid) { //La note n'est plus dans le cadre, on l'efface
 			tmpNote = noteTab[i];
 			noteTab.erase(noteTab.begin() + i);
 			delete tmpNote;

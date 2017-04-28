@@ -103,3 +103,4 @@ void Score::updateScore(const line currLine,const Keyboard& keyState,bool fail) 
 bool Score::isFail() {
     return fail;
 }
+

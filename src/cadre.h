@@ -1,28 +1,11 @@
 #ifndef _CADRE_H
 #define _CADRE_H
 
+#include "class.h"
 #include "partition.h"
 #include <vector>
 #include <string>
 
-class Note {
-
-private :
-	int posX;
-	int posY;
-	int color; //0=vert , 1=rouge, 2=jaune, 3=bleu, 4=orange
-	bool longDuration; //True si la note est longue (noéte "2")
-	float speed;
-
-public :
-	Note();
-	Note(int x, int y, int c, bool longBool, float speedNote);
-	int getPosX() const;
-	int getPosY() const;
-	int getColor() const;
-	void scroll(float delta);
-
-};
 
 /**@class Cadre
 	@brief  S'occupe du cadre déroulant des notes.

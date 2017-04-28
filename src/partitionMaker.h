@@ -1,7 +1,7 @@
 #ifndef PARTITION_MAKER_H
 #define PARTITION_MAKER_H
 
-#include "struct.h"
+#include "class.h"
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>

@@ -13,7 +13,7 @@
 #include <stdint.h>
 
 #include "partition.h"
-#include "struct.h"
+#include "class.h"
 #include "score.h"
 #include "cadre.h"
 
