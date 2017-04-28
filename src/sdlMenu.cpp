@@ -35,7 +35,7 @@ void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
             }else{
                 posPtr=posPtr-1;
             }
-        }else{
+        }else{//move down
             if(posPtr==nbDiff-1){
                 posPtr=0;
             }else{
@@ -269,8 +269,8 @@ void SdlMenu::sdlShow(){
                 cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
                 
             }
-            rec.x=0.083*width;
-            rec.y=0.3125*height;
+            rec.x=0.09*width;
+            rec.y=0.07*height;
             rec.w=0.0167*width*choosenSongTitle.size();
             rec.h=0.0625*height;
             if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
@@ -303,10 +303,10 @@ void SdlMenu::sdlShow(){
                     cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
                     
                 }
-                rec.x=0.66*width;
-                rec.y=600+50*i;
-                rec.w=20*tempTxt.size();
-                rec.h=50;
+                rec.x=0.066*width;
+                rec.y=0.20*height+(0.105*height)*i;
+                rec.w=0.016*width*tempTxt.size();
+                rec.h=0.12*height;
                 if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
                     cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
                 }
@@ -314,8 +314,8 @@ void SdlMenu::sdlShow(){
                                                
             }
             //######### Affichage du pointeur ########
-
-            im_ptrMenu.draw(renderer,900,600+50*posPtr,120,40);
+                                    //(0.33)*width,(0.0375*height)+posPtr*(0.0625*height),(0.15*height),(0.05*height)
+            im_ptrMenu.draw(renderer,(0.40)*width,0.25*height+(0.105*height)*posPtr,0.1*width,0.05*height);
             
             
             
@@ -430,9 +430,6 @@ void SdlMenu::sdlLoop(){
                   
                                 stateMenu = 2; //Direction Difficulté !
                                 posPtr=0;
-                         
-
-                                
                                 break;
                             }
                             
@@ -476,7 +473,6 @@ void SdlMenu::sdlLoop(){
                                 if (Mix_PlayChannel(4,soundAccept,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
-                                //im_chargment.show()
                                 
                                 
                                 
