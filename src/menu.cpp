@@ -75,6 +75,8 @@ void Menu::choose() {
 
 Song& Menu::getCurrSong() { return *songTab[currI]; }
 
+
+
 const Song& Menu::getConstCurrSong(){ return  *songTab[currI]; }
 
 unsigned int Menu::getCurrI() const { return currI; }
@@ -95,7 +97,7 @@ void Menu::decreaseDiff(){
 	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
 }
 
-Game& Menu::getGame() {return *currGame;} //surement inutile, à bouger
+//Game& Menu::getGame() {return *currGame;} //surement inutile, à bouger
 
 bool Menu::getMode() const { return mode;}
 

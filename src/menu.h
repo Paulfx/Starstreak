@@ -20,7 +20,7 @@ private :
 	unsigned int currI; //indice dans songTab de currPtr
 	unsigned int nbSongs; //taille du tab
 	bool active; //false si menu inactif = une game est active
-	Game* currGame; //La partie en cours
+	//Game* currGame; //La partie en cours
 	unsigned int difficulty;// 1, 2 ou 3
 	bool mode;
     
@@ -68,8 +68,9 @@ public :
 
 	unsigned int getNbSongs() const;
 
-	unsigned int getDifficulty() const;
-
+    unsigned int getDifficulty() const;
+    
+    
 	Game& getGame();
 
 	bool isActive() const;

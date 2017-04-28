@@ -6,25 +6,48 @@
     //Menu 0
 
 
-// ============= GAME =============== //
+// ============= MENU =============== //
+
+//Procédure de mouvement pour le pointeur du menu 0 et 2`
+//nbDiff=0 pour le menu 0
 
 
-
-void SdlMenu::moveUpPtr() {
-    if(posPtr==0){
-        posPtr=2;
+// Pas très utile vu qu'on a fixer le nb de difficulté
+void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
+    if(IDmenu==0){
+        if(move=="up"){
+            if(posPtr==0){
+                posPtr=2;
+            }else{
+                posPtr=posPtr-1;
+            }
+        }else{
+            if(posPtr==2){
+                posPtr=0;
+            }else{
+                posPtr=posPtr+1;
+            }
+        }
     }else{
-        posPtr=posPtr-1;
+        if(move=="up"){
+            if(posPtr==0){
+                posPtr=nbDiff-1;
+            }else{
+                posPtr=posPtr-1;
+            }
+        }else{
+            if(posPtr==nbDiff-1){
+                posPtr=0;
+            }else{
+                posPtr=posPtr+1;
+            }
+        }
+        
     }
 }
 
-void SdlMenu::moveDownPtr() {
-    if(posPtr==2){
-        posPtr=0;
-    }else{
-        posPtr=posPtr+1;
-    }
-}
+
+
 
 
 
@@ -118,7 +141,7 @@ SdlMenu::SdlMenu(){
 
         im_backgroundMenu0.loadFromFile("../data/theme/BackgroundMenu0.jpg",renderer);
         im_backgroundMenu1.loadFromFile("../data/theme/BackgroundMenu1.jpg",renderer);
-        //im_backgroundMenu2.loadFromFile("../data/theme/BackgroundMenu2.jpg",renderer);
+        im_backgroundMenu2.loadFromFile("../data/theme/BackgroundMenu2.jpg",renderer);
 
         im_ptrMenu.loadFromFile("../data/theme/Select.png",renderer);
 
@@ -140,7 +163,8 @@ SdlMenu::SdlMenu(){
 
 //Affichage du menu SELECT state=1
 void SdlMenu::sdlShow(){
-
+    SDL_Color WhiteC = {255, 255, 255};
+    SDL_Color RedC={255,0,0};
     switch(stateMenu){
         case 0: {
             SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
@@ -189,9 +213,9 @@ void SdlMenu::sdlShow(){
             SDL_Surface * SurfaceList;
             SDL_Texture * tex;
             SDL_Rect rec;
-
-            SDL_Color couleurNoire = {0, 0, 0};
-            SDL_Color couleurBlanche = {255, 255, 255};
+            
+            //SDL_Color couleurNoire = {0, 0, 0};
+            
             string tempTitle;
 
             cout<<menu->getNbSongs();
@@ -200,7 +224,7 @@ void SdlMenu::sdlShow(){
             while(i<endShowTitle){
                 tempTitle=menu->getTitleSong(i);
                 cout <<tempTitle <<endl;
-                SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(), couleurBlanche);
+                SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(),WhiteC);
                 if(SurfaceList==NULL){
                     cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
 
@@ -221,12 +245,90 @@ void SdlMenu::sdlShow(){
                 i++;
                 posTitle++;
             }
-
             break;
         }
         case 2: {
-            //Affichage de la liste des difficultés possibles avec du Texte
-            //Placement du pointeur
+            
+            SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
+            SDL_RenderClear(renderer);
+            im_backgroundMenu2.draw(renderer,0,0,width,height);
+            
+            
+            
+            
+            //###### Affichage Chanson Selectionnée ##########
+            SDL_Surface * Surface;
+            SDL_Texture * tex;
+            SDL_Rect rec;
+            
+            Surface=TTF_RenderText_Blended(fontMenu,choosenSongTitle.c_str(),RedC);
+            if(Surface==NULL){
+                cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
+                
+            }
+            tex=SDL_CreateTextureFromSurface(renderer,Surface);
+            if(tex==NULL){
+                cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
+                
+            }
+            rec.x=100;
+            rec.y=250;
+            rec.w=20*choosenSongTitle.size();
+            rec.h=50;
+            if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
+                cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+            }
+         
+            
+            //##### Affichage Difficulté ##########
+            string tempTxt;
+            for(unsigned int i=0;i<3;i++){
+                switch(i){
+                    case 0:{
+                        tempTxt="0: Pour les NOOBS";
+                        break;
+                    }
+                    case 1:{
+                        tempTxt="1: Pour les CASUALS";
+                         break;
+                    }
+                       
+                    case 2:{
+                        tempTxt="2: Pour les ROCKERS";
+                        break;
+                    }
+                    
+                }
+                Surface=TTF_RenderText_Blended(fontMenu,tempTxt.c_str(),WhiteC);
+                tex=SDL_CreateTextureFromSurface(renderer,Surface);
+                if(tex==NULL){
+                    cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
+                    
+                }
+                rec.x=800;
+                rec.y=600+50*i;
+                rec.w=20*tempTxt.size();
+                rec.h=50;
+                if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
+                    cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+                }
+
+                                               
+            }
+            //######### Affichage du pointeur ########
+
+            im_ptrMenu.draw(renderer,900,600+50*posPtr,120,40);
+
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
             break;
         }
     }
@@ -264,13 +366,13 @@ void SdlMenu::sdlLoop(){
                                 if (Mix_PlayChannel(2,soundMove,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
-                                moveUpPtr();
+                                movePtr("up",0,0);
                                 break;
                             case SDL_SCANCODE_DOWN:
                                 if (Mix_PlayChannel(3,soundMove,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
-                                moveDownPtr();
+                                movePtr("down",0,0);
                                 break;
                             case SDL_SCANCODE_RETURN:
                                 if (Mix_PlayChannel(4,soundAccept,0)==-1) {
@@ -279,6 +381,7 @@ void SdlMenu::sdlLoop(){
                                 switch(posPtr){
                                     case 0: {//SET MODE GAME + state
                                         stateMenu=1;
+                                        posPtr=0;
                                         break;
                                     }
                                     case 1:{//SET MODE CREATE + state -> set mode dans la partie 2
@@ -332,26 +435,22 @@ void SdlMenu::sdlLoop(){
                                 if (Mix_PlayChannel(4,soundAccept,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
-                                //go difficulty -> set state + keep difficulty
-                                /*  ---------------  AVANT --------------------
-                                            menu->choose();
-                                            sdlLoop();
-                                    ---------------  APRES -------------------- */
-                                //SDL_LoadingImage im_chargement(menu.musiqueChoisie)
-                                SdlGame game(texture,window,renderer,menu->getConstCurrSong(),menu->getDifficulty(),menu->getMode());
+                                choosenSongTitle=(menu->getCurrSong()).title;
                                 //im_chargment.show()
-                                Mix_HaltChannel(1);// Theo faudra que tu supprimes cette ligne lorsque le choix de la difficultée sera ok
-                                game.sdlLoop();
-                                stateMenu = 0; //On retourne au début
+                  
+                                stateMenu = 2; //Direction Difficulté !
+                                posPtr=0;
+                         
 
-                                if (Mix_FadeInChannel(1,soundMenu,2,4000)==-1) {// RElance la musique du menu
-                                    cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-                                }
+                                
+                                break;
                             }
-                            break;
+                            
                             case SDL_SCANCODE_ESCAPE://touche echap
+                            {
                                 quit=true;
                                 break;
+                            }
                             default :
                                 break;
                         }
@@ -360,9 +459,63 @@ void SdlMenu::sdlLoop(){
                 break;
             }
             case 2: {//Difficulty loop
-                quit=true;
-                soundQuit();
-                cout <<endl <<"Pas encore implementé, une mise à jour arrive prochainement, stay tuned"<< endl;
+                while (SDL_PollEvent(&events)) {
+                    if (events.type == SDL_QUIT){
+                        quit = true;
+                        soundQuit();
+                    }else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
+                        switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
+                            case SDL_SCANCODE_UP: //flèche du haut
+                            {
+                                if (Mix_PlayChannel(2,soundMove,0)==-1) {
+                                    cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                                }
+                                movePtr("up",2,3);
+                                break;
+                            }
+                            case SDL_SCANCODE_DOWN:
+                            {//flèche du bas
+                                if (Mix_PlayChannel(3,soundMove,0)==-1) {
+                                    cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                                }
+                                movePtr("down",2,3);
+                                break;
+                            }
+                            case SDL_SCANCODE_RETURN://touche entré
+                            {
+                                if (Mix_PlayChannel(4,soundAccept,0)==-1) {
+                                    cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                                }
+                                //im_chargment.show()
+                                
+                                
+                                
+                                SdlGame game(texture,window,renderer,menu->getCurrSong(),posPtr+1,menu->getMode());
+                                //DETRUIRE LE JEUUUUUU
+                                Mix_HaltChannel(1);// Theo faudra que tu supprimes cette ligne lorsque le choix de la difficultée sera ok
+                                game.sdlLoop();
+                                if (Mix_FadeInChannel(1,soundMenu,2,4000)==-1) {// RElance la musique du menu
+                                    cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                                }
+                                stateMenu = 0;
+                                //ON PEUT FAIRE UN BIEN JOUERF AFFICHAGE DU SCORE OU UNNE CONNERIE DE CE GENRE ICI (une fonction show avec un delay ou un ok)
+                                break;
+                            }
+                         
+                            case SDL_SCANCODE_ESCAPE://touche echap
+                            {
+                                
+                                
+                                //On pourrait imaginer un retour au menu de selection donc destruction de game ?
+                                quit=true;
+                                soundQuit();
+                                break;
+                            }
+                            default :
+                                break;
+                        }
+                    }
+                }
                 break;
             }
         }

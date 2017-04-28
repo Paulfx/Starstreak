@@ -41,6 +41,7 @@ private :
     
     int posPtr;
     int stateMenu;
+    string choosenSongTitle;
     // Etat du menu :
         //par default on est dans le premier (0)
         //1 -> Selection chanson
@@ -84,8 +85,7 @@ public :
     
     //fonction moove du pointeur indepandant de currI
     //Static ? modification des données private en static possible ?
-    void moveUpPtr();
-    void moveDownPtr();
+    void movePtr(const string move,const int IDmenu,const int nbDiff);
     
 };
 

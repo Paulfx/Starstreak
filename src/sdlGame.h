@@ -27,7 +27,7 @@ private :
     int width,height; //taille de la fenêtre
 
 /* ######### GAME ######### */
-
+    string titleSong;
     Game* game;
 
     Image im_note0, im_note1, im_note2, im_note3, im_note4, im_ligneValidation;
@@ -50,6 +50,7 @@ public :
     /** @brief  Affichage de l'etat actuel du jeux 
      */
     void sdlShow();
+    
 
 };
 
