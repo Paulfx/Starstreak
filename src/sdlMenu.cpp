@@ -196,7 +196,7 @@ void SdlMenu::sdlShow(){
             //Menu Deroulant
             if((menu->getCurrI())>9){
                 posPtr=9;//pointe sur la derniere
-                im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
+                im_ptrMenu.draw(renderer,(0.33)*width,(0.0375*height)+posPtr*(0.0625*height),(0.15*height),(0.05*height));
 
 
                 beginShowTitle=menu->getCurrI()%10; //affiche les 10 chanson aprés la menu->getCurrI()%10
@@ -204,7 +204,7 @@ void SdlMenu::sdlShow(){
             }
             else{
                 posPtr=menu->getCurrI()%10;//%menu->getNbSongs();
-                im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
+                im_ptrMenu.draw(renderer,(0.33)*width,(0.0375*height)+posPtr*(0.0625*height),(0.15*height),(0.05*height));
             }
 
             //Decla des 3 composants de la liste
@@ -233,10 +233,10 @@ void SdlMenu::sdlShow(){
 
                 }
                 SurfaceList=NULL;
-                rec.x=30;
-                rec.y=25+posTitle*50;//(1/3)*(height)+50*i+5;
-                rec.w=20*tempTitle.size();
-                rec.h=50;
+                rec.x=(0.025)*width;
+                rec.y=(0.03125)*height+posTitle*(0.0625)*height;
+                rec.w=(0.0167)*width*tempTitle.size();
+                rec.h=(0.0625)*height;
                 if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
                     cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
                 }
@@ -269,10 +269,10 @@ void SdlMenu::sdlShow(){
                 cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
                 
             }
-            rec.x=100;
-            rec.y=250;
-            rec.w=20*choosenSongTitle.size();
-            rec.h=50;
+            rec.x=0.083*width;
+            rec.y=0.3125*height;
+            rec.w=0.0167*width*choosenSongTitle.size();
+            rec.h=0.0625*height;
             if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
                 cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
             }
@@ -303,7 +303,7 @@ void SdlMenu::sdlShow(){
                     cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
                     
                 }
-                rec.x=800;
+                rec.x=0.66*width;
                 rec.y=600+50*i;
                 rec.w=20*tempTxt.size();
                 rec.h=50;
