@@ -8,9 +8,9 @@ const int COLUMN_NOTE_2 = 300;
 const int COLUMN_NOTE_3 = 450;
 const int COLUMN_NOTE_4 = 600;
 const int BEGIN_CADRE = 0;
-const int BEGIN_VALIDATION = 500;
+const int BEGIN_VALIDATION = 520;
 const int END_VALIDATION = 550;
-const int TIME_UNTIL_DOWN = 3;
+const float TIME_UNTIL_DOWN = 2;
 
 Game::Game() {
 

@@ -134,6 +134,8 @@ void Score::update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard) {
 }
 
 void Score::success() {
+cout<<"SUCCESS"<<endl;
+
     noteStreak++;
     numberSuccess++;
     if (noteStreak%10 == 0 && noteStreak<40){//de 0 à 40 notes consécutives le multiplicateur est incrémenté toutes les 10 notes
@@ -146,6 +148,7 @@ void Score::success() {
 }
 
 void Score::failure() {
+  
     noteStreak=0;
     multiplier=1;
     rockmeter-=2;

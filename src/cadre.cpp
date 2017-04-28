@@ -22,7 +22,6 @@ Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY
 
 	speed=(float)(beginValid + (float)(endValid-beginValid)/2 - initialY)/timeUntil;
 	assert(speed!=0);
-	cout<<"SPEED :"<<speed;
 	timeLine=0;
 }
 
@@ -45,8 +44,6 @@ delta représente le temps depuis le dernier appel de la fonction en SECONDES
 */
 
 bool Cadre::update(float delta, const line& currLine) {
-	cout<<timeLine<<endl<<delta<<endl;
-
 	if (timeLine==0) timeLine = currLine.time/1000.f;//conversion en secondes
 	
 	bool ajout=false;

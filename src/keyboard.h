@@ -55,18 +55,26 @@ public :
     /** @brief Mutateur
     */
     void setNoPress(unsigned int i);
-    
-    /** @brief Mutateur
-    */
-    void setSimplePress(unsigned int i);
-    
-    /** @brief Mutateur
-    */
-    void setLongPress(unsigned int i);
 
+    /** @brief Mutateur
+    Initialise tout le tableau à noPress
+    */
+    void clear();
+    
+    /** @brief Mutateur
+    Met la touche 'i' à simplePress si elle était à noPress, longPress sinon
+    */
+    void setPress(unsigned int i);
+    
     /** @brief Mutateur
     */
     void setValid(bool b);
+
+    void afficher();
+
+    /** Transforme tous les simplePress en longPress
+    */
+    void setLongPressAllSimplePress(); 
 
 };
 

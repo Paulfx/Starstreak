@@ -75,29 +75,50 @@ void SdlGame::sdlLoop(){
         cout<<"Mix_PlayMusic error"<<endl;
     }
 
+
+    Keyboard& keyboard = game->getKeyboard();
+
     float time_seconds = SDL_GetTicks() / 1000.f;
     while(!quitGame){
+        keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
+        while (SDL_PollEvent(&events)) {
+            if (events.type == SDL_QUIT){
+                quitGame = true;
+            }
+            else if (events.type == SDL_KEYDOWN){ //Appui
+                switch(events.key.keysym.scancode) {
+                    case SDL_SCANCODE_A:
+                        quitGame=true;
+                        break;
+                    case SDL_SCANCODE_Q:keyboard.setPress(0);break;
+                    case SDL_SCANCODE_W:keyboard.setPress(1);break;
+                    case SDL_SCANCODE_E:keyboard.setPress(2);break;
+                    case SDL_SCANCODE_R:keyboard.setPress(3);break;
+                    case SDL_SCANCODE_T:keyboard.setPress(4);break;
+
+                    default:break;
+                }
+            }
+            else if (events.type == SDL_KEYUP){ //Relachement
+                switch(events.key.keysym.scancode) {
+                    case SDL_SCANCODE_Q:keyboard.setNoPress(0);break;
+                    case SDL_SCANCODE_W:keyboard.setNoPress(1);break;
+                    case SDL_SCANCODE_E:keyboard.setNoPress(2);break;
+                    case SDL_SCANCODE_R:keyboard.setNoPress(3);break;
+                    case SDL_SCANCODE_T:keyboard.setNoPress(4);break;
+                    default:break;
+                }
+            }
+        }
+        keyboard.afficher();
+
         float new_time = SDL_GetTicks() / 1000.f;
         float delta = new_time - time_seconds;
         time_seconds = new_time;
 
         game->update(delta);
 
-        while (SDL_PollEvent(&events)) {
-            if (events.type == SDL_QUIT){
-                quitGame = true;
-            }
-            else if (events.type == SDL_KEYDOWN){
-                switch(events.key.keysym.scancode) {
-                    case SDL_SCANCODE_A:
-                        quitGame=true;
-                        break;
-                    
-
-                    default:break;
-                }
-            }
-        }
+        
         sdlShow();
         SDL_RenderPresent(renderer);
     }

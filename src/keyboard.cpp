@@ -8,12 +8,11 @@
 
 #include "keyboard.h"
 #include <cassert>
+#include <iostream>
 
 Keyboard::Keyboard(){
     keyTab=new enumPress[5];
-    for(int i=0;i<5;i++){
-        keyTab[i]=noPress;
-    }
+    clear();
     validation = false;
 }
 
@@ -41,8 +40,28 @@ bool Keyboard::isValid() const {return validation;}
 
 void Keyboard::setNoPress(unsigned int i) { keyTab[i] = noPress; }
 
-void Keyboard::setSimplePress(unsigned int i) { keyTab[i] = noPress; }
+void Keyboard::clear() {
+    for(int i=0;i<5;i++){
+        keyTab[i]=noPress;
+    }
+}
 
-void Keyboard::setLongPress(unsigned int i) { keyTab[i] = noPress; }
+void Keyboard::setPress(unsigned int i) { 
+    if(keyTab[i] == noPress) keyTab[i] = simplePress;
+    else keyTab[i] = longPress;
+}
 
 void Keyboard::setValid(bool b) { validation = b; }
+
+void Keyboard::afficher() {
+    for(int i=0;i<5;i++){
+        std::cout<<keyTab[i];
+    }
+    std::cout<<std::endl;
+}
+
+void Keyboard::setLongPressAllSimplePress() {
+    for(int i=0;i<5;i++){
+        if(keyTab[i]==simplePress) keyTab[i]=longPress;
+    }
+}

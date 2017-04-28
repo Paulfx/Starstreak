@@ -17,5 +17,5 @@ bool Note::getNeedPlay() const {return needPlay;}
 bool Note::isPlayed() const {return played;}
 bool Note::isLong() const {return longDuration;}
 void Note::scroll(float delta) {posY+=delta*speed;}
-void Note::setNeedPlay() {needPlay = true;}
+void Note::setNeedPlay() {needPlay=true;}
 void Note::setPlayed() {played=true;}
