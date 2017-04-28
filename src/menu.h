@@ -58,9 +58,11 @@ public :
 	/**@brief Crée la partie associée à la chanson pointée par currPtr
 		Rend le menu inactif
 	*/
-	void choose();
+	//void choose();
 
 	Song& getCurrSong();
+
+	const Song& getConstCurrSong(); 
 
 	unsigned int getCurrI() const;
 
@@ -75,7 +77,6 @@ public :
 	void increaseDiff();
 
 	void decreaseDiff();
-
 
 	bool getMode() const;
 

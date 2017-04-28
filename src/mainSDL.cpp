@@ -4,7 +4,7 @@
 #include <cassert>
 #include <iostream>
 
-#include "sdlGame.h"
+#include "sdlMenu.h"
 
 
 using namespace std;
@@ -23,8 +23,8 @@ int main (int argc, char *argv[]){
     //channels Nombre de channel de son en sortie (periphérique?) -> 2 stereo, 1 mono, rien a voir avec les channel de mixing
     //chunksize, used per output sample
     */
-    sdlGame mySDL;
-    mySDL.sdlMenuLoop();
+    SdlMenu mySDL;
+    mySDL.sdlLoop();
     
     
     return 0;

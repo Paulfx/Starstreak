@@ -17,7 +17,7 @@ Game::Game() {
 }
 
 
-Game::Game(Song& currSong,unsigned int difficulty,bool mode) {
+Game::Game(const Song& currSong,unsigned int difficulty,bool mode) {
 	song = currSong;
 	creationMode = mode;
 	partition = new Partition(currSong.filePartition,1);//A CHANGER DIFFICULTY != 1
@@ -46,7 +46,7 @@ Game::~Game() {
 	delete score;
 }
 
-Song& Game::getSong() { return song;}
+const Song& Game::getSong() { return song;}
 
 Score& Game::getScore() { return *score;}
 

@@ -1,11 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
+
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
 #include <assert.h>
-#include <queue>
 #include <vector>
 #include <stdint.h>
 
@@ -47,7 +50,7 @@ public :
      @param difficulty difficulté de la Game et donc modification de la lecture/ecriture sur le fichier ? 
      @todo
      */
-    Game(Song& song,unsigned int difficulty,bool mode);
+    Game(const Song& song,unsigned int difficulty,bool mode);
     
     /**@brief Destructeur
      */
@@ -56,7 +59,7 @@ public :
     /**@brief accesseur de l'attribut song, instance de la classe Song
     @return une référence vers song
     */
-    Song& getSong();
+    const Song& getSong();
 
     /**@brief accesseur de l'attribut score, instance de la classe Score
     @return une référence vers score

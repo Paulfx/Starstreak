@@ -35,7 +35,7 @@ test : obj/mainTest.o obj/partition.o obj/keyboard.o
 cadre : obj/mainCadre.o obj/cadre.o obj/partition.o
 	g++ -o bin/$@ $^ -std=c++11
 
-SDL: $(OBJET) obj/sdlGame.o obj/mainSDL.o # ////
+SDL: $(OBJET) obj/sdlGame.o obj/sdlMenu.o obj/sdlClass.o obj/mainSDL.o # ////
 	g++ -o bin/$@ $^ -std=c++11 $(INCLUDE) $(LIB)
 
 

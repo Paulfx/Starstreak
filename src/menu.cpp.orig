@@ -9,7 +9,7 @@ Menu::Menu() {
 	mode=false;
 }
 
-Menu::Menu(const string& filename) : currI(0), active(true), difficulty(-1), mode(false){
+Menu::Menu(const string& filename) : currI(0), active(true), difficulty(0), mode(false){
 	cout<<"Ouverture de : "<<filename<<endl;
 	ifstream fichier(filename.c_str());
 	assert(fichier.is_open());
@@ -53,29 +53,29 @@ Menu::~Menu() {
 	songTab = NULL;
 }
 
-
-//On ne peut qu'afficher 10 chanson dans le cadre de selection -> il faudra faire un modulo 10 pour recuperer la position ou la chanson pointer (sdlGame l-160)
 void Menu::moveUp() {
 	(currI == 0) ? currI=nbSongs-1 : currI=(currI - 1) % nbSongs;
 }
 
 void Menu::moveDown() {
-    //%nbSongs evite de faire le test si on est en bas
 	currI = (currI + 1) % nbSongs;
 }
 
 
 //Synchro affichage + coeur
 //songTab et le vector String sont initialisé dans le même ordre.
-/*
+
 void Menu::choose() {
 	currGame = new Game(*songTab[currI],difficulty,mode); 
 	active = false;
-}	*/								
+<<<<<<< local
+}									
 
+=======
+}
+
+>>>>>>> other
 Song& Menu::getCurrSong() { return *songTab[currI]; }
-
-const Song& Menu::getConstCurrSong(){ return  *songTab[currI]; }
 
 unsigned int Menu::getCurrI() const { return currI; }
 
