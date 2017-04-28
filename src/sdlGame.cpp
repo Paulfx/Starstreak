@@ -84,11 +84,13 @@ void SdlGame::sdlLoop(){
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
+                Mix_HaltMusic();
             }
             else if (events.type == SDL_KEYDOWN){ //Appui
                 switch(events.key.keysym.scancode) {
                     case SDL_SCANCODE_A:
                         quitGame=true;
+                        Mix_HaltMusic();
                         break;
                     case SDL_SCANCODE_Q:keyboard.setPress(0);break;
                     case SDL_SCANCODE_W:keyboard.setPress(1);break;

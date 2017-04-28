@@ -57,32 +57,33 @@ SdlMenu::SdlMenu(){
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS,1024)==-1){
         cout<<Mix_GetError()<<endl;
     }
-    
+
 /*SDL_Mixer init*/
     Mix_AllocateChannels(5);
-    
-    
+
+
 
     /* bruitages de naviguation + musique de fond*/
-    
+
     soundMove=Mix_LoadWAV("../data/theme/sounds/move.ogg");
     if(!soundMove){
         cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
     }
-    
+
     soundAccept=Mix_LoadWAV("../data/theme/sounds/action.ogg");
     if(!soundAccept){
         cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
     }
     /*musique de fond dans le menu*/
-    
+    /**@todo Ouvrir plusieurs son de menu qui se lance aléatoirement**/
+
     soundMenu=Mix_LoadWAV("../data/theme/sounds/menu.ogg");
     if(!soundMenu){
         cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
     }
-    if (Mix_PlayChannel(1,soundMenu,2)==-1) {
+    if (Mix_FadeInChannel(1,soundMenu,2,4000)==-1) {
         cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-    }
+        }
     Mix_Pause(1);
 
 
@@ -94,15 +95,15 @@ SdlMenu::SdlMenu(){
 
     //Initialisation du menu
     menu= new Menu("../data/index");
-     
+
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,0,0,SDL_WINDOW_FULLSCREEN_DESKTOP);
-    
-    
+
+
     SDL_GetWindowSize(window, &width, &height);    //parametres gestion de position/taille/resolution etc
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
-    
+
 
     SDL_RenderSetLogicalSize(renderer,width, height); //taille fenetre
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
@@ -114,7 +115,7 @@ SdlMenu::SdlMenu(){
                                 //fluidité sur l'affichage des images
                                 0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
     if(renderer){
-        
+
         im_backgroundMenu0.loadFromFile("../data/theme/BackgroundMenu0.jpg",renderer);
         im_backgroundMenu1.loadFromFile("../data/theme/BackgroundMenu1.jpg",renderer);
         //im_backgroundMenu2.loadFromFile("../data/theme/BackgroundMenu2.jpg",renderer);
@@ -139,12 +140,12 @@ SdlMenu::SdlMenu(){
 
 //Affichage du menu SELECT state=1
 void SdlMenu::sdlShow(){
-    
+
     switch(stateMenu){
         case 0: {
             SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
             SDL_RenderClear(renderer);
-            
+
             im_backgroundMenu0.draw(renderer,0,0,width,height);
             switch(posPtr){
                 case 0:
@@ -162,20 +163,20 @@ void SdlMenu::sdlShow(){
         case 1: {
             SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
             SDL_RenderClear(renderer);
-            
+
             im_backgroundMenu1.draw(renderer,0,0,width,height);
-            
-            
+
+
             int beginShowTitle=0;
             int endShowTitle=10;
-            
-            
+
+
             //Menu Deroulant
             if((menu->getCurrI())>9){
                 posPtr=9;//pointe sur la derniere
                 im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
-                
-                
+
+
                 beginShowTitle=menu->getCurrI()%10; //affiche les 10 chanson aprés la menu->getCurrI()%10
                 endShowTitle=menu->getCurrI();
             }
@@ -183,16 +184,16 @@ void SdlMenu::sdlShow(){
                 posPtr=menu->getCurrI()%10;//%menu->getNbSongs();
                 im_ptrMenu.draw(renderer,400,30+posPtr*50,120,40);
             }
-            
+
             //Decla des 3 composants de la liste
             SDL_Surface * SurfaceList;
             SDL_Texture * tex;
             SDL_Rect rec;
-            
+
             SDL_Color couleurNoire = {0, 0, 0};
             SDL_Color couleurBlanche = {255, 255, 255};
             string tempTitle;
-            
+
             cout<<menu->getNbSongs();
             int i=beginShowTitle;
             int posTitle=0;
@@ -202,12 +203,12 @@ void SdlMenu::sdlShow(){
                 SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(), couleurBlanche);
                 if(SurfaceList==NULL){
                     cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
-                    
+
                 }
                 tex= SDL_CreateTextureFromSurface(renderer,SurfaceList);
                 if(tex==NULL){
                     cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
-                    
+
                 }
                 SurfaceList=NULL;
                 rec.x=30;
@@ -220,7 +221,7 @@ void SdlMenu::sdlShow(){
                 i++;
                 posTitle++;
             }
-            
+
             break;
         }
         case 2: {
@@ -245,17 +246,15 @@ void SdlMenu::sdlTest(){
 void SdlMenu::sdlLoop(){
     SDL_Event events;
     bool quit = false;
-    
-    
-    
-                        /*Debut de la boucle Menu*/ 
-    
+    Mix_Resume(1);
+                        /*Debut de la boucle Menu*/
+
     while (!quit){
         sdlShow();
-        Mix_Resume(1);
 
         switch(stateMenu){
             case 0: {// menu0 loop
+
                 while(SDL_PollEvent(&events)){
                     if (events.type == SDL_QUIT){
                         quit = true;
@@ -284,7 +283,7 @@ void SdlMenu::sdlLoop(){
                                     }
                                     case 1:{//SET MODE CREATE + state -> set mode dans la partie 2
                                         quit=true;
-                                        soundQuit();
+                                        Mix_HaltChannel(1);
                                         cout <<endl <<"Pas encore implementé, une mise à jour arrive prochainement, stay tuned"<< endl;
                                         break;
                                     }
@@ -303,7 +302,7 @@ void SdlMenu::sdlLoop(){
                                 break;
                         }
                     }
-                    
+
                 }
                 break;
             }
@@ -313,7 +312,7 @@ void SdlMenu::sdlLoop(){
                     quit = true;
                     soundQuit();
                 }
-                
+
                     else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                         switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                             case SDL_SCANCODE_UP: //flèche du haut
@@ -341,13 +340,17 @@ void SdlMenu::sdlLoop(){
                                 //SDL_LoadingImage im_chargement(menu.musiqueChoisie)
                                 SdlGame game(texture,window,renderer,menu->getConstCurrSong(),menu->getDifficulty(),menu->getMode());
                                 //im_chargment.show()
+                                Mix_HaltChannel(1);// Theo faudra que tu supprimes cette ligne lorsque le choix de la difficultée sera ok
                                 game.sdlLoop();
                                 stateMenu = 0; //On retourne au début
+
+                                if (Mix_FadeInChannel(1,soundMenu,2,4000)==-1) {// RElance la musique du menu
+                                    cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                                }
                             }
                             break;
                             case SDL_SCANCODE_ESCAPE://touche echap
                                 quit=true;
-                                soundQuit();
                                 break;
                             default :
                                 break;
@@ -371,9 +374,9 @@ void SdlMenu::sdlLoop(){
 }
 
 
-void SdlMenu::soundQuit() {
+void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le programme sinon on aura plus aucun son lorsque l'on retourne dans le menu
     Mix_HaltChannel(1);//arrete le musique du menu MAIS CA DANS FONCTION !
-    Mix_FreeChunk(soundAccept); 
+    Mix_FreeChunk(soundAccept);
     Mix_FreeChunk(soundMove);
     Mix_FreeChunk(soundMenu);
 }
@@ -382,16 +385,16 @@ void SdlMenu::soundQuit() {
 
 
 SdlMenu::~SdlMenu(){
-    
-    
-    
+
+
+
     //Fermeture TTF
     //TTF_CloseFont(fontMenu);  -> erreur d'allocation
     TTF_Quit();
     Mix_CloseAudio();
     IMG_Quit();
     SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
-    
+
 }
 
 
