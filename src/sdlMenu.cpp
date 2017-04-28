@@ -344,13 +344,16 @@ void SdlMenu::sdlLoop(){
                                 SdlGame game(texture,window,renderer,menu->getConstCurrSong(),menu->getDifficulty(),menu->getMode());
                                 //im_chargment.show()
                                 game.sdlLoop();
+                                stateMenu = 0; //On retourne au début
                             }
+                            break;
                             case SDL_SCANCODE_ESCAPE://touche echap
                                 quit=true;
                                 Mix_HaltChannel(1);//arrete le musique du menu
                                 Mix_FreeChunk(soundAccept);
                                 Mix_FreeChunk(soundMove);
                                 Mix_FreeChunk(soundMenu); //MEME FONCTION
+                                break;
                             default :
                                 break;
                         }
