@@ -63,14 +63,7 @@ SdlMenu::SdlMenu(){
     if (TTF_Init() == -1) {
         cout << "Erreur lors de l'initialisation de la SDL_ttf : " << SDL_GetError() << endl;SDL_Quit();exit(1);
     }
-    //chemin + taille de police
-    //Police du menu
-    fontMenu= NULL;
-    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 50);
-    if(fontMenu==NULL) {
-        cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
-        // handle error
-    }
+
     //IMAGE
     int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
     if( !(IMG_Init(imgFlags) & imgFlags)) {
@@ -124,6 +117,18 @@ SdlMenu::SdlMenu(){
 
 
     SDL_GetWindowSize(window, &width, &height);    //parametres gestion de position/taille/resolution etc
+    
+    
+    //POLICE DU MENU
+    fontMenu= NULL;
+    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 0.0625*width); //TAILLE GENERE DYNAMIQUEMENT EN FONCTION DE LA TAILLE DE L'ECRAN
+    if(fontMenu==NULL) {
+        cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
+        // handle error
+    }
+    
+    
+    
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
 
@@ -154,13 +159,6 @@ SdlMenu::SdlMenu(){
 
 
 
-
-
-
-
-
-
-
 //Affichage du menu SELECT state=1
 void SdlMenu::sdlShow(){
     SDL_Color WhiteC = {255, 255, 255};
@@ -173,13 +171,13 @@ void SdlMenu::sdlShow(){
             im_backgroundMenu0.draw(renderer,0,0,width,height);
             switch(posPtr){
                 case 0:
-                    im_ptrMenu.draw(renderer,800,posPtr*110+300,120,40);
+                    im_ptrMenu.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.375*height),0.15*height,0.05*height);
                     break;
                 case 1:
-                    im_ptrMenu.draw(renderer,800,posPtr*110+300,120,40);
+                    im_ptrMenu.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.375*height),0.15*height,0.05*height);
                     break;
                 case 2:
-                    im_ptrMenu.draw(renderer,800,posPtr*110+300,120,40);
+                    im_ptrMenu.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.375*height),0.15*height,0.05*height);
                     break;
             }
             break;
@@ -318,14 +316,6 @@ void SdlMenu::sdlShow(){
             //######### Affichage du pointeur ########
 
             im_ptrMenu.draw(renderer,900,600+50*posPtr,120,40);
-
-
-            
-            
-            
-            
-            
-            
             
             
             
@@ -521,9 +511,6 @@ void SdlMenu::sdlLoop(){
         }
 
     }
-
-  //  SDL_menu_quit();
-
 }
 
 
