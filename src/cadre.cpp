@@ -114,3 +114,5 @@ Note* Cadre::getPtrNote(unsigned int i) {
 bool Cadre::isEmpty() const { return noteTab.empty();}
 
 int Cadre::getBeginValid() const { return beginValid;}
+
+int Cadre::getTabPos(unsigned int i) const { return tabPos[i];}

@@ -72,6 +72,8 @@ public :
      */
 	int getBeginValid() const;
 
+	int getTabPos(unsigned int i) const;
+
 };
 
 

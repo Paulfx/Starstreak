@@ -4,7 +4,7 @@ using namespace std;
 
 const int COLUMN_NOTE_0 = 0;
 const int COLUMN_NOTE_1 = 150;
-const int COLUMN_NOTE_2 = 300;
+const int COLUMN_NOTE_2 = 280;
 const int COLUMN_NOTE_3 = 450;
 const int COLUMN_NOTE_4 = 600;
 const int BEGIN_CADRE = 0;

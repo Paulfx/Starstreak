@@ -11,7 +11,8 @@ SdlGame::SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * rend
     assert(renderer);
 
     game = new Game(song,difficulty,mode);
-
+    
+    SDL_GetWindowSize(window, &width, &height);
 
     im_note0.loadFromFile("../data/theme/notes/vert.png",renderer);
     im_note1.loadFromFile("../data/theme/notes/rouge.png",renderer);
@@ -22,16 +23,29 @@ SdlGame::SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * rend
     im_ligneValidation.loadFromFile("../data/theme/notes/ligneValidation.png",renderer);
     
     im_noteV0.loadFromFile("../data/theme/notes/validGreen.png",renderer);
+    tabImV[0]=im_noteV0;
     im_noteV1.loadFromFile("../data/theme/notes/validRed.png",renderer);
+    tabImV[1]=im_noteV1;
     im_noteV2.loadFromFile("../data/theme/notes/validYel.png",renderer);
+    tabImV[2]=im_noteV2;
     im_noteV3.loadFromFile("../data/theme/notes/validBl.png",renderer);
+    tabImV[3]=im_noteV3;
     im_noteV4.loadFromFile("../data/theme/notes/validOr.png",renderer);
+    tabImV[4]=im_noteV4;
+
     
     im_noteVPush0.loadFromFile("../data/theme/notes/validGreenON.png",renderer);
+    tabImVPush[0]=im_noteVPush0;
     im_noteVPush1.loadFromFile("../data/theme/notes/validRedON.png",renderer);
+    tabImVPush[1]=im_noteVPush1;
     im_noteVPush2.loadFromFile("../data/theme/notes/validYelON.png",renderer);
+    tabImVPush[2]=im_noteVPush2;
     im_noteVPush3.loadFromFile("../data/theme/notes/validBlON.png",renderer);
+    tabImVPush[3]=im_noteVPush3;
     im_noteVPush4.loadFromFile("../data/theme/notes/validOrON.png",renderer);
+    tabImVPush[4]=im_noteVPush4;
+
+    
 }
 
 SdlGame::~SdlGame() {
@@ -48,21 +62,43 @@ void SdlGame::sdlShow(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
 
+    
     Cadre& cadre = game->getCadre();
 
-    im_ligneValidation.draw(renderer,0,cadre.getBeginValid());
+   // im_ligneValidation.draw(renderer,0,cadre.getBeginValid());
+
+    drawValidation();
+    int taille = width/20;
 
     for(unsigned int i=0;i<cadre.getNbNote();++i) {
         Note& note = cadre.getNote(i);
         int color = note.getColor();
         switch(color) {
-            case 0 : im_note0.draw(renderer,note.getPosX(),note.getPosY());break;
-            case 1 : im_note1.draw(renderer,note.getPosX(),note.getPosY());break;
-            case 2 : im_note2.draw(renderer,note.getPosX(),note.getPosY());break;
-            case 3 : im_note3.draw(renderer,note.getPosX(),note.getPosY());break;
-            case 4 : im_note4.draw(renderer,note.getPosX(),note.getPosY());break;
+            case 0 : im_note0.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
+            case 1 : im_note1.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
+            case 2 : im_note2.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
+            case 3 : im_note3.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
+            case 4 : im_note4.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
             default:break;
         }
+    }
+
+}
+
+void SdlGame::drawValidation(){
+    Cadre& cadre = game->getCadre();
+    Keyboard& keyboard = game->getKeyboard();
+
+    int taille = width/20;  
+
+    for(unsigned int i=0;i<5;++i) {
+        if(keyboard.isNoPress(i)) {
+            tabImV[i].draw(renderer,cadre.getTabPos(0)+i*taille,cadre.getBeginValid(),taille,taille);
+        }
+        else {
+            tabImVPush[i].draw(renderer,cadre.getTabPos(0)+i*taille,cadre.getBeginValid(),taille,taille);
+        }
+
     }
 
 }
@@ -88,7 +124,6 @@ void SdlGame::sdlLoop(){
     if (Mix_PlayMusic(music,1)==-1) {
         cout<<"Mix_PlayMusic error"<<endl;
     }
-
 
     Keyboard& keyboard = game->getKeyboard();
 
