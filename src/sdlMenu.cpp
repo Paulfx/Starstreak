@@ -199,12 +199,12 @@ void SdlMenu::sdlShow(){
             //SDL_Color couleurNoire = {0, 0, 0};
             string tempTitle;
 
-            cout<<menu->getNbSongs();
+            //cout<<menu->getNbSongs();
             int i=beginShowTitle;
             int posTitle=0;
             while(i<endShowTitle){
                 tempTitle=menu->getTitleSong(i);
-                cout <<tempTitle <<endl;
+                //cout <<tempTitle <<endl;
                 SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(),WhiteC);
                 if(SurfaceList==NULL){
                     cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
@@ -334,18 +334,23 @@ void SdlMenu::sdlLoop(){
                     }else if(events.type == SDL_KEYDOWN){
                         switch(events.key.keysym.scancode){
                             case SDL_SCANCODE_UP:
+                            {
                                 if (Mix_PlayChannel(2,soundMove,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
                                 movePtr("up",0,0);
                                 break;
+                            }
                             case SDL_SCANCODE_DOWN:
+                            {
                                 if (Mix_PlayChannel(3,soundMove,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
                                 movePtr("down",0,0);
                                 break;
+                            }
                             case SDL_SCANCODE_RETURN:
+                            {
                                 if (Mix_PlayChannel(4,soundAccept,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
@@ -368,10 +373,13 @@ void SdlMenu::sdlLoop(){
                                     }
                                 }
                                 break;
+                            }
                             case SDL_SCANCODE_ESCAPE:
+                            {
                                 quit=true;
                                 soundQuit();
                                 break;
+                            }
                             default:
                                 break;
                         }
@@ -385,9 +393,7 @@ void SdlMenu::sdlLoop(){
                 if (events.type == SDL_QUIT){
                     quit = true;
                     soundQuit();
-                }
-
-                    else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
+                }else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                         switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                             case SDL_SCANCODE_UP: //flèche du haut
                                 if (Mix_PlayChannel(2,soundMove,0)==-1) {
@@ -419,8 +425,6 @@ void SdlMenu::sdlLoop(){
                                 quit=true;
                                 break;
                             }
-                            default :
-                                break;
                         }
                     }
                 }
@@ -472,11 +476,9 @@ void SdlMenu::sdlLoop(){
                                 
                                 //On pourrait imaginer un retour au menu de selection donc destruction de game ?
                                 quit=true;
-                                //soundQuit(); pas utile si car on reste dans menu
+                                soundQuit();//pas utile si car on reste dans menu
                                 break;
                             }
-                            default :
-                                break;
                         }
                     }
                 }
@@ -524,7 +526,6 @@ void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le progr
     Mix_FreeChunk(soundMove);
     Mix_FreeChunk(soundMenu);
 }
-
 
 
 
