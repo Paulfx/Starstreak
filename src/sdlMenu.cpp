@@ -100,19 +100,19 @@ SdlMenu::SdlMenu(){
     
     /* bruitages de naviguation + musique de fond*/
 
-    soundMove=Mix_LoadWAV("../data/theme/sounds/336.wav"); //Mix_LoadWAV("../data/theme/sounds/move.ogg")
+    soundMove=Mix_LoadWAV("../data/theme/sounds/move.wav"); //Mix_LoadWAV("../data/theme/sounds/move.ogg")
     if(!soundMove){
         cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
     }
 
-    soundAccept=Mix_LoadWAV("../data/theme/sounds/action.ogg");
+    soundAccept=Mix_LoadWAV("../data/theme/sounds/action.wav");
     if(!soundAccept){
         cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
     }
     /*musique de fond dans le menu*/
     /**@todo Ouvrir plusieurs son de menu qui se lance aléatoirement**/
 
-    soundMenu=Mix_LoadWAV("../data/theme/sounds/menu.ogg");
+    soundMenu=Mix_LoadWAV("../data/theme/sounds/menuKiller.wav");
     if(!soundMenu){
         cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
     }
