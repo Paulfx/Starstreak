@@ -396,17 +396,21 @@ void SdlMenu::sdlLoop(){
                 }else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                         switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                             case SDL_SCANCODE_UP: //flèche du haut
+                            {
                                 if (Mix_PlayChannel(2,soundMove,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
                                 menu->moveUp();
                                 break;
+                            }
                             case SDL_SCANCODE_DOWN://flèche du bas
+                            {
                                 if (Mix_PlayChannel(3,soundMove,0)==-1) {
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
                                 menu->moveDown();
                                 break;
+                            }
                             case SDL_SCANCODE_RETURN://touche entré
                             {
                                 if (Mix_PlayChannel(4,soundAccept,0)==-1) {
