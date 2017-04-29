@@ -21,14 +21,14 @@ class SdlGame {
 private :
 	
 /* ######### FENETRE ######### */
-    SDL_Texture * texture;
     SDL_Window * window;
     SDL_Renderer * renderer;
     int width,height; //taille de la fenêtre
 
 /* ######### GAME ######### */
-    string titleSong;
     Game* game;
+
+    Mix_Music *music;
 
     Image im_note0, im_note1, im_note2, im_note3, im_note4, im_ligneValidation,
     im_noteV0, im_noteV1, im_noteV2, im_noteV3, im_noteV4/*note val et val pull*/, im_noteVPush0, im_noteVPush1, im_noteVPush2, im_noteVPush3, im_noteVPush4;
@@ -42,16 +42,16 @@ public :
 
 	/** @brief Constructeur
      */
-    SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty,bool mode);
+    SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty,bool mode);
     
     /** @brief Destructeur
      */
     ~SdlGame ();
 
-    /** @brief Mouvement en interaction du jeux
+    /** @brief 
      */
     void sdlLoop();
-    /** @brief  Affichage de l'etat actuel du jeux 
+    /** @brief  Affichage de l'etat actuel du jeu 
      */
     void sdlShow();
 

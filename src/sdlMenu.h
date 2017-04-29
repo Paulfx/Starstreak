@@ -14,6 +14,7 @@
 #include "menu.h"
 #include "sdlClass.h" //importe classe image
 #include "sdlGame.h"
+#include "sdlPartitionMaker.h"
 
 using namespace std;
 
@@ -25,7 +26,6 @@ class SdlMenu {
 private :
     
 /* ######### FENETRE ######### */
-    SDL_Texture * texture;
     SDL_Window * window;
     SDL_Renderer * renderer;
     int height,width; //Taille de la fenêtre
@@ -42,6 +42,7 @@ private :
     int posPtr;
     int stateMenu;
     string choosenSongTitle;
+    bool creationMode;
     // Etat du menu :
         //par default on est dans le premier (0)
         //1 -> Selection chanson

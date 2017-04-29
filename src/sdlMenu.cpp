@@ -47,7 +47,7 @@ void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
 }
 
 
-SdlMenu::SdlMenu(){
+SdlMenu::SdlMenu() : creationMode(false){
     // INITIALISATION DE SDL
 
     //SDL
@@ -125,11 +125,11 @@ SdlMenu::SdlMenu(){
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
-    texture = SDL_CreateTexture(renderer,
+   /* texture = SDL_CreateTexture(renderer,
                                 SDL_PIXELFORMAT_ARGB8888, //
                                 SDL_TEXTUREACCESS_STREAMING,
                                 //fluidité sur l'affichage des images
-                                0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)
+                                0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)*/
     if(renderer){
 
         im_backgroundMenu0.loadFromFile("../data/theme/BackgroundMenu0.jpg",renderer);
@@ -199,7 +199,7 @@ void SdlMenu::sdlShow(){
                 im_ptrMenu.draw(renderer,(0.33)*width,(0.0375*height)+posPtr*(0.0625*height),(0.15*height),(0.05*height));
             }
 
-            //Decla des 3 composants de la liste
+            //Declaration des 3 composants de la liste
             SDL_Surface * SurfaceList;
             SDL_Texture * tex;
             SDL_Rect rec;
@@ -272,7 +272,7 @@ void SdlMenu::sdlShow(){
             for(unsigned int i=0;i<3;i++){
                 switch(i){
                     case 0:{
-                        tempTxt="0: Pour les NOOBS";
+                        tempTxt="0: Pour les ROUILLES";
                         break;
                     }
                     case 1:{
@@ -361,9 +361,8 @@ void SdlMenu::sdlLoop(){
                                         break;
                                     }
                                     case 1:{//SET MODE CREATE + state -> set mode dans la partie 2
-                                        quit=true;
-                                        Mix_HaltChannel(1);
-                                        cout <<endl <<"Pas encore implementé, une mise à jour arrive prochainement, stay tuned"<< endl;
+                                        creationMode=true;
+                                        stateMenu=1;
                                         break;
                                     }
                                     case 2: {//QUIT
@@ -380,8 +379,7 @@ void SdlMenu::sdlLoop(){
                                 soundQuit();
                                 break;
                             }
-                            default:
-                                break;
+                            default:break;
                         }
                     }
 
@@ -426,9 +424,11 @@ void SdlMenu::sdlLoop(){
                             
                             case SDL_SCANCODE_ESCAPE://touche echap
                             {
-                                quit=true;
+                                stateMenu=0; //retour arrière
+                                creationMode=false;
                                 break;
                             }
+                            default:break;
                         }
                     }
                 }
@@ -463,31 +463,41 @@ void SdlMenu::sdlLoop(){
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
                                 
+                                if(creationMode) {
+                                    soundQuit();
+                                    SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong());
+                                    partMaker.sdlLoop();
+                                    soundInit();
+                                    stateMenu=0;
+                                    creationMode=false;
                                 
-                                
-                                SdlGame game(texture,window,renderer,menu->getCurrSong(),posPtr+1,menu->getMode());
-                                //DETRUIRE LE JEUUUUUU
-                                soundQuit();
-                                game.sdlLoop();
-                                soundInit();//pour relancer les sons (on ne repasse jamais dans l'appel en haut de menu)
-                                stateMenu = 0;
-                                //ON PEUT FAIRE UN BIEN JOUERF AFFICHAGE DU SCORE OU UNNE CONNERIE DE CE GENRE ICI (une fonction show avec un delay ou un ok)
+                                }
+                                else {
+
+                                    soundQuit();
+                                    SdlGame game(window,renderer,menu->getCurrSong(),posPtr+1,menu->getMode());
+                                    game.sdlLoop();
+                                    soundInit();//pour relancer les sons (on ne repasse jamais dans l'appel en haut de menu)
+                                    stateMenu = 0;
+                                    //ON PEUT FAIRE UN BIEN JOUERF AFFICHAGE DU SCORE OU UNNE CONNERIE DE CE GENRE ICI (une fonction show avec un delay ou un ok)
+                                    //Pourquoi un object de la classe "loadingImage" ou "fadeImage" :)?
+
+                                }
                                 break;
                             }
                          
                             case SDL_SCANCODE_ESCAPE://touche echap
                             {
-                                
-                                //On pourrait imaginer un retour au menu de selection donc destruction de game ?
-                                quit=true;
-                                soundQuit();//pas utile si car on reste dans menu
+                                stateMenu=1;//retour arrière
                                 break;
                             }
+                            default:break;
                         }
                     }
                 }
                 break;
             }
+            default:break;
         }
 
     }
@@ -525,7 +535,7 @@ void SdlMenu::soundInit() {
 }
     
 void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le programme sinon on aura plus aucun son lorsque l'on retourne dans le menu
-    Mix_HaltChannel(1);//arrete le musique du menu MAIS CA DANS FONCTION !
+    Mix_HaltChannel(1);
     Mix_FreeChunk(soundAccept);
     Mix_FreeChunk(soundMove);
     Mix_FreeChunk(soundMenu);
@@ -535,13 +545,14 @@ void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le progr
 
 SdlMenu::~SdlMenu(){
 
-
+    delete menu;
 
     //Fermeture TTF
     //TTF_CloseFont(fontMenu);  -> erreur d'allocation
     TTF_Quit();
     Mix_CloseAudio();
-    IMG_Quit();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
 
 }

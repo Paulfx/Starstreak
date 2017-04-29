@@ -14,15 +14,15 @@
 class Cadre {
 
 private :
-	int tabPos [5]; //Position des colonnes
+	unsigned int tabPos [5]; //Position des colonnes TODO : a virer
 	float timeUntil; // Représente le temps(constant) entre l'arrivée d'une note dans le cadre
 				   // et son arrivée dans la zone de validation en secondes
 	float speed; //Vitesse des notes par secondes
-	int initialY;
-	int beginValid; //Position en Y du début de la zone de validation
-	int endValid; //Position en Y de la fin de la zone de validation
+	unsigned int initialY;
+	unsigned int beginValid; //Position en Y du début de la zone de validation
+	unsigned int endValid; //Position en Y de la fin de la zone de validation
 //	Partition* partition;
-	//int movingY;
+	//unsigned int movingY;
 	vector<Note*> noteTab;
 
 	float timeLine; //Tps de la ligne moins delta en secondes
@@ -36,8 +36,9 @@ public :
     
     /** @brief
      */
-	Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY, int beginV, int endV);
+	Cadre(unsigned int pos0,unsigned int pos1,unsigned int pos2,unsigned int pos3,unsigned int pos4, float time, unsigned int initY, unsigned int beginV, unsigned int endV);
 	
+	~Cadre();
     
 	/**@brief met à jour le cadre.
 	@param time représente le temps écoulé (en ms) depuis le lancement du son

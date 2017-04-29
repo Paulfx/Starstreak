@@ -48,7 +48,6 @@ Menu::~Menu() {
 	for(unsigned int i =0;i<nbSongs;i++) {
 		delete songTab[i];
 	}
-	
 	delete songTab;
 	songTab = NULL;
 }
@@ -63,21 +62,10 @@ void Menu::moveDown() {
     //%nbSongs evite de faire le test si on est en bas
 	currI = (currI + 1) % nbSongs;
 }
-
-
-//Synchro affichage + coeur
-//songTab et le vector String sont initialisé dans le même ordre.
-/*
-void Menu::choose() {
-	currGame = new Game(*songTab[currI],difficulty,mode); 
-	active = false;
-}	*/								
-
+						
 Song& Menu::getCurrSong() { return *songTab[currI]; }
 
-
-
-const Song& Menu::getConstCurrSong(){ return  *songTab[currI]; }
+const Song& Menu::getConstCurrSong(){ return *songTab[currI]; }
 
 unsigned int Menu::getCurrI() const { return currI; }
 

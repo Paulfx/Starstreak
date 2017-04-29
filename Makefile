@@ -10,7 +10,7 @@ INCLUDE = -I/usr/local/include/SDL2 -I/usr/local/include -Isrc
 #dit au makefile de chercher les .cpp dans le dossier dir
 #vpath %.cpp src
 
-OBJET=obj/menu.o obj/game.o obj/partition.o obj/score.o obj/keyboard.o obj/cadre.o obj/class.o
+OBJET=obj/menu.o obj/game.o obj/partition.o obj/score.o obj/keyboard.o obj/cadre.o obj/class.o obj/partitionMaker.o
 
 all:  make_dir starStreak
 
@@ -35,7 +35,7 @@ test : obj/mainTest.o obj/partition.o obj/keyboard.o
 cadre : obj/mainCadre.o obj/cadre.o obj/partition.o
 	g++ -o bin/$@ $^ -std=c++11
 
-SDL: $(OBJET) obj/sdlGame.o obj/sdlMenu.o obj/sdlClass.o obj/mainSDL.o # ////
+SDL: $(OBJET) obj/sdlGame.o obj/sdlMenu.o obj/sdlClass.o obj/mainSDL.o obj/sdlPartitionMaker.o# ////
 	g++ -o bin/$@ $^ -std=c++11 $(INCLUDE) $(LIB)
 
 

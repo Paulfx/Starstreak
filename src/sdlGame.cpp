@@ -7,7 +7,7 @@ SdlGame::SdlGame() {
 
 }
 
-SdlGame::SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty,bool mode) : texture(texture), window(window), renderer(renderer){
+SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty,bool mode) : window(window), renderer(renderer){
     assert(renderer);
 
     game = new Game(song,difficulty,mode);
@@ -74,7 +74,7 @@ void SdlGame::sdlShow(){
         Note& note = cadre.getNote(i);
         int color = note.getColor();
         switch(color) {
-            case 0 : im_note0.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
+            case 0 : im_note0.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break; //TODO ENLEVER TABPOS DE CADRE !
             case 1 : im_note1.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
             case 2 : im_note2.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
             case 3 : im_note3.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
@@ -98,9 +98,7 @@ void SdlGame::drawValidation(){
         else {
             tabImVPush[i].draw(renderer,cadre.getTabPos(0)+i*taille,cadre.getBeginValid(),taille,taille);
         }
-
     }
-
 }
 
 
@@ -112,10 +110,9 @@ void SdlGame::sdlLoop(){
     
 
     /*SDL_MIXER (lancement de la chanson)*/
-    Mix_Music *music;
     string aMusic="../data/mp3/";
     aMusic+=game->getSong().fileMusic;
-    const char *accesMusic = aMusic.c_str();//Mix_load n'accepte de cont char donc convertion
+    const char *accesMusic = aMusic.c_str();
     cout<<"lancement de :"<<accesMusic<<endl;
     music=Mix_LoadMUS(accesMusic);
     if (!music){
@@ -133,7 +130,6 @@ void SdlGame::sdlLoop(){
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
-                Mix_HaltMusic();
             }
             else if (events.type == SDL_KEYDOWN){ //Appui
                 switch(events.key.keysym.scancode) {

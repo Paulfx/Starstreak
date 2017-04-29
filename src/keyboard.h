@@ -10,7 +10,7 @@
 #define KEYBOARD_H
 
 #include <stdio.h>
-
+#include <string>
 
 enum enumPress {noPress, simplePress, longPress}; 
 
@@ -71,6 +71,10 @@ public :
     void setValid(bool b);
 
     void afficher();
+
+    /**@brief Retourne l'état du clavier sous forme de chaines de caractères
+    */
+    std::string getCurrentStateStr();
 
     /** Transforme tous les simplePress en longPress
     */

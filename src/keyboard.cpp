@@ -10,6 +10,7 @@
 #include <cassert>
 #include <iostream>
 
+
 Keyboard::Keyboard(){
     keyTab=new enumPress[5];
     clear();
@@ -59,6 +60,14 @@ void Keyboard::afficher() {
         std::cout<<keyTab[i];
     }
     std::cout<<std::endl;
+}
+
+std::string Keyboard::getCurrentStateStr() {
+    std::string res;
+    for(int i=0;i<5;++i) {
+        res+=std::to_string(keyTab[i]);
+    }
+    return res;
 }
 
 void Keyboard::setLongPressAllSimplePress() {

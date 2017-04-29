@@ -2,7 +2,7 @@
 
 Note::Note() {}
 
-Note::Note(int x, int y, int c, bool longBool, float speedNote) {
+Note::Note(unsigned int x, unsigned int y, unsigned int c, bool longBool, float speedNote) {
 	posX = x;
 	posY = y;
 	color = c;
@@ -10,9 +10,9 @@ Note::Note(int x, int y, int c, bool longBool, float speedNote) {
 	speed=speedNote;
 }
 
-int Note::getPosX() const {return posX;}
-int Note::getPosY() const {return posY;}
-int Note::getColor() const {return color;}
+unsigned int Note::getPosX() const {return posX;}
+unsigned int Note::getPosY() const {return posY;}
+unsigned int Note::getColor() const {return color;}
 bool Note::getNeedPlay() const {return needPlay;}
 bool Note::isPlayed() const {return played;}
 bool Note::isLong() const {return longDuration;}

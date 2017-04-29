@@ -41,7 +41,7 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 Partition::~Partition() {
 	if(partition != NULL) {
 		delete [] partition;
-		//partition = NULL;
+		partition = NULL;
 	}
 }	
 

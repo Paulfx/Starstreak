@@ -7,7 +7,7 @@ const float DURATION_FRAME = 16; //en ms
 
 Cadre::Cadre() {}
 
-Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY, int beginV, int endV){
+Cadre::Cadre(unsigned int pos0,unsigned int pos1,unsigned int pos2,unsigned int pos3,unsigned int pos4, float time, unsigned int initY, unsigned int beginV, unsigned int endV){
 	tabPos[0] = pos0; 
 	tabPos[1] = pos1;
 	tabPos[2] = pos2;
@@ -26,52 +26,36 @@ Cadre::Cadre(int pos0,int pos1,int pos2,int pos3,int pos4, float time, int initY
 	timeLine=0;
 }
 
-/*
 
-float time_seconds = SDL_GetTicks() / 1000.f;
-while(1){
-    float new_time = SDL_GetTicks() / 1000.f;
-    float delta = new_time - time_seconds;
-    time_seconds = new_time;
-    updateGamePhysics(delta);
-    SDL_RenderClear(renderer);
-    renderGamebjects();
-    SDL_RenderPresent(renderer); //Will wait here
+Cadre::~Cadre(){
+	for(unsigned int i=0;i<noteTab.size();++i) delete noteTab[i];  //Normalement, le tableau est vide et désalloué
 }
 
-
+/*
 delta représente le temps depuis le dernier appel de la fonction en SECONDES
-
 */
-
 bool Cadre::update(float delta, const line& currLine) {
 	if (timeLine==0) timeLine = currLine.time/1000.f;//conversion en secondes
-	
-	bool ajout=false;
-
-	//On fait avancer les notes existantes
-	//scrollCadre(delta);
-
-	//Ajout de la ligne, si c'est le moment
-	//float actualTime = currLine.time - time; //Actual time représente le temps qu'il reste avant de devoir jouer la ligne
-	
 	timeLine-=delta;
 	assert(timeLine>timeUntil-delta);
 	assert(timeUntil-delta>0);
-
-
 	Note* note;
-
+	bool ajout=false;
+	//Ajout de la ligne, si c'est le moment
 	if( timeLine < (timeUntil + delta) && timeLine > (timeUntil - delta) ) {
 		//On ajoute les notes de la ligne au cadre
 		ajout=true;
 		timeLine=0; //On réinitialise timeLine
 		for(unsigned int i=0;i<5;++i){
-			if(currLine.data[i] == '1') { note= new Note(tabPos[i],initialY,i,false,speed);noteTab.push_back(note); }
-			else if(currLine.data[i] == '2') { note = new Note(tabPos[i],initialY,i,true,speed);noteTab.push_back(note); }
-			
+			if(currLine.data[i] == '1') { 
+				note= new Note(tabPos[i],initialY,i,false,speed);
+				noteTab.push_back(note); 
+			}
+			else if(currLine.data[i] == '2') { 
+				note = new Note(tabPos[i],initialY,i,true,speed);
+				noteTab.push_back(note); 
+			}
 		}
-
 	}
 	return ajout;
 }
@@ -94,7 +78,7 @@ void Cadre::scrollCadre(float delta, Score& score) {
 			if(!tmpNote->isPlayed()) score.failure();
 			else score.success();
 
-			delete tmpNote;
+			delete tmpNote;//toutes les notes devraient être supprimées
 		}
 	}
 }
