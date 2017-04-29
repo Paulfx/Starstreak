@@ -52,6 +52,8 @@ private :
     Image im_backgroundMenu1;
     Image im_backgroundMenu2;
     Image im_ptrMenu;
+    Image im_ptrMenuWhite;
+    Image im_ptrMenuBlack;
 
 /* son */
     Mix_Chunk *soundMove;

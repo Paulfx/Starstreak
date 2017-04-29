@@ -47,19 +47,14 @@ void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
 }
 
 
-
-
-
-
-
 SdlMenu::SdlMenu(){
     // INITIALISATION DE SDL
 
     //SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
     }
-    //TTF
+        //TTF
     if (TTF_Init() == -1) {
         cout << "Erreur lors de l'initialisation de la SDL_ttf : " << SDL_GetError() << endl;SDL_Quit();exit(1);
     }
@@ -70,18 +65,42 @@ SdlMenu::SdlMenu(){
         cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;SDL_Quit();exit(1);
     }
     //MIXER
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS,1024)==-1){
-        cout<<Mix_GetError()<<endl;
+    
+     if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096)==-1){
+         cout<<Mix_GetError()<<endl;
+     }
+    /*
+    int flags=MIX_INIT_OGG;
+    int initted=Mix_Init(flags);
+    if(initted&flags != flags) {
+        printf("Mix_Init: Failed to init required ogg and mod support!\n");
+        printf("Mix_Init: %s\n", Mix_GetError());
+        // handle error
+    }
+     */
+    
+    //Debuggage sdl_mixer cross OS -> .ogg pas supporté pas mac naturelement
+    Mix_AllocateChannels(5);
+    
+    {
+        int i,n=Mix_GetNumChunkDecoders();
+        printf("There are %d available chunk(sample) decoders:\n",n);
+        for(i=0; i<n; ++i)
+            printf("	%s\n", Mix_GetChunkDecoder(i));
+        n = Mix_GetNumMusicDecoders();
+        printf("There are %d available music decoders:\n",n);
+        for(i=0; i<n; ++i)
+            printf("	%s\n", Mix_GetMusicDecoder(i));
     }
 
+    
 /*SDL_Mixer init*/
-    Mix_AllocateChannels(5);
+   
 
-
-
+    
     /* bruitages de naviguation + musique de fond*/
 
-    soundMove=Mix_LoadWAV("../data/theme/sounds/move.ogg");
+    soundMove=Mix_LoadWAV("../data/theme/sounds/336.wav"); //Mix_LoadWAV("../data/theme/sounds/move.ogg")
     if(!soundMove){
         cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
     }
@@ -103,7 +122,7 @@ SdlMenu::SdlMenu(){
     Mix_Pause(1);
 
 
-
+    
 
 
     posPtr=0;
@@ -149,14 +168,12 @@ SdlMenu::SdlMenu(){
         im_backgroundMenu2.loadFromFile("../data/theme/BackgroundMenu2.jpg",renderer);
 
         im_ptrMenu.loadFromFile("../data/theme/Select.png",renderer);
-
+        im_ptrMenuWhite.loadFromFile("../data/theme/selecteurBlanc.png",renderer);
+        im_ptrMenuBlack.loadFromFile("../data/theme/selecteurNoir.png",renderer);
     }else {
         cout << "Erreur dans l'initialisation du renderer" << endl;
     }
 }
-
-
-
 
 
 //Affichage du menu SELECT state=1
@@ -171,13 +188,16 @@ void SdlMenu::sdlShow(){
             im_backgroundMenu0.draw(renderer,0,0,width,height);
             switch(posPtr){
                 case 0:
-                    im_ptrMenu.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.375*height),0.15*height,0.05*height);
+                    im_ptrMenuBlack.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
+                    im_ptrMenuWhite.draw(renderer,(0.25*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     break;
                 case 1:
-                    im_ptrMenu.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.375*height),0.15*height,0.05*height);
+                    im_ptrMenuBlack.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
+                    im_ptrMenuWhite.draw(renderer,(0.25*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     break;
                 case 2:
-                    im_ptrMenu.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.375*height),0.15*height,0.05*height);
+                    im_ptrMenuBlack.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
+                    im_ptrMenuWhite.draw(renderer,(0.25*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     break;
             }
             break;
@@ -185,14 +205,9 @@ void SdlMenu::sdlShow(){
         case 1: {
             SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
             SDL_RenderClear(renderer);
-
             im_backgroundMenu1.draw(renderer,0,0,width,height);
-
-
             int beginShowTitle=0;
             int endShowTitle=10;
-
-
             //Menu Deroulant
             if((menu->getCurrI())>9){
                 posPtr=9;//pointe sur la derniere
@@ -213,7 +228,6 @@ void SdlMenu::sdlShow(){
             SDL_Rect rec;
             
             //SDL_Color couleurNoire = {0, 0, 0};
-            
             string tempTitle;
 
             cout<<menu->getNbSongs();
@@ -329,7 +343,6 @@ void SdlMenu::sdlShow(){
 
 //Essai de loop+affichage
 void SdlMenu::sdlTest(){
-
     sdlLoop();
 }
 
@@ -340,7 +353,6 @@ void SdlMenu::sdlLoop(){
     bool quit = false;
     Mix_Resume(1);
                         /*Debut de la boucle Menu*/
-
     while (!quit){
         sdlShow();
 
@@ -490,7 +502,6 @@ void SdlMenu::sdlLoop(){
                          
                             case SDL_SCANCODE_ESCAPE://touche echap
                             {
-                                
                                 
                                 //On pourrait imaginer un retour au menu de selection donc destruction de game ?
                                 quit=true;
