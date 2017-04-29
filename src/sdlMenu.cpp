@@ -155,23 +155,31 @@ void SdlMenu::sdlShow(){
             SDL_RenderClear(renderer);
 
             im_backgroundMenu0.draw(renderer,0,0,width,height);
-            switch(posPtr){
+            switch(posPtr)
+            {
                 case 0:
+                {
                     im_ptrMenuBlack.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     im_ptrMenuWhite.draw(renderer,(0.25*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     break;
+                }
                 case 1:
+                {
                     im_ptrMenuBlack.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     im_ptrMenuWhite.draw(renderer,(0.25*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     break;
+                }
                 case 2:
+                {
                     im_ptrMenuBlack.draw(renderer,(0.66*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     im_ptrMenuWhite.draw(renderer,(0.25*width),posPtr*(0.1375*height)+(0.35*height),0.05*width,0.07*height);
                     break;
+                }
             }
             break;
         }
-        case 1: {
+        case 1:
+        {
             SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
             SDL_RenderClear(renderer);
             im_backgroundMenu1.draw(renderer,0,0,width,height);
@@ -202,25 +210,27 @@ void SdlMenu::sdlShow(){
             //cout<<menu->getNbSongs();
             int i=beginShowTitle;
             int posTitle=0;
-            while(i<endShowTitle){
+            while(i<endShowTitle)
+            {
                 tempTitle=menu->getTitleSong(i);
                 //cout <<tempTitle <<endl;
                 SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(),WhiteC);
-                if(SurfaceList==NULL){
+                if(SurfaceList==NULL)
+                {
                     cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
-
                 }
                 tex= SDL_CreateTextureFromSurface(renderer,SurfaceList);
-                if(tex==NULL){
+                if(tex==NULL)
+                {
                     cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
-
                 }
                 SurfaceList=NULL;
                 rec.x=(0.025)*width;
                 rec.y=(0.03125)*height+posTitle*(0.0625)*height;
                 rec.w=(0.0167)*width*tempTitle.size();
                 rec.h=(0.0625)*height;
-                if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
+                if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0)
+                {
                     cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
                 }
                 i++;
@@ -233,9 +243,6 @@ void SdlMenu::sdlShow(){
             SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
             SDL_RenderClear(renderer);
             im_backgroundMenu2.draw(renderer,0,0,width,height);
-            
-            
-            
             
             //###### Affichage Chanson Selectionnée ##########
             SDL_Surface * Surface;
@@ -259,7 +266,6 @@ void SdlMenu::sdlShow(){
             if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
                 cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
             }
-         
             
             //##### Affichage Difficulté ##########
             string tempTxt;
@@ -278,7 +284,6 @@ void SdlMenu::sdlShow(){
                         tempTxt="2: Pour les ROCKERS";
                         break;
                     }
-                    
                 }
                 Surface=TTF_RenderText_Blended(fontMenu,tempTxt.c_str(),WhiteC);
                 tex=SDL_CreateTextureFromSurface(renderer,Surface);
@@ -293,15 +298,10 @@ void SdlMenu::sdlShow(){
                 if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
                     cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
                 }
-
-                                               
             }
+            
             //######### Affichage du pointeur ########
-                                    //(0.33)*width,(0.0375*height)+posPtr*(0.0625*height),(0.15*height),(0.05*height)
             im_ptrMenu.draw(renderer,(0.40)*width,0.25*height+(0.105*height)*posPtr,0.1*width,0.05*height);
-            
-            
-            
             break;
         }
     }
