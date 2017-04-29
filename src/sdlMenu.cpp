@@ -69,57 +69,26 @@ SdlMenu::SdlMenu(){
      if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096)==-1){
          cout<<Mix_GetError()<<endl;
      }
-    /*
-    int flags=MIX_INIT_OGG;
-    int initted=Mix_Init(flags);
-    if(initted&flags != flags) {
-        printf("Mix_Init: Failed to init required ogg and mod support!\n");
-        printf("Mix_Init: %s\n", Mix_GetError());
-        // handle error
-    }
-     */
-    
-    //Debuggage sdl_mixer cross OS -> .ogg pas supporté pas mac naturelement
-    Mix_AllocateChannels(5);
-    
-    {
-        int i,n=Mix_GetNumChunkDecoders();
-        printf("There are %d available chunk(sample) decoders:\n",n);
-        for(i=0; i<n; ++i)
-            printf("	%s\n", Mix_GetChunkDecoder(i));
+   
+    int i,n=Mix_GetNumChunkDecoders();
+    printf("There are %d available chunk(sample) decoders:\n",n);
+    for(i=0; i<n; ++i){
+        printf("	%s\n", Mix_GetChunkDecoder(i));
         n = Mix_GetNumMusicDecoders();
         printf("There are %d available music decoders:\n",n);
-        for(i=0; i<n; ++i)
-            printf("	%s\n", Mix_GetMusicDecoder(i));
     }
+    for(i=0; i<n; ++i){
+        printf("	%s\n", Mix_GetMusicDecoder(i));
+    }
+            
 
     
-/*SDL_Mixer init*/
+            /*SDL_Mixer init*/
    
-
+    soundMove=NULL;
+    soundAccept=NULL;
+    soundMenu=NULL;
     
-    /* bruitages de naviguation + musique de fond*/
-
-    soundMove=Mix_LoadWAV("../data/theme/sounds/move.wav"); //Mix_LoadWAV("../data/theme/sounds/move.ogg")
-    if(!soundMove){
-        cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
-    }
-
-    soundAccept=Mix_LoadWAV("../data/theme/sounds/action.wav");
-    if(!soundAccept){
-        cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
-    }
-    /*musique de fond dans le menu*/
-    /**@todo Ouvrir plusieurs son de menu qui se lance aléatoirement**/
-
-    soundMenu=Mix_LoadWAV("../data/theme/sounds/menuKiller.wav");
-    if(!soundMenu){
-        cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
-    }
-    if (Mix_FadeInChannel(1,soundMenu,2,4000)==-1) {
-        cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-        }
-    Mix_Pause(1);
 
 
     
@@ -351,7 +320,7 @@ void SdlMenu::sdlTest(){
 void SdlMenu::sdlLoop(){
     SDL_Event events;
     bool quit = false;
-    Mix_Resume(1);
+    soundInit();
                         /*Debut de la boucle Menu*/
     while (!quit){
         sdlShow();
@@ -490,11 +459,9 @@ void SdlMenu::sdlLoop(){
                                 
                                 SdlGame game(texture,window,renderer,menu->getCurrSong(),posPtr+1,menu->getMode());
                                 //DETRUIRE LE JEUUUUUU
-                                Mix_HaltChannel(1);// Theo faudra que tu supprimes cette ligne lorsque le choix de la difficultée sera ok
+                                soundQuit();
                                 game.sdlLoop();
-                                if (Mix_FadeInChannel(1,soundMenu,2,4000)==-1) {// RElance la musique du menu
-                                    cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-                                }
+                                soundInit();//pour relancer les sons (on ne repasse jamais dans l'appel en haut de menu)
                                 stateMenu = 0;
                                 //ON PEUT FAIRE UN BIEN JOUERF AFFICHAGE DU SCORE OU UNNE CONNERIE DE CE GENRE ICI (une fonction show avec un delay ou un ok)
                                 break;
@@ -505,7 +472,7 @@ void SdlMenu::sdlLoop(){
                                 
                                 //On pourrait imaginer un retour au menu de selection donc destruction de game ?
                                 quit=true;
-                                soundQuit();
+                                //soundQuit(); pas utile si car on reste dans menu
                                 break;
                             }
                             default :
@@ -520,7 +487,37 @@ void SdlMenu::sdlLoop(){
     }
 }
 
-
+void SdlMenu::soundInit() {
+    
+    soundMove=NULL;
+    soundAccept=NULL;
+    soundMenu=NULL;
+    
+    if (soundMenu==NULL){
+        Mix_AllocateChannels(5);
+        
+        soundMove=Mix_LoadWAV("../data/theme/sounds/move.wav");
+        if(!soundMove){
+            cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
+        }
+        
+        soundAccept=Mix_LoadWAV("../data/theme/sounds/action.wav");
+        if(!soundAccept){
+            cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
+        }
+        /*musique de fond dans le menu*/
+        /**@todo Ouvrir plusieurs son de menu qui se lance aléatoirement**/
+        
+        soundMenu=Mix_LoadWAV("../data/theme/sounds/menuKiller.wav");
+        if(!soundMenu){
+            cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
+        }
+        if (Mix_PlayChannel(1,soundMenu,2)==-1) {
+            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+        }
+    }
+}
+    
 void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le programme sinon on aura plus aucun son lorsque l'on retourne dans le menu
     Mix_HaltChannel(1);//arrete le musique du menu MAIS CA DANS FONCTION !
     Mix_FreeChunk(soundAccept);
