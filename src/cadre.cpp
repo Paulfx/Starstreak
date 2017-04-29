@@ -1,5 +1,6 @@
 #include "cadre.h"
 #include <cassert>
+#include <iostream>
 
 const float DURATION_FRAME = 16; //en ms
 
@@ -49,7 +50,7 @@ bool Cadre::update(float delta, const line& currLine) {
 	bool ajout=false;
 
 	//On fait avancer les notes existantes
-	scrollCadre(delta);
+	//scrollCadre(delta);
 
 	//Ajout de la ligne, si c'est le moment
 	//float actualTime = currLine.time - time; //Actual time représente le temps qu'il reste avant de devoir jouer la ligne
@@ -76,7 +77,7 @@ bool Cadre::update(float delta, const line& currLine) {
 }
 
 
-void Cadre::scrollCadre(float delta) {
+void Cadre::scrollCadre(float delta, Score& score) {
 	Note* tmpNote;
 	unsigned int posY;
 	for(unsigned int i=0;i<noteTab.size();++i) {
@@ -84,10 +85,15 @@ void Cadre::scrollCadre(float delta) {
 		posY = noteTab[i]->getPosY();
 		if(posY >= beginValid && posY <=endValid) {
 			noteTab[i]->setNeedPlay(); //La note doit être jouée
+			std::cout<<"NOTE COLONNE : "<<noteTab[i]->getColor()<<" doit être jouée"<<std::endl;
 		}
 		else if(posY > endValid) { //La note n'est plus dans le cadre, on l'efface
 			tmpNote = noteTab[i];
 			noteTab.erase(noteTab.begin() + i);
+			//Juste avant la suppression, si la note n'a pas été jouée, alors on appelle score.failure()
+			if(!tmpNote->isPlayed()) score.failure();
+			else score.success();
+
 			delete tmpNote;
 		}
 	}

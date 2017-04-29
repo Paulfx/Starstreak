@@ -3,6 +3,7 @@
 
 #include "class.h"
 #include "partition.h"
+#include "score.h"
 #include <vector>
 #include <string>
 
@@ -47,7 +48,7 @@ public :
     
     /** @brief
      */
-	void scrollCadre(float delta);
+	void scrollCadre(float delta, Score& score);
     
     
     /** @brief

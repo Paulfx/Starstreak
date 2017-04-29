@@ -37,6 +37,7 @@ SdlGame::SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * rend
 SdlGame::~SdlGame() {
     //Libération images
     delete game;
+    Mix_HaltMusic();
 }
 
 
@@ -124,7 +125,7 @@ void SdlGame::sdlLoop(){
                 }
             }
         }
-        keyboard.afficher();
+        //keyboard.afficher();
 
         float new_time = SDL_GetTicks() / 1000.f;
         float delta = new_time - time_seconds;

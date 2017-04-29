@@ -54,6 +54,7 @@ void Keyboard::setPress(unsigned int i) {
 void Keyboard::setValid(bool b) { validation = b; }
 
 void Keyboard::afficher() {
+    
     for(int i=0;i<5;i++){
         std::cout<<keyTab[i];
     }

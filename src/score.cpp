@@ -109,29 +109,31 @@ void Score::update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard) {
     bool play = false;
     for(i=0;i<5;++i) { //i<keyboard.nbNote ==> dépend de la difficulté ?
         //Si une note doit être jouée
-        for(j=0;j<tabNeedPlay.size() && tabNeedPlay[j]->getColor() == i;++j){ //Pour toutes les notes dans la colonne i
-            play=true;
-            if(!tabNeedPlay[j]->isPlayed()) {
-                if(keyboard.isSimplePress(i)) {//Appui simple
+        for(j=0;j<tabNeedPlay.size();++j){ //Pour toutes les notes jouables
+            if(tabNeedPlay[j]->getColor() == i) { //La note est dans la bonne colonne
+                play=true;
+                if(keyboard.isSimplePress(i) || keyboard.isLongPress(i)) {//Appui simple
                     tabNeedPlay[j]->setPlayed();
-                    success();
+                    cout<<"NOTE COLONNE : "<<j<<" est jouée"<<endl;
+                    //tabNeedPlay[j]->setNoNeedPlay(); //A FAIRE
+                    //success();
                 }
-
-                /*else if(keyboard.isDoublePress(i) && tabNeedPlay[j]->) TODO : LONG PRESS */
-
-                if(keyboard.isNoPress(i)) {//Pas d'appui
-                    failure();
-                }
-            }
+            }  
         }
         //Sinon, si aucune note ne doit être jouée
         if(!play) {
-            if(!keyboard.isNoPress(i)) failure(); //Si le joueur a apppuyé, echec
+            if(!keyboard.isNoPress(i)) {
+                failure(); //Si le joueur a apppuyé, echec
+                cout<<"TOUCHES SANS NOTES"<<endl;
+            }
         }
         play=false;
     }
 
 }
+
+
+
 
 void Score::success() {
 cout<<"SUCCESS"<<endl;
@@ -148,7 +150,7 @@ cout<<"SUCCESS"<<endl;
 }
 
 void Score::failure() {
-  
+cout<<"FAIL"<<endl;
     noteStreak=0;
     multiplier=1;
     rockmeter-=2;

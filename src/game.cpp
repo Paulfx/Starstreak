@@ -8,8 +8,8 @@ const int COLUMN_NOTE_2 = 300;
 const int COLUMN_NOTE_3 = 450;
 const int COLUMN_NOTE_4 = 600;
 const int BEGIN_CADRE = 0;
-const int BEGIN_VALIDATION = 520;
-const int END_VALIDATION = 550;
+const int BEGIN_VALIDATION = 500;
+const int END_VALIDATION = 600;
 const float TIME_UNTIL_DOWN = 2;
 
 Game::Game() {
@@ -66,12 +66,11 @@ void Game::update(float delta) {
 		if(ligneAjoutee) {
 			currLine=partition->getLine();
 		}
-
-		ligneAjoutee=cadre->update(delta,currLine);
+		cadre->scrollCadre(delta,*score);
+		ligneAjoutee=cadre->update(delta,currLine);//On regarde si on a ajouté la ligne
 		Note* note;
 		vector<Note*> needPlayTab; //Contiendra les notes qui doivent être jouée
 		for(unsigned int i=0;i<cadre->getNbNote();++i) {
-
 			note = cadre->getPtrNote(i);
 			if(note->getNeedPlay()) { //Si la note doit être jouée
 				needPlayTab.push_back(note);
@@ -82,7 +81,7 @@ void Game::update(float delta) {
 
 	}
 	
-	else if(!cadre->isEmpty()) cadre->scrollCadre(delta);
+	else if(!cadre->isEmpty()) cadre->scrollCadre(delta,*score);
 	//On finit de dérouler le cadre jusqu'à ce que toutes les notes soient passées
 
 
