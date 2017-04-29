@@ -18,8 +18,20 @@ SdlGame::SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * rend
     im_note2.loadFromFile("../data/theme/notes/jaune.png",renderer);
     im_note3.loadFromFile("../data/theme/notes/bleu.png",renderer);
     im_note4.loadFromFile("../data/theme/notes/orange.png",renderer);
-    
+
     im_ligneValidation.loadFromFile("../data/theme/notes/ligneValidation.png",renderer);
+    
+    im_noteV0.loadFromFile("../data/theme/notes/validGreen.png",renderer);
+    im_noteV1.loadFromFile("../data/theme/notes/validRed.png",renderer);
+    im_noteV2.loadFromFile("../data/theme/notes/validYel.png",renderer);
+    im_noteV3.loadFromFile("../data/theme/notes/validBl.png",renderer);
+    im_noteV4.loadFromFile("../data/theme/notes/validOr.png",renderer);
+    
+    im_noteVPush0.loadFromFile("../data/theme/notes/validGreenON.png",renderer);
+    im_noteVPush1.loadFromFile("../data/theme/notes/validRedON.png",renderer);
+    im_noteVPush2.loadFromFile("../data/theme/notes/validYelON.png",renderer);
+    im_noteVPush3.loadFromFile("../data/theme/notes/validBlON.png",renderer);
+    im_noteVPush4.loadFromFile("../data/theme/notes/validOrON.png",renderer);
 }
 
 SdlGame::~SdlGame() {

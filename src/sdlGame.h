@@ -30,7 +30,8 @@ private :
     string titleSong;
     Game* game;
 
-    Image im_note0, im_note1, im_note2, im_note3, im_note4, im_ligneValidation;
+    Image im_note0, im_note1, im_note2, im_note3, im_note4, im_ligneValidation,
+    im_noteV0, im_noteV1, im_noteV2, im_noteV3, im_noteV4/*note val et val pull*/, im_noteVPush0, im_noteVPush1, im_noteVPush2, im_noteVPush3, im_noteVPush4;
 
 public :
 	
