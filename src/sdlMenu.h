@@ -83,6 +83,8 @@ public :
     
     void sdlTest();
     
+    void soundInit();
+    
     void soundQuit();
     
     //fonction moove du pointeur indepandant de currI

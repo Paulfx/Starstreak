@@ -36,6 +36,7 @@ SdlGame::SdlGame(SDL_Texture * texture, SDL_Window * window, SDL_Renderer * rend
 
 SdlGame::~SdlGame() {
     //Libération images
+    //et de la musique en cours
     delete game;
     Mix_HaltMusic();
 }
