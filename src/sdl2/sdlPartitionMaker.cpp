@@ -16,8 +16,6 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
     }
     
     string aMusic="../data/wav/";
-    //aMusic+=game->getSong().fileMusic;
-    //aMusic+=song.fileMusic;
     aMusic+=partMaker->getSong().fileMusic;
     const char *accesMusic = aMusic.c_str();
     cout<<"lancement de :"<<accesMusic<<endl;
@@ -70,6 +68,7 @@ void SdlPartitionMaker::sdlLoop() {
     if (Mix_PlayMusic(music,1)==-1) {
         cout<<"Mix_PlayMusic error"<<endl;
     }
+    
     
     float duration = partMaker->getSong().duration;
     Keyboard& keyboard = partMaker->getKeyboard();
