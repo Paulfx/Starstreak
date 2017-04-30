@@ -27,9 +27,8 @@ private :
 
 /* ######### GAME ######### */
     PartitionMaker* partMaker;
-    Mix_Music *music;
     TTF_Font * font;
-    
+    Mix_Music *music;
 
 public :
 	

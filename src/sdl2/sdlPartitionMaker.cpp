@@ -19,10 +19,14 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
     aMusic+=partMaker->getSong().fileMusic;
     const char *accesMusic = aMusic.c_str();
     cout<<"lancement de :"<<accesMusic<<endl;
+    cout<<"coucou0"<<endl;
     music=Mix_LoadMUS(accesMusic);
+    //music=Mix_LoadMUS("../data/wav/sth.wav");
+    cout<<"coucou1"<<endl;
     if (!music){
-        cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
+        cout<<"Mix_LoadMus "<<accesMusic<<Mix_GetError()<<endl;
     }
+    cout<<"coucou2"<<endl;
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
