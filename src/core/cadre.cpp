@@ -19,6 +19,7 @@ Cadre::Cadre(unsigned int pos0,unsigned int pos1,unsigned int pos2,unsigned int 
 	endValid = endV;
 	totalTime = 0.f;
 
+	std::cout<<timeUntil<<std::endl;
 	speed=(float)(beginValid + (float)(endValid-beginValid)/2 - initialY)/timeUntil;//En pixels par seconde
 	assert(speed!=0);
 	timeLine=0;
@@ -40,6 +41,7 @@ bool Cadre::update(float delta, const line& currLine) {
 	std::cout<<timeUntilPlay<<std::endl;
 	std::cout<<totalTime<<std::endl;
 	std::cout<<delta<<std::endl<<std::endl;
+	std::cout<<timeUntil<<std::endl<<std::endl;
 	assert(timeUntilPlay>timeUntil-delta);
 	assert(timeUntil-delta>0);
 	Note* note;
@@ -97,6 +99,18 @@ Note* Cadre::getPtrNote(unsigned int i) {
 	assert(i<noteTab.size());
 	return noteTab[i];
 }
+
+vector<Note*> Cadre::getNeedPlayTab() {
+	std::vector<Note*> needPlayTab; //Contiendra les notes qui doivent être jouée
+	for(unsigned int i=0;i<noteTab.size();++i) {
+		if(noteTab[i]->getNeedPlay()) { //Si la note doit être jouée
+			needPlayTab.push_back(noteTab[i]);
+		}
+	}
+	return needPlayTab;
+}
+
+
 
 bool Cadre::isEmpty() const { return noteTab.empty();}
 

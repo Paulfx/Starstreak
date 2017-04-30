@@ -66,6 +66,8 @@ public :
      */
     Note* getPtrNote(unsigned int i);
 
+    vector<Note*> getNeedPlayTab();
+
     /** @brief
      */
 	bool isEmpty() const;

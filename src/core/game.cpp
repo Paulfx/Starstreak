@@ -65,21 +65,15 @@ void Game::update(float delta) {
 		}
 		cadre->scrollCadre(delta,*score);
 		ligneAjoutee=cadre->update(delta,currLine);//On regarde si on a ajouté la ligne
-		Note* note;
-		vector<Note*> needPlayTab; //Contiendra les notes qui doivent être jouée
-		for(unsigned int i=0;i<cadre->getNbNote();++i) {
-			note = cadre->getPtrNote(i);
-			if(note->getNeedPlay()) { //Si la note doit être jouée
-				needPlayTab.push_back(note);
-			}
-		}
-		score->update(needPlayTab,*keyboard);
-
 
 	}
 	
-	else if(!cadre->isEmpty()) cadre->scrollCadre(delta,*score);
-	//On finit de dérouler le cadre jusqu'à ce que toutes les notes soient passées
-
+	else if(!cadre->isEmpty()) {
+		//On finit de dérouler le cadre jusqu'à ce que toutes les notes soient passées
+		cadre->scrollCadre(delta,*score);
+	}
+	
+	vector<Note*> needPlayTab=cadre->getNeedPlayTab(); //Contient les notes qui doivent être jouée
+	score->update(needPlayTab,*keyboard);
 
 }

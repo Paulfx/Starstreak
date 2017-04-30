@@ -177,6 +177,8 @@ void SdlGame::sdlShow(){
 
 }
 
+
+
 void SdlGame::drawValidation(){
     Cadre& cadre = game->getCadre();
     int widthV = width/10;
@@ -187,10 +189,10 @@ void SdlGame::drawValidation(){
     int taille=width/20;
     for(unsigned int i=0;i<5;++i) {
         if(!tabPush[i]) {
-            tabImV[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV); //5 param
+            tabImV[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV,widthV);
         }
         else {
-            tabImVPush[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV); //5param
+            tabImVPush[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV,widthV);
         }
     }
 }
