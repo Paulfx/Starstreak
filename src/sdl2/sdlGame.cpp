@@ -20,8 +20,9 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     im_note2.loadFromFile("../data/theme/notes/jaune.png",renderer);
     im_note3.loadFromFile("../data/theme/notes/bleu.png",renderer);
     im_note4.loadFromFile("../data/theme/notes/orange.png",renderer);
-
-       
+    im_noteAlredyPlayed.loadFromFile("../data/theme/notes/vert.png",renderer);
+    
+    
     backgroundImageLoad();
     
     tabImV[0].loadFromFile("../data/theme/notes/validGreen.png",renderer);
@@ -155,23 +156,40 @@ void SdlGame::sdlShow(){
     
     Cadre& cadre = game->getCadre();
 
-   // im_ligneValidation.draw(renderer,0,cadre.getBeginValid());
 
     drawValidation();
     int widthNote = width/10;
     int heightNote = height/6;
+    
+    
+    
+    bool tabIsPlayed[5];
 
     for(unsigned int i=0;i<cadre.getNbNote();++i) {
+        
         Note& note = cadre.getNote(i);
+        tabIsPlayed[i]=note.isPlayed();
         int color = note.getColor();
         int Distx=width/4;
-        switch(color) {
-            case 0 : im_note0.draw(renderer,Distx+color*widthNote,note.getPosY());break; //TODO ENLEVER TABPOS DE CADRE !
-            case 1 : im_note1.draw(renderer,Distx+color*widthNote,note.getPosY());break;
-            case 2 : im_note2.draw(renderer,Distx+color*widthNote,note.getPosY());break;
-            case 3 : im_note3.draw(renderer,Distx+color*widthNote,note.getPosY());break;
-            case 4 : im_note4.draw(renderer,Distx+color*widthNote,note.getPosY());break;
-            default:break;
+        cout << endl << tabIsPlayed[i];
+        if(tabIsPlayed[i]){ //si la touche a eté un succes on change l'image (très peu d'affichage mais sympa quand meme)
+            switch(color) {
+                case 0 : im_noteAlredyPlayed.draw(renderer,Distx+color*widthNote,note.getPosY());break; 
+                case 1 : im_noteAlredyPlayed.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                case 2 : im_noteAlredyPlayed.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                case 3 : im_noteAlredyPlayed.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                case 4 : im_noteAlredyPlayed.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                default:break;
+            }
+        }else{
+            switch(color) {
+                case 0 : im_note0.draw(renderer,Distx+color*widthNote,note.getPosY());break; //TODO ENLEVER TABPOS DE CADRE !
+                case 1 : im_note1.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                case 2 : im_note2.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                case 3 : im_note3.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                case 4 : im_note4.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+                default:break;
+            }
         }
     }
 
@@ -217,6 +235,7 @@ void SdlGame::sdlLoop(){
         float delta = new_time - time_seconds;
         time_seconds = new_time;
         game->update(delta);
+        
         
         //keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
         while (SDL_PollEvent(&events)) {

@@ -8,6 +8,7 @@ Note::Note(unsigned int x, unsigned int y, unsigned int c, bool longBool, float 
 	color = c;
 	longDuration = longBool;
 	speed=speedNote;
+    played=false;
 }
 
 unsigned int Note::getPosX() const {return posX;}

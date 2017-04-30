@@ -27,7 +27,7 @@ private :
 
 /* ######### GAME ######### */
     Game* game;
-    Image im_note0, im_note1, im_note2, im_note3, im_note4; //Acces unique par switch
+    Image im_note0, im_note1, im_note2, im_note3, im_note4,im_noteAlredyPlayed; //Acces unique par switch
     Image Background;
     Image tabImV [5]; //acces avec un for
     Image tabImVPush [5]; //acces avec un for
