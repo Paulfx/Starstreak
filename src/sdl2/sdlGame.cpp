@@ -21,32 +21,21 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     im_note3.loadFromFile("../data/theme/notes/bleu.png",renderer);
     im_note4.loadFromFile("../data/theme/notes/orange.png",renderer);
 
-    im_ligneValidation.loadFromFile("../data/theme/notes/ligneValidation.png",renderer);
-    
-    
-    
-    im_noteV0.loadFromFile("../data/theme/notes/validGreen.png",renderer);
-    tabImV[0]=im_noteV0;
-    im_noteV1.loadFromFile("../data/theme/notes/validRed.png",renderer);
-    tabImV[1]=im_noteV1;
-    im_noteV2.loadFromFile("../data/theme/notes/validYel.png",renderer);
-    tabImV[2]=im_noteV2;
-    im_noteV3.loadFromFile("../data/theme/notes/validBl.png",renderer);
-    tabImV[3]=im_noteV3;
-    im_noteV4.loadFromFile("../data/theme/notes/validOr.png",renderer);
-    tabImV[4]=im_noteV4;
+       
     backgroundImageLoad();
     
-    im_noteVPush0.loadFromFile("../data/theme/notes/validGreenON.png",renderer);
-    tabImVPush[0]=im_noteVPush0;
-    im_noteVPush1.loadFromFile("../data/theme/notes/validRedON.png",renderer);
-    tabImVPush[1]=im_noteVPush1;
-    im_noteVPush2.loadFromFile("../data/theme/notes/validYelON.png",renderer);
-    tabImVPush[2]=im_noteVPush2;
-    im_noteVPush3.loadFromFile("../data/theme/notes/validBlON.png",renderer);
-    tabImVPush[3]=im_noteVPush3;
-    im_noteVPush4.loadFromFile("../data/theme/notes/validOrON.png",renderer);
-    tabImVPush[4]=im_noteVPush4;
+    tabImV[0].loadFromFile("../data/theme/notes/validGreen.png",renderer);
+    tabImV[1].loadFromFile("../data/theme/notes/validRed.png",renderer);
+    tabImV[2].loadFromFile("../data/theme/notes/validYel.png",renderer);
+    tabImV[3].loadFromFile("../data/theme/notes/validBl.png",renderer);
+    tabImV[4].loadFromFile("../data/theme/notes/validOr.png",renderer);
+  
+    
+    tabImVPush[0].loadFromFile("../data/theme/notes/validGreenON.png",renderer);
+    tabImVPush[1].loadFromFile("../data/theme/notes/validRedON.png",renderer);
+    tabImVPush[2].loadFromFile("../data/theme/notes/validYelON.png",renderer);
+    tabImVPush[3].loadFromFile("../data/theme/notes/validBlON.png",renderer);
+    tabImVPush[4].loadFromFile("../data/theme/notes/validOrON.png",renderer);
 
     tabPush[0]=false;
     tabPush[1]=false;
@@ -85,10 +74,12 @@ void SdlGame::backgroundImageLoad(){
     Background.loadFromFile(accesImage,renderer);
 }
 
-
+//Testament de l'ihm de jeu: destrction de :
 SdlGame::~SdlGame() {
     //Libération images
     //et de la musique en cours
+    
+    
     
     delete game;
     Mix_FreeMusic(music);
