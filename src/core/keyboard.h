@@ -23,6 +23,7 @@ class Keyboard{
 private :
 
     enumPress* keyTab; //[0->4] -> note "AZERT"
+    unsigned int* numberFramesPressedTab; //Compteur
     bool validation; //True si la touche de validation a été enfoncée, false sinon
 
 public :

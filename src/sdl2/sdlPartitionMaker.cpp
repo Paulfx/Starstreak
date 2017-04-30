@@ -1,10 +1,10 @@
 #include "sdlPartitionMaker.h"
 
 
-SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * renderer, const Song& song) : window(window), renderer(renderer) {
+SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * renderer, const Song& song, unsigned int difficulty) : window(window), renderer(renderer) {
 	assert(renderer);
 
-    partMaker=new PartitionMaker(song);
+    partMaker=new PartitionMaker(song,difficulty);
 
     cout<<"Partition Maker créé"<<endl;
     
@@ -32,7 +32,7 @@ void SdlPartitionMaker::sdlShow() {
 	SDL_Surface * surface;
     SDL_Texture * tex;
     SDL_Rect rec;
-	SDL_Color WhiteC = {255, 255, 255};
+	SDL_Color WhiteC = {0,0,0};
 
 
     surface=TTF_RenderText_Blended(font,message.c_str(),WhiteC);
@@ -42,8 +42,8 @@ void SdlPartitionMaker::sdlShow() {
     }
     rec.x=width/2;
     rec.y=height/2;
-    rec.w=0.016*width*message.size();
-    rec.h=0.12*height;
+    rec.w=surface->w;
+    rec.h=surface->h;
     if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl;
     }
@@ -78,55 +78,52 @@ void SdlPartitionMaker::sdlLoop() {
     int time;
     float timeSeconds;
     int timeBefore=SDL_GetTicks();
-    while(!partMaker->isEnded()){
-    	time=SDL_GetTicks()-timeBefore;
-    	timeSeconds=time/1000.f;
-    	while(timeSeconds<=duration && !quit) {
-    		cout<<timeSeconds<<"   "<<duration<<endl;
-	        keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
-	        while (SDL_PollEvent(&events)) {
-	            if (events.type == SDL_QUIT){
-	                quit = true;
-	            }
-	            else if (events.type == SDL_KEYDOWN){ //Appui
-	                switch(events.key.keysym.scancode) {
-	                    case SDL_SCANCODE_A:
-	                        quit=true;
-	                        break;
-	                    case SDL_SCANCODE_Q:keyboard.setPress(0);break;
-	                    case SDL_SCANCODE_W:keyboard.setPress(1);break;
-	                    case SDL_SCANCODE_E:keyboard.setPress(2);break;
-	                    case SDL_SCANCODE_R:keyboard.setPress(3);break;
-	                    case SDL_SCANCODE_T:keyboard.setPress(4);break;
+    	
+	while(timeSeconds<=duration && !quit) {
+		time=SDL_GetTicks()-timeBefore;
+		timeSeconds=time/1000.f;
+		cout<<timeSeconds<<"   "<<duration<<endl;
+        //keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
+        while (SDL_PollEvent(&events)) {
+            if (events.type == SDL_QUIT){
+                quit = true;
+            }
+            else if (events.type == SDL_KEYDOWN){ //Appui
+                switch(events.key.keysym.scancode) {
+                    case SDL_SCANCODE_A:
+                        quit=true;
+                        break;
+                    case SDL_SCANCODE_Q:keyboard.setPress(0);break;
+                    case SDL_SCANCODE_W:keyboard.setPress(1);break;
+                    case SDL_SCANCODE_E:keyboard.setPress(2);break;
+                    case SDL_SCANCODE_R:keyboard.setPress(3);break;
+                    case SDL_SCANCODE_T:keyboard.setPress(4);break;
 
-	                    default:break;
-	                }
-	            }
-	            else if (events.type == SDL_KEYUP){ //Relachement
-	                switch(events.key.keysym.scancode) {
-	                    case SDL_SCANCODE_Q:keyboard.setNoPress(0);break;
-	                    case SDL_SCANCODE_W:keyboard.setNoPress(1);break;
-	                    case SDL_SCANCODE_E:keyboard.setNoPress(2);break;
-	                    case SDL_SCANCODE_R:keyboard.setNoPress(3);break;
-	                    case SDL_SCANCODE_T:keyboard.setNoPress(4);break;
-	                    default:break;
-	                }
-	            }
-	        }
-	        string line=keyboard.getCurrentStateStr();
-	        cout<<"LINE : "<<line<<endl;
-	        time = SDL_GetTicks() - timeBefore;
-	        timeSeconds=time/1000.f;
-	        
-	        partMaker->update(time,line);
+                    default:break;
+                }
+            }
+            else if (events.type == SDL_KEYUP){ //Relachement
+                switch(events.key.keysym.scancode) {
+                    case SDL_SCANCODE_Q:keyboard.setNoPress(0);break;
+                    case SDL_SCANCODE_W:keyboard.setNoPress(1);break;
+                    case SDL_SCANCODE_E:keyboard.setNoPress(2);break;
+                    case SDL_SCANCODE_R:keyboard.setNoPress(3);break;
+                    case SDL_SCANCODE_T:keyboard.setNoPress(4);break;
+                    default:break;
+                }
+            }
+        }
+        string line=keyboard.getCurrentStateStr();
+        cout<<"LINE : "<<line<<endl;
+        time = SDL_GetTicks() - timeBefore;
+        timeSeconds=time/1000.f;
+        
+        partMaker->update(time,line);
 
-	        sdlShow();
-	        SDL_RenderPresent(renderer);
-	    }
-	    quit=false;
-	    partMaker->increaseDifficulty();
-	    timeBefore=SDL_GetTicks();
-	}
-
-	partMaker->save();
+        sdlShow();
+        SDL_RenderPresent(renderer);
+    }
+    partMaker->save();
 }
+
+	

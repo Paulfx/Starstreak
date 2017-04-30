@@ -10,13 +10,16 @@ Partition::Partition() {
 }
 
 Partition::Partition(const string & filename,unsigned int difficulty) {
-	cout<<"Ouverture de : "<<filename<<endl;
-	ifstream fichier(filename.c_str());
+	string filenameDiff=filename+to_string(difficulty);
+	cout<<"Ouverture de : "<<filenameDiff<<endl;
+	ifstream fichier(filenameDiff.c_str());
 	assert(fichier.is_open());
 	index = 0;
 	end=false;
 
-	string difficultyLine,strNbBeginning;
+	/*
+	string difficultyLine;
+	string strNbBeginning;
 	getline(fichier,difficultyLine);
 	stringstream ss(difficultyLine); //Conversion de str en flux
 	for (unsigned int i=0;i<difficulty;i++) {
@@ -25,6 +28,8 @@ Partition::Partition(const string & filename,unsigned int difficulty) {
 	int nbBeginning = std::stoi(strNbBeginning.c_str()); //nbr de caractère avant le début de la partition
 
 	fichier.seekg(nbBeginning,ios::beg); // On se déplace au début de la partition
+	*/
+
 
 	fichier >> nbLine;
 	partition = new line[nbLine];

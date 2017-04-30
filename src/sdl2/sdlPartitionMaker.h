@@ -32,7 +32,7 @@ private :
 
 public :
 	
-    SdlPartitionMaker(SDL_Window * window, SDL_Renderer * renderer, const Song& song);
+    SdlPartitionMaker(SDL_Window * window, SDL_Renderer * renderer, const Song& song, unsigned int difficulty);
 
     ~SdlPartitionMaker();
 

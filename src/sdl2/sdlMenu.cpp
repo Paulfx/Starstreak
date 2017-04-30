@@ -447,6 +447,7 @@ void SdlMenu::sdlLoop(){
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
                                 movePtr("up",2,3);
+                                //menu->increaseDiff();
                                 break;
                             }
                             case SDL_SCANCODE_DOWN:
@@ -455,6 +456,7 @@ void SdlMenu::sdlLoop(){
                                     cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                                 }
                                 movePtr("down",2,3);
+                                //menu->decreaseDiff();
                                 break;
                             }
                             case SDL_SCANCODE_RETURN://touche entré
@@ -465,7 +467,9 @@ void SdlMenu::sdlLoop(){
                                 
                                 if(creationMode) {
                                     soundQuit();
-                                    SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong());
+
+                                    cout<<"DIFF : "<<menu->getDifficulty()<<endl;
+                                    SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong(),1);
                                     partMaker.sdlLoop();
                                     soundInit();
                                     stateMenu=0;

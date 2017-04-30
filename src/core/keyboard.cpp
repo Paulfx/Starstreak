@@ -11,14 +11,18 @@
 #include <iostream>
 
 
+const unsigned int LIMIT_NUMBER_FRAMES = 7;
+
 Keyboard::Keyboard(){
     keyTab=new enumPress[5];
+    numberFramesPressedTab=new unsigned int[5];
     clear();
     validation = false;
 }
 
 Keyboard::~Keyboard(){
     delete [] keyTab;
+    delete [] numberFramesPressedTab;
 }
 
 bool Keyboard::isNoPress(unsigned int i) const {
@@ -39,17 +43,19 @@ bool Keyboard::isLongPress(unsigned int i) const {
 
 bool Keyboard::isValid() const {return validation;}
 
-void Keyboard::setNoPress(unsigned int i) { keyTab[i] = noPress; }
+void Keyboard::setNoPress(unsigned int i) { keyTab[i] = noPress; numberFramesPressedTab[i]=0; }
 
 void Keyboard::clear() {
     for(int i=0;i<5;i++){
         keyTab[i]=noPress;
+        numberFramesPressedTab[i]=0;
     }
 }
 
 void Keyboard::setPress(unsigned int i) { 
     if(keyTab[i] == noPress) keyTab[i] = simplePress;
-    else keyTab[i] = longPress;
+    else if(numberFramesPressedTab[i] < LIMIT_NUMBER_FRAMES) numberFramesPressedTab[i]++;
+    else keyTab[i] = longPress; 
 }
 
 void Keyboard::setValid(bool b) { validation = b; }

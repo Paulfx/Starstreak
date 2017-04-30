@@ -1,11 +1,9 @@
 #include "partitionMaker.h"
 
 
-PartitionMaker::PartitionMaker(const Song& currSong){
-	difficulty=1;
-	numberLine1=0;
-	numberLine2=0;
-	numberLine3=0;
+PartitionMaker::PartitionMaker(const Song& currSong,unsigned int currDifficulty){
+	difficulty=currDifficulty;
+	numberLine=0;
 	song=currSong;
 	keyboard = new Keyboard();
 }
@@ -18,21 +16,15 @@ PartitionMaker::~PartitionMaker(){
 
 
 void PartitionMaker::update(unsigned int msTime, const string& line) {
-	//en fonction de la difficulté, on remplit le vectorDiff correspondant
 	if(line!="00000") {
 		string fullLine = line +" "+to_string(msTime)+"\n";
-
-		switch(difficulty) {
-			case 1:data1+=fullLine;numberLine1++;break;
-			case 2:data2+=fullLine;numberLine2++;break;
-			case 3:data3+=fullLine;numberLine3++;break;
-		}
+		data+=fullLine;
+		numberLine++;
 	}
 }
 
-
 void PartitionMaker::save() {
-	
+	/*
 	string dataDiff1 = numberLine1+"\n"+data1+"\n";
 	string dataDiff2 = numberLine2+"\n"+data2+"\n";
 	string dataDiff3 = numberLine3+"\n"+data3+"\n";
@@ -48,16 +40,22 @@ void PartitionMaker::save() {
 	unsigned int nbCharFirstLine = 1+nbDigits(nbCharToDifficulty2)+nbDigits(nbCharToDifficulty3)+2; //2 correspond aux virgules de la première ligne
 
 	calcNbChar(nbCharToDifficulty1,nbCharToDifficulty2,nbCharToDifficulty3,nbCharFirstLine);
+	
+
 
 	string fullData = to_string(nbCharToDifficulty1)+","+to_string(nbCharToDifficulty2)+","+to_string(nbCharToDifficulty3)+"\n"+data1+data2+data3;
 	cout<<fullData<<endl;
+
+	*/
 	/* Sauvegarde */
-	ofstream fichier(song.filePartition);
-	fichier<<fullData;
+	string filename=song.filePartition+to_string(difficulty);
+	ofstream fichier(filename.c_str());
+	fichier<<numberLine<<"\n";
+	fichier<<data;
 	fichier.close();
 
 }
-
+/*
 void PartitionMaker::calcNbChar(unsigned int& nbChar1,unsigned int& nbChar2,unsigned int& nbChar3, unsigned int count) {
 	unsigned int tmpCount;
 	bool finished=false;
@@ -83,16 +81,10 @@ int PartitionMaker::nbDigits(unsigned int number) {
 	}
 	return digits;
 }
-
+*/
 Keyboard& PartitionMaker::getKeyboard() { return *keyboard;}
 
 const Song& PartitionMaker::getSong() { return song;}
 
 unsigned int PartitionMaker::getDifficulty() { return difficulty;}
 
-bool PartitionMaker::isEnded() const { return end;}
-
-void PartitionMaker::increaseDifficulty() {
-	if(difficulty !=3) difficulty++;
-	else end=true;
-}
