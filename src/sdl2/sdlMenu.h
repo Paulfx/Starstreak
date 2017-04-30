@@ -95,9 +95,9 @@ public :
     void sdlShowSelect();
     void sdlShowMenu();
     
-    void sdlLoopDiff();
-    void sdlLoopSelect();
-    void sdlLoopMenu(bool quit);
+    int sdlLoopDiff();
+    int sdlLoopSelect();
+    int sdlLoopMenu();
     
     
     

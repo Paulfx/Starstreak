@@ -51,39 +51,6 @@ void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
     }
 }
 
-void SdlMenu::sdlInit() {
-    //SDL
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
-        cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
-    }
-        //TTF
-    if (TTF_Init() == -1) {
-        cout << "Erreur lors de l'initialisation de la SDL_ttf : " << SDL_GetError() << endl;SDL_Quit();exit(1);
-    }
-
-    //IMAGE
-    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-    if( !(IMG_Init(imgFlags) & imgFlags)) {
-        cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;SDL_Quit();exit(1);
-    }
-    //MIXER
-    
-     if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096)==-1){
-         cout<<Mix_GetError()<<endl;
-     }
-   
-    int i,n=Mix_GetNumChunkDecoders();
-    printf("There are %d available chunk(sample) decoders:\n",n);
-    for(i=0; i<n; ++i){
-        printf("    %s\n", Mix_GetChunkDecoder(i));
-        n = Mix_GetNumMusicDecoders();
-        printf("There are %d available music decoders:\n",n);
-    }
-    for(i=0; i<n; ++i){
-        printf("    %s\n", Mix_GetMusicDecoder(i));
-    }
-}
-
 SdlMenu::SdlMenu() : creationMode(false){
     // INITIALISATION DE SDL
     sdlInit();
@@ -136,6 +103,94 @@ SdlMenu::SdlMenu() : creationMode(false){
         cout << "Erreur dans l'initialisation du renderer" << endl;
     }
 }
+
+void SdlMenu::sdlInit() {
+    //SDL
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+        cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
+    }
+        //TTF
+    if (TTF_Init() == -1) {
+        cout << "Erreur lors de l'initialisation de la SDL_ttf : " << SDL_GetError() << endl;SDL_Quit();exit(1);
+    }
+
+    //IMAGE
+    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+    if( !(IMG_Init(imgFlags) & imgFlags)) {
+        cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;SDL_Quit();exit(1);
+    }
+    //MIXER
+    
+     if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096)==-1){
+         cout<<Mix_GetError()<<endl;
+     }
+   
+    int i,n=Mix_GetNumChunkDecoders();
+    printf("There are %d available chunk(sample) decoders:\n",n);
+    for(i=0; i<n; ++i){
+        printf("    %s\n", Mix_GetChunkDecoder(i));
+        n = Mix_GetNumMusicDecoders();
+        printf("There are %d available music decoders:\n",n);
+    }
+    for(i=0; i<n; ++i){
+        printf("    %s\n", Mix_GetMusicDecoder(i));
+    }
+}
+
+void SdlMenu::soundInit() {
+    
+    soundMove=NULL;
+    soundAccept=NULL;
+    soundMenu=NULL;
+    
+    if (soundMenu==NULL){
+        Mix_AllocateChannels(5);
+        
+        soundMove=Mix_LoadWAV("../data/theme/sounds/move.wav");
+        if(!soundMove){
+            cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
+        }
+        
+        soundAccept=Mix_LoadWAV("../data/theme/sounds/action.wav");
+        if(!soundAccept){
+            cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
+        }
+        /*musique de fond dans le menu*/
+        /**@todo Ouvrir plusieurs son de menu qui se lance aléatoirement**/
+        
+        soundMenu=Mix_LoadWAV("../data/theme/sounds/menuKiller.wav");
+        if(!soundMenu){
+            cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
+        }
+        if (Mix_PlayChannel(1,soundMenu,2)==-1) {
+            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+        }
+    }
+}
+    
+void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le programme sinon on aura plus aucun son lorsque l'on retourne dans le menu
+    Mix_HaltChannel(1);
+    Mix_FreeChunk(soundAccept);
+    Mix_FreeChunk(soundMove);
+    Mix_FreeChunk(soundMenu);
+}
+
+
+
+SdlMenu::~SdlMenu(){
+
+    delete menu;
+
+    //Fermeture TTF
+    //TTF_CloseFont(fontMenu);  -> erreur d'allocation
+    TTF_Quit();
+    Mix_CloseAudio();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
+
+}
+
 
 void SdlMenu::createTextTextures() {
     SDL_Color white = {255, 255, 255};
@@ -306,7 +361,233 @@ void SdlMenu::sdlTest(){
     sdlLoop();
 }
 
+//########## LOOP PRINCIPALE #########
+void SdlMenu::sdlLoop(){
+    soundInit();
+    //sdlShow();
+    while (stateMenu!=-1){
+        switch(stateMenu){
+            case 0: {// menu0 loop
+                stateMenu=sdlLoopMenu();
+                //dlShowMenu();
+                //SDL_RenderPresent(renderer);
+                //sdlLoopMenu(quit);
+                break;
+            }
+            case 1: {//SELECT lloop
+                stateMenu=sdlLoopSelect();
+                //SDL_RenderPresent(renderer);
+                //sdlLoopSelect();
+                break;
+            }
+            case 2: {//Difficulty loop
+                stateMenu=sdlLoopDiff();
+                //SDL_RenderPresent(renderer);
+                //sdlLoopDiff();
+                break;
+            }
+            default:break;
+        }
+    }
+}
 
+
+
+//###### LOOP menu #####
+int SdlMenu::sdlLoopMenu(){
+    assert(stateMenu==0);
+    SDL_Event events;
+    while(1) {
+        while(SDL_PollEvent(&events)){
+            if (events.type == SDL_QUIT){
+                return -1;
+            }else if(events.type == SDL_KEYDOWN){
+                switch(events.key.keysym.scancode){
+                    case SDL_SCANCODE_UP:
+                    {
+                        if (Mix_PlayChannel(2,soundMove,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        movePtr("up",0,0);
+                        break;
+                    }
+                    case SDL_SCANCODE_DOWN:
+                    {
+                        if (Mix_PlayChannel(3,soundMove,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        movePtr("down",0,0);
+                        break;
+                    }
+                    case SDL_SCANCODE_RETURN:
+                    {
+                        if (Mix_PlayChannel(4,soundAccept,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        switch(posPtr){
+                            case 0: {//Select menu
+                                posPtr=0;
+                                return 1;
+                            }
+                            case 1:{//Create menu
+                                creationMode=true;
+                                return 1;
+                            }
+                            case 2: {//QUIT
+                                return -1;
+                            }
+                        }
+                        break;
+                    }
+                    case SDL_SCANCODE_ESCAPE:
+                    {
+                        return -1;
+                    }
+                    default:break;
+                }
+            }
+            
+        }
+        sdlShowMenu();
+        SDL_RenderPresent(renderer);
+    }
+}
+
+//###### LOOP Select song ############
+int SdlMenu::sdlLoopSelect(){
+    assert(stateMenu==1);
+    SDL_Event events;
+    while(1) {
+        while (SDL_PollEvent(&events)) {
+            if (events.type == SDL_QUIT){
+                stateMenu=0;
+            }else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
+                switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
+                    case SDL_SCANCODE_UP:
+                    {
+                        if (Mix_PlayChannel(2,soundMove,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        menu->moveUp();
+                        break;
+                    }
+                    case SDL_SCANCODE_DOWN:
+                    {
+                        if (Mix_PlayChannel(3,soundMove,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        menu->moveDown();
+                        break;
+                    }
+                    case SDL_SCANCODE_RETURN://Menu difficulté
+                    {
+                        if (Mix_PlayChannel(4,soundAccept,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        choosenSongTitle=(menu->getCurrSong()).title;
+                        posPtr=0;
+                        return 2;
+                    }
+                        
+                    case SDL_SCANCODE_ESCAPE://Retour arrière
+                    {
+                        creationMode=false;
+                        return 1;
+                    }
+                    default:break;
+                }
+            }
+        }
+        sdlShowSelect();
+        SDL_RenderPresent(renderer);
+    }
+}
+
+// ###### LOOP difficulté ##########
+int SdlMenu::sdlLoopDiff(){
+    assert(stateMenu==2);
+    SDL_Event events;
+    while(1) {
+        while (SDL_PollEvent(&events)) {
+            if (events.type == SDL_QUIT){
+                return -1; //retour a menu, pas a select ?
+            }else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
+                switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
+                    case SDL_SCANCODE_UP: //flèche du haut
+                    {
+                        if (Mix_PlayChannel(2,soundMove,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        movePtr("up",2,3);
+                        break;
+                    }
+                    case SDL_SCANCODE_DOWN:
+                    {//flèche du bas
+                        if (Mix_PlayChannel(3,soundMove,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        movePtr("down",2,3);
+                        break;
+                    }
+                    case SDL_SCANCODE_RETURN://touche entré
+                    {
+                        if (Mix_PlayChannel(4,soundAccept,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
+                        
+                        if(creationMode) {
+                            soundQuit();
+                            SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong(),posPtr+1);
+                            partMaker.sdlLoop();
+                            soundInit();
+                            creationMode=false;
+                            return 0;//Menu initial
+                        }
+                        else {
+                            soundQuit();
+                            SdlGame game(window,renderer,menu->getCurrSong(),posPtr+1);
+                            game.sdlLoop();
+                            soundInit();//pour relancer les sons (on ne repasse jamais dans l'appel en haut de menu)
+                            //ON PEUT FAIRE UN BIEN JOUERF AFFICHAGE DU SCORE OU UNNE CONNERIE DE CE GENRE ICI (une fonction show avec un delay ou un ok)
+                            //Pourquoi un object de la classe "loadingImage" ou "fadeImage" :)?
+                            return 0;
+                        }
+                        break;
+                    }
+                    case SDL_SCANCODE_ESCAPE://touche echap
+                    {
+                        return 1;//retour arrière
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+
+        sdlShowDiff();
+        SDL_RenderPresent(renderer);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 //###### LOOP menu #####
 void SdlMenu::sdlLoopMenu(bool quit){
@@ -517,58 +798,5 @@ void SdlMenu::sdlLoop(){
     }
 }
 
-void SdlMenu::soundInit() {
-    
-    soundMove=NULL;
-    soundAccept=NULL;
-    soundMenu=NULL;
-    
-    if (soundMenu==NULL){
-        Mix_AllocateChannels(5);
-        
-        soundMove=Mix_LoadWAV("../data/theme/sounds/move.wav");
-        if(!soundMove){
-            cout<<"erreur ouverture effet de séléction:"<<Mix_GetError()<<endl;
-        }
-        
-        soundAccept=Mix_LoadWAV("../data/theme/sounds/action.wav");
-        if(!soundAccept){
-            cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
-        }
-        /*musique de fond dans le menu*/
-        /**@todo Ouvrir plusieurs son de menu qui se lance aléatoirement**/
-        
-        soundMenu=Mix_LoadWAV("../data/theme/sounds/menuKiller.wav");
-        if(!soundMenu){
-            cout<<"erreur ouverture musique menu:"<<Mix_GetError()<<endl;
-        }
-        if (Mix_PlayChannel(1,soundMenu,2)==-1) {
-            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
-        }
-    }
-}
-    
-void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le programme sinon on aura plus aucun son lorsque l'on retourne dans le menu
-    Mix_HaltChannel(1);
-    Mix_FreeChunk(soundAccept);
-    Mix_FreeChunk(soundMove);
-    Mix_FreeChunk(soundMenu);
-}
 
-
-
-SdlMenu::~SdlMenu(){
-
-    delete menu;
-
-    //Fermeture TTF
-    //TTF_CloseFont(fontMenu);  -> erreur d'allocation
-    TTF_Quit();
-    Mix_CloseAudio();
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit(); // Arrêt de la SDL (libération de la mémoire).
-
-}
-
-
+*/
