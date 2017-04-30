@@ -17,6 +17,7 @@ Cadre::Cadre(unsigned int pos0,unsigned int pos1,unsigned int pos2,unsigned int 
 	initialY = initY;
 	beginValid = beginV;
 	endValid = endV;
+	totalTime = 0.f;
 
 	speed=(float)(beginValid + (float)(endValid-beginValid)/2 - initialY)/timeUntil;//En pixels par seconde
 	assert(speed!=0);
@@ -31,16 +32,20 @@ Cadre::~Cadre(){
 /*
 delta représente le temps depuis le dernier appel de la fonction en SECONDES
 */
-bool Cadre::update(float delta, const line& currLine,bool addBefore) {
-	if (timeLine == 0) timeLine = currLine.time/1000.f; //Initialisation
-	if (addBefore) timeLine = currLine.time/1000.f; //Si la ligne précédente a été ajoutée
-	timeLine-=delta;
-	assert(timeLine>timeUntil-delta);
+bool Cadre::update(float delta, const line& currLine) {
+	float timeUntilPlay;
+	totalTime+=delta;
+	if (timeLine == 0) timeLine = currLine.time/1000.f; //Initialisation et si la ligne précédente a été ajoutée
+	timeUntilPlay=timeLine-totalTime;
+	std::cout<<timeUntilPlay<<std::endl;
+	std::cout<<totalTime<<std::endl;
+	std::cout<<delta<<std::endl<<std::endl;
+	assert(timeUntilPlay>timeUntil-delta);
 	assert(timeUntil-delta>0);
 	Note* note;
 	bool ajout=false;
 	//Ajout de la ligne, si c'est le moment
-	if( timeLine < (timeUntil + delta) && timeLine > (timeUntil - delta) ) {
+	if( timeUntilPlay < (timeUntil + delta) ) {
 		//On ajoute les notes de la ligne au cadre
 		ajout=true;
 		timeLine=0; //On réinitialise timeLine

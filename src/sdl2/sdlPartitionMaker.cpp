@@ -114,6 +114,7 @@ void SdlPartitionMaker::sdlLoop() {
             }
         }
         string line=keyboard.getCurrentStateStr();
+        for(unsigned int i=0;i<5;i++) {keyboard.setNoPress(i);}
         cout<<"LINE : "<<line<<endl;
         time = SDL_GetTicks() - timeBefore;
         timeSeconds=time/1000.f;

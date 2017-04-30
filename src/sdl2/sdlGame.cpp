@@ -186,6 +186,11 @@ void SdlGame::sdlLoop(){
 
     float time_seconds = SDL_GetTicks() / 1000.f;
     while(!quitGame){
+        float new_time = SDL_GetTicks() / 1000.f;
+        float delta = new_time - time_seconds;
+        time_seconds = new_time;
+        game->update(delta);
+
         //keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
@@ -218,14 +223,8 @@ void SdlGame::sdlLoop(){
             }
         }
         //keyboard.afficher();
-
-        float new_time = SDL_GetTicks() / 1000.f;
-        float delta = new_time - time_seconds;
-        time_seconds = new_time;
-
         sdlShow();
         sdlScore();
-        game->update(delta);
         SDL_RenderPresent(renderer);
     }
 

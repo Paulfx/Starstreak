@@ -11,7 +11,7 @@
 #include <iostream>
 
 
-const unsigned int LIMIT_NUMBER_FRAMES = 7;
+const unsigned int LIMIT_NUMBER_FRAMES = 10;
 
 Keyboard::Keyboard(){
     keyTab=new enumPress[5];
