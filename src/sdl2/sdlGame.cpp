@@ -50,13 +50,24 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     tabPush[2]=false;
     tabPush[3]=false;
     tabPush[4]=false;
+
+
+    string aMusic="../data/wav/";
+    aMusic+=game->getSong().fileMusic;
+    const char *accesMusic = aMusic.c_str();
+    cout<<"lancement de :"<<accesMusic<<endl;
+    music=Mix_LoadMUS(accesMusic);
+    if (!music){
+        cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
+    }
+
 }
 
 SdlGame::~SdlGame() {
     //Libération images
     //et de la musique en cours
     delete game;
-    Mix_HaltMusic();
+    Mix_FreeMusic(music);
 }
 
 
@@ -110,19 +121,11 @@ void SdlGame::sdlLoop(){
     SDL_Event events;
     bool quitGame = false;
     
-
-    /*SDL_MIXER (lancement de la chanson)*/
-    string aMusic="../data/mp3/";
-    aMusic+=game->getSong().fileMusic;
-    const char *accesMusic = aMusic.c_str();
-    cout<<"lancement de :"<<accesMusic<<endl;
-    music=Mix_LoadMUS(accesMusic);
-    if (!music){
-        cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
-    }
     if (Mix_PlayMusic(music,1)==-1) {
         cout<<"Mix_PlayMusic error"<<endl;
     }
+
+    
 
     Keyboard& keyboard = game->getKeyboard();
 
