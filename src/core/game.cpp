@@ -38,8 +38,6 @@ Game::Game(const Song& currSong,unsigned int difficulty,bool mode) {
 	ligneAjoutee=false;
 	currLine=partition->getLine();
 
-
-
 }
 
 Game::~Game() {

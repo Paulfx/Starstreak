@@ -469,8 +469,8 @@ void SdlMenu::sdlLoop(){
                                     soundQuit();
 
                                     cout<<"DIFF : "<<menu->getDifficulty()<<endl;
-                                    SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong(),1);
-                                    partMaker.sdlLoop();
+                                    SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong(),posPtr+1); //je déduis que posPtr +1 est la difficulté
+                                    partMaker.sdlLoop();                                                       //Mais menu;getDifficulty() menu.increaseDiff...
                                     soundInit();
                                     stateMenu=0;
                                     creationMode=false;
