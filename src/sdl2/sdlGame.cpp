@@ -89,6 +89,7 @@ void SdlGame::backgroundImageLoad(){
 SdlGame::~SdlGame() {
     //Libération images
     //et de la musique en cours
+    
     delete game;
     Mix_FreeMusic(music);
 }
@@ -126,7 +127,7 @@ void SdlGame::sdlShow(){
     
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
-
+    Background.draw(renderer,0,0,width,height);
     
     Cadre& cadre = game->getCadre();
 
@@ -162,10 +163,10 @@ void SdlGame::drawValidation(){
     int taille=width/20;
     for(unsigned int i=0;i<5;++i) {
         if(!tabPush[i]) {
-            tabImV[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV);
+            tabImV[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV); //5 param
         }
         else {
-            tabImVPush[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV);
+            tabImVPush[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV); //5param
         }
     }
 }
