@@ -434,7 +434,7 @@ void SdlMenu::sdlLoopDiff(){
                     
                     if(creationMode) {
                         soundQuit();
-                        SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong());
+                        SdlPartitionMaker partMaker(window,renderer,menu->getCurrSong(),posPtr+1);
                         partMaker.sdlLoop();
                         soundInit();
                         stateMenu=0;
@@ -444,7 +444,7 @@ void SdlMenu::sdlLoopDiff(){
                     else {
                         
                         soundQuit();
-                        SdlGame game(window,renderer,menu->getCurrSong(),posPtr+1,menu->getMode());
+                        SdlGame game(window,renderer,menu->getCurrSong(),posPtr+1);
                         game.sdlLoop();
                         soundInit();//pour relancer les sons (on ne repasse jamais dans l'appel en haut de menu)
                         stateMenu = 0;
