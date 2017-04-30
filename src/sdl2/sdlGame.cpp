@@ -140,11 +140,11 @@ void SdlGame::sdlShow(){
         int color = note.getColor();
         int Distx=width/4;
         switch(color) {
-            case 0 : im_note0.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break; //TODO ENLEVER TABPOS DE CADRE !
-            case 1 : im_note1.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
-            case 2 : im_note2.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
-            case 3 : im_note3.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
-            case 4 : im_note4.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
+            case 0 : im_note0.draw(renderer,Distx+color*widthNote,note.getPosY());break; //TODO ENLEVER TABPOS DE CADRE !
+            case 1 : im_note1.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+            case 2 : im_note2.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+            case 3 : im_note3.draw(renderer,Distx+color*widthNote,note.getPosY());break;
+            case 4 : im_note4.draw(renderer,Distx+color*widthNote,note.getPosY());break;
             default:break;
         }
     }
@@ -157,12 +157,14 @@ void SdlGame::drawValidation(){
     int Distx=width/4; // 1/4 + 1/2 + 1/4
     int Disty=height*5/6;
     int heightV =height/6;
+
+    int taille=width/20;
     for(unsigned int i=0;i<5;++i) {
         if(!tabPush[i]) {
-            tabImV[i].draw(renderer,Distx+i*widthV,Disty,widthV,heightV);
+            tabImV[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV);
         }
         else {
-            tabImVPush[i].draw(renderer,Distx+i*widthV,Disty,widthV,heightV);
+            tabImVPush[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV);
         }
     }
 }
@@ -193,7 +195,7 @@ void SdlGame::sdlLoop(){
                 switch(events.key.keysym.scancode) {
                     case SDL_SCANCODE_A:
                         quitGame=true;
-                        Mix_HaltMusic();
+                        //Mix_HaltMusic();
                         break;
                     case SDL_SCANCODE_Q:keyboard.setPress(0);tabPush[0]=true;break;
                     case SDL_SCANCODE_W:keyboard.setPress(1);tabPush[1]=true;break;

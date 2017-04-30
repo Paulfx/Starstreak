@@ -34,8 +34,9 @@ Cadre::~Cadre(){
 /*
 delta représente le temps depuis le dernier appel de la fonction en SECONDES
 */
-bool Cadre::update(float delta, const line& currLine) {
-	if (timeLine==0) timeLine = currLine.time/1000.f;//conversion en secondes
+bool Cadre::update(float delta, const line& currLine,bool addBefore) {
+	if (timeLine == 0) timeLine = currLine.time/1000.f; //Initialisation
+	if (addBefore) timeLine = currLine.time/1000.f; //Si la ligne précédente a été ajoutée
 	timeLine-=delta;
 	assert(timeLine>timeUntil-delta);
 	assert(timeUntil-delta>0);

@@ -76,9 +76,9 @@ void SdlPartitionMaker::sdlLoop() {
 
     
     int time;
-    float timeSeconds;
+    float timeSeconds=0;
     int timeBefore=SDL_GetTicks();
-    	
+    
 	while(timeSeconds<=duration && !quit) {
 		time=SDL_GetTicks()-timeBefore;
 		timeSeconds=time/1000.f;

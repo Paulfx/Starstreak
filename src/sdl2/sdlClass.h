@@ -14,6 +14,8 @@ public:
     Image ();
     void loadFromFile (const char* filename, SDL_Renderer * renderer);
     void draw (SDL_Renderer * renderer, int x, int y, int w=-1, int h=-1);
+    int getWidth();
+	int getHeight();
 };
 
 

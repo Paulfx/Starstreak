@@ -64,7 +64,7 @@ void Game::update(float delta) {
 			currLine=partition->getLine();
 		}
 		cadre->scrollCadre(delta,*score);
-		ligneAjoutee=cadre->update(delta,currLine);//On regarde si on a ajouté la ligne
+		ligneAjoutee=cadre->update(delta,currLine,ligneAjoutee);//On regarde si on a ajouté la ligne
 		Note* note;
 		vector<Note*> needPlayTab; //Contiendra les notes qui doivent être jouée
 		for(unsigned int i=0;i<cadre->getNbNote();++i) {

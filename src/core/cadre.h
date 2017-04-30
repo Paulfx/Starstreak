@@ -44,7 +44,7 @@ public :
 	@param time représente le temps écoulé (en ms) depuis le lancement du son
 	@return true si currLine est ajoutée au cadre, false sinon
 	*/
-	bool update(float delta, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
+	bool update(float delta, const line& currLine,bool ajout); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
 
     
     /** @brief

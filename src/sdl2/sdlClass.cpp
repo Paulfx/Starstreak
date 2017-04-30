@@ -61,3 +61,6 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
     ok = SDL_RenderCopy(renderer,texture,NULL,&r);
     //assert(ok == 0);
 }
+
+int Image::getWidth() { return surface->w;}
+int Image::getHeight() { return surface->h;}
