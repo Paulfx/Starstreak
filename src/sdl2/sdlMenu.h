@@ -32,8 +32,6 @@ private :
 
 /* ######### MENU ######### */
     TTF_Font * fontMenu; //Police pour le menu
-    //SDL_Mixer * ????
-    //SDL_DisplayMode currentMode; //currentMode : structure contenant taille de l'écran : w (width) et h (height)
     Menu* menu;
 
 
@@ -81,6 +79,17 @@ public :
     /** @brief  Affiche le menu de selection de chanson
      */
     void sdlShow();
+    
+    
+    void sdlShowDiff();
+    void sdlShowSelect();
+    void sdlShowMenu();
+    
+    void sdlLoopDiff();
+    void sdlLoopSelect();
+    void sdlLoopMenu(bool quit);
+    
+    
     
     void sdlTest();
     
