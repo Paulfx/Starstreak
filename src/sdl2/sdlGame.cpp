@@ -96,11 +96,21 @@ SDL_Texture* SdlGame::surfaceToTexture( SDL_Surface* surf ) {
 
 
 void SdlGame::sdlScore(){
-     SDL_Color white = {255, 255, 255};
+    SDL_Color white = {255, 255, 255};
+    SDL_Color black = {0,0,0};
     SDL_Surface* surf;
     int score=game->getScore().getTotalScore();
     string sc=to_string(score);
-    surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),white);
+    surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),black);
+    texScore=surfaceToTexture(surf);
+    SDL_Rect rec;
+    rec.x=100;
+    rec.y=200;
+    rec.w=200;
+    rec.h=100;
+    if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
+        cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+    }
 }
 
 
@@ -212,6 +222,7 @@ void SdlGame::sdlLoop(){
         time_seconds = new_time;
 
         sdlShow();
+        sdlScore();
         game->update(delta);
         SDL_RenderPresent(renderer);
     }
