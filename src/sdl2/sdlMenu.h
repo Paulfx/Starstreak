@@ -33,9 +33,6 @@ private :
 /* ######### MENU ######### */
     TTF_Font * fontMenu; //Police pour le menu
     Menu* menu;
-
-
-    //SdlGame game;
     
     int posPtr;
     int stateMenu;
@@ -85,9 +82,9 @@ public :
     void sdlShowSelect();
     void sdlShowMenu();
     
-    void sdlLoopDiff();
-    void sdlLoopSelect();
-    void sdlLoopMenu(bool quit);
+    int sdlLoopDiff();
+    int sdlLoopSelect();
+    int sdlLoopMenu();
     
     
     
