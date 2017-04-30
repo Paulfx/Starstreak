@@ -114,6 +114,7 @@ void Score::update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard) {
                 play=true;
                 if(keyboard.isSimplePress(i) || keyboard.isLongPress(i)) {//Appui simple
                     tabNeedPlay[j]->setPlayed();
+                    keyboard.setNoPress(i);
                     cout<<"NOTE COLONNE : "<<j<<" est jouée"<<endl;
                     //tabNeedPlay[j]->setNoNeedPlay(); //A FAIRE
                     //success();
@@ -124,6 +125,7 @@ void Score::update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard) {
         if(!play) {
             if(!keyboard.isNoPress(i)) {
                 failure(); //Si le joueur a apppuyé, echec
+                keyboard.setNoPress(i);
                 cout<<"TOUCHES SANS NOTES"<<endl;
             }
         }

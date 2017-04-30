@@ -126,7 +126,7 @@ void SdlGame::sdlLoop(){
 
     float time_seconds = SDL_GetTicks() / 1000.f;
     while(!quitGame){
-        keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
+        //keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quitGame = true;
