@@ -36,6 +36,8 @@ private :
     Image tabImV [5];
     Image tabImVPush [5];
 
+    bool tabPush [5]; //tabPush[i] est true tant que la touche n'est pas relaché
+
 public :
 	
 	SdlGame();

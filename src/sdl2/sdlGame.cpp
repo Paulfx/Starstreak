@@ -45,7 +45,11 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     im_noteVPush4.loadFromFile("../data/theme/notes/validOrON.png",renderer);
     tabImVPush[4]=im_noteVPush4;
 
-    
+    tabPush[0]=false;
+    tabPush[1]=false;
+    tabPush[2]=false;
+    tabPush[3]=false;
+    tabPush[4]=false;
 }
 
 SdlGame::~SdlGame() {
@@ -87,12 +91,10 @@ void SdlGame::sdlShow(){
 
 void SdlGame::drawValidation(){
     Cadre& cadre = game->getCadre();
-    Keyboard& keyboard = game->getKeyboard();
-
     int taille = width/20;  
 
     for(unsigned int i=0;i<5;++i) {
-        if(keyboard.isNoPress(i)) {
+        if(!tabPush[i]) {
             tabImV[i].draw(renderer,cadre.getTabPos(0)+i*taille,cadre.getBeginValid(),taille,taille);
         }
         else {
@@ -137,22 +139,22 @@ void SdlGame::sdlLoop(){
                         quitGame=true;
                         Mix_HaltMusic();
                         break;
-                    case SDL_SCANCODE_Q:keyboard.setPress(0);break;
-                    case SDL_SCANCODE_W:keyboard.setPress(1);break;
-                    case SDL_SCANCODE_E:keyboard.setPress(2);break;
-                    case SDL_SCANCODE_R:keyboard.setPress(3);break;
-                    case SDL_SCANCODE_T:keyboard.setPress(4);break;
+                    case SDL_SCANCODE_Q:keyboard.setPress(0);tabPush[0]=true;break;
+                    case SDL_SCANCODE_W:keyboard.setPress(1);tabPush[1]=true;break;
+                    case SDL_SCANCODE_E:keyboard.setPress(2);tabPush[2]=true;break;
+                    case SDL_SCANCODE_R:keyboard.setPress(3);tabPush[3]=true;break;
+                    case SDL_SCANCODE_T:keyboard.setPress(4);tabPush[4]=true;break;
 
                     default:break;
                 }
             }
             else if (events.type == SDL_KEYUP){ //Relachement
                 switch(events.key.keysym.scancode) {
-                    case SDL_SCANCODE_Q:keyboard.setNoPress(0);break;
-                    case SDL_SCANCODE_W:keyboard.setNoPress(1);break;
-                    case SDL_SCANCODE_E:keyboard.setNoPress(2);break;
-                    case SDL_SCANCODE_R:keyboard.setNoPress(3);break;
-                    case SDL_SCANCODE_T:keyboard.setNoPress(4);break;
+                    case SDL_SCANCODE_Q:keyboard.setNoPress(0);tabPush[0]=false;break;
+                    case SDL_SCANCODE_W:keyboard.setNoPress(1);tabPush[1]=false;break;
+                    case SDL_SCANCODE_E:keyboard.setNoPress(2);tabPush[2]=false;break;
+                    case SDL_SCANCODE_R:keyboard.setNoPress(3);tabPush[3]=false;break;
+                    case SDL_SCANCODE_T:keyboard.setNoPress(4);tabPush[4]=false;break;
                     default:break;
                 }
             }
@@ -163,10 +165,8 @@ void SdlGame::sdlLoop(){
         float delta = new_time - time_seconds;
         time_seconds = new_time;
 
-        game->update(delta);
-
-        
         sdlShow();
+        game->update(delta);
         SDL_RenderPresent(renderer);
     }
 
