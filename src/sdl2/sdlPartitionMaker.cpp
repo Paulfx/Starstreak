@@ -14,9 +14,21 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
     if(font==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
     }
+    
+    string aMusic="../data/wav/";
+    //aMusic+=game->getSong().fileMusic;
+    //aMusic+=song.fileMusic;
+    aMusic+=partMaker->getSong().fileMusic;
+    const char *accesMusic = aMusic.c_str();
+    cout<<"lancement de :"<<accesMusic<<endl;
+    music=Mix_LoadMUS(accesMusic);
+    if (!music){
+        cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
+    }
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
+    Mix_FreeMusic(music);
 	delete partMaker;
 }
 
@@ -55,22 +67,10 @@ void SdlPartitionMaker::sdlLoop() {
 	SDL_Event events;
     bool quit = false;
     
-    /*SDL_MIXER (lancement de la chanson)*/
-  /*  string aMusic="../data/mp3/";
-    aMusic+=partMaker->getSong().fileMusic;
-    const char *accesMusic = aMusic.c_str();
-    cout<<"lancement de :"<<accesMusic<<endl;
-    music=Mix_LoadMUS(accesMusic);
-
-
-    
-
-   /* if (!music){
-        cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
-    }
     if (Mix_PlayMusic(music,1)==-1) {
         cout<<"Mix_PlayMusic error"<<endl;
-    }*/
+    }
+    
     float duration = partMaker->getSong().duration;
     Keyboard& keyboard = partMaker->getKeyboard();
 

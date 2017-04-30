@@ -29,6 +29,7 @@ private :
     PartitionMaker* partMaker;
     Mix_Music *music;
     TTF_Font * font;
+    
 
 public :
 	
