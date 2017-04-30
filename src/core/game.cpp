@@ -17,10 +17,9 @@ Game::Game() {
 }
 
 
-Game::Game(const Song& currSong,unsigned int difficulty,bool mode) {
+Game::Game(const Song& currSong,unsigned int difficulty) {
 	song = currSong;
-	creationMode = mode;
-	partition = new Partition(currSong.filePartition,1);//A CHANGER DIFFICULTY != 1
+	partition = new Partition(currSong.filePartition,difficulty);//A CHANGER DIFFICULTY != 1
 
 	cout<<"Partition créée"<<endl;
 	cout<<partition->getNbLine()<<endl;

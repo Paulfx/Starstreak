@@ -7,10 +7,10 @@ SdlGame::SdlGame() {
 
 }
 
-SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty,bool mode) : window(window), renderer(renderer){
+SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty) : window(window), renderer(renderer){
     assert(renderer);
 
-    game = new Game(song,difficulty,mode);
+    game = new Game(song,difficulty);
     
     SDL_GetWindowSize(window, &width, &height);
 

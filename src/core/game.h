@@ -27,7 +27,6 @@ private :
     
     Partition* partition;
     Score* score;
-    bool creationMode;
     Song song;
     Cadre* cadre;
     Keyboard* keyboard;
@@ -51,7 +50,7 @@ public :
      @param difficulty difficulté de la Game et donc modification de la lecture/ecriture sur le fichier ? 
      @todo
      */
-    Game(const Song& song,unsigned int difficulty,bool mode);
+    Game(const Song& song,unsigned int difficulty);
     
     /**@brief Destructeur
      */

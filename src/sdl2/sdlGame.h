@@ -44,7 +44,7 @@ public :
 
 	/** @brief Constructeur
      */
-    SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty,bool mode);
+    SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty);
     
     /** @brief Destructeur
      */
