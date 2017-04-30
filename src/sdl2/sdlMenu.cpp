@@ -12,6 +12,11 @@
 //nbDiff=0 pour le menu 0
 
 
+const char* txtDiff0 = "1. Pour les ROUILLES";
+const char* txtDiff1 = "2. Pour les CASUALS";
+const char* txtDiff2 = "3. Pour les ROCKEURS";
+
+
 // Pas très utile vu qu'on a fixer le nb de difficulté
 void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
     if(IDmenu==0){
@@ -46,10 +51,7 @@ void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
     }
 }
 
-
-SdlMenu::SdlMenu() : creationMode(false){
-    // INITIALISATION DE SDL
-
+void SdlMenu::sdlInit() {
     //SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;SDL_Quit();exit(1);
@@ -73,27 +75,24 @@ SdlMenu::SdlMenu() : creationMode(false){
     int i,n=Mix_GetNumChunkDecoders();
     printf("There are %d available chunk(sample) decoders:\n",n);
     for(i=0; i<n; ++i){
-        printf("	%s\n", Mix_GetChunkDecoder(i));
+        printf("    %s\n", Mix_GetChunkDecoder(i));
         n = Mix_GetNumMusicDecoders();
         printf("There are %d available music decoders:\n",n);
     }
     for(i=0; i<n; ++i){
-        printf("	%s\n", Mix_GetMusicDecoder(i));
+        printf("    %s\n", Mix_GetMusicDecoder(i));
     }
-            
+}
 
-    
+SdlMenu::SdlMenu() : creationMode(false){
+    // INITIALISATION DE SDL
+    sdlInit();
+
             /*SDL_Mixer init*/
-   
     soundMove=NULL;
     soundAccept=NULL;
     soundMenu=NULL;
     
-
-
-    
-
-
     posPtr=0;
     stateMenu=0;
 
@@ -102,34 +101,28 @@ SdlMenu::SdlMenu() : creationMode(false){
 
     //Ouverture de la fenetre
     window = SDL_CreateWindow("StarStreak", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,0,0,SDL_WINDOW_FULLSCREEN_DESKTOP);
-
-
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
     SDL_GetWindowSize(window, &width, &height);    //parametres gestion de position/taille/resolution etc
     
-    
+    //TTF
     //POLICE DU MENU
-    fontMenu= NULL;
     fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 0.0625*width); //TAILLE GENERE DYNAMIQUEMENT EN FONCTION DE LA TAILLE DE L'ECRAN
     if(fontMenu==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
         // handle error
     }
     
-    
-    
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);//renderer synchro avec le rafraichissement de la fenetre
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // permet d'obtenir les redimensionnements plus doux.
+    createTextTextures();
 
 
     SDL_RenderSetLogicalSize(renderer,width, height); //taille fenetre
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
-   /* texture = SDL_CreateTexture(renderer,
-                                SDL_PIXELFORMAT_ARGB8888, //
-                                SDL_TEXTUREACCESS_STREAMING,
-                                //fluidité sur l'affichage des images
-                                0,0); //taille de l'ecran (on pourrait utiliser des parametres du main ?)*/
+    
+
+
     if(renderer){
 
         im_backgroundMenu0.loadFromFile("../data/theme/BackgroundMenu0.jpg",renderer);
@@ -142,6 +135,37 @@ SdlMenu::SdlMenu() : creationMode(false){
     }else {
         cout << "Erreur dans l'initialisation du renderer" << endl;
     }
+}
+
+void SdlMenu::createTextTextures() {
+    SDL_Color white = {255, 255, 255};
+    SDL_Texture* texture;
+    for(unsigned int i=0;i<menu->getNbSongs();++i) {
+        SDL_Surface* surf;
+        surf = TTF_RenderText_Blended(fontMenu,menu->getTitleSong(i).c_str(),white);
+        texture=surfaceToTexture(surf);
+        texTab.push_back(texture);
+    }
+
+    SDL_Surface* surfDiff0;
+    surfDiff0 = TTF_RenderText_Blended(fontMenu,txtDiff0,white);
+    textureDiff0=surfaceToTexture(surfDiff0);
+
+    SDL_Surface* surfDiff1;
+    surfDiff1 = TTF_RenderText_Blended(fontMenu,txtDiff1,white);
+    textureDiff1=surfaceToTexture(surfDiff1);
+
+    SDL_Surface* surfDiff2;
+    surfDiff2 = TTF_RenderText_Blended(fontMenu,txtDiff2,white);
+    textureDiff2=surfaceToTexture(surfDiff2);
+
+}
+
+SDL_Texture* SdlMenu::surfaceToTexture( SDL_Surface* surf ) {
+    SDL_Texture* texture;
+    texture = SDL_CreateTextureFromSurface(renderer, surf);
+    SDL_FreeSurface(surf);
+    return texture;
 }
 
 // ##### Affiche le menu 0 ##########
@@ -167,7 +191,6 @@ void SdlMenu::sdlShowSelect(){
         posPtr=9;//pointe sur la derniere
         im_ptrMenu.draw(renderer,(0.33)*width,(0.0375*height)+posPtr*(0.0625*height),(0.15*height),(0.05*height));
         
-        
         beginShowTitle=menu->getCurrI()%10; //affiche les 10 chanson aprés la menu->getCurrI()%10
         endShowTitle=menu->getCurrI();
     }
@@ -177,11 +200,10 @@ void SdlMenu::sdlShowSelect(){
     }
     
     //Declaration des 3 composants de la liste
-    SDL_Surface * SurfaceList;
-    SDL_Texture * tex;
+    //SDL_Surface * SurfaceList;
+    //SDL_Texture * tex;
     SDL_Rect rec;
     
-    //SDL_Color couleurNoire = {0, 0, 0};
     string tempTitle;
     
     //cout<<menu->getNbSongs();
@@ -189,6 +211,7 @@ void SdlMenu::sdlShowSelect(){
     int posTitle=0;
     while(i<endShowTitle)
     {
+        /*
         tempTitle=menu->getTitleSong(i);
         //cout <<tempTitle <<endl;
         SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(),WhiteC);
@@ -202,12 +225,13 @@ void SdlMenu::sdlShowSelect(){
             cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
         }
         SurfaceList=NULL;
+
+        */
         rec.x=(0.025)*width;
         rec.y=(0.03125)*height+posTitle*(0.0625)*height;
         rec.w=(0.0167)*width*tempTitle.size();
         rec.h=(0.0625)*height;
-        if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0)
-        {
+        if(SDL_RenderCopy(renderer, texTab[i], NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
         }
         i++;
@@ -225,10 +249,10 @@ void SdlMenu::sdlShowDiff(){
     im_backgroundMenu2.draw(renderer,0,0,width,height);
     
     //###### Affichage Chanson Selectionnée ##########
-    SDL_Surface * Surface;
-    SDL_Texture * tex;
+    //SDL_Surface * Surface;
+    //SDL_Texture * tex;
     SDL_Rect rec;
-    
+    /*
     Surface=TTF_RenderText_Blended(fontMenu,choosenSongTitle.c_str(),RedC);
     if(Surface==NULL){
         cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
@@ -238,39 +262,32 @@ void SdlMenu::sdlShowDiff(){
     if(tex==NULL){
         cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
         
-    }
+    }*/
     rec.x=0.09*width;
     rec.y=0.07*height;
     rec.w=0.0167*width*choosenSongTitle.size();
     rec.h=0.0625*height;
-    if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
+    if(SDL_RenderCopy(renderer, texTab[0], NULL, &rec)!=0){ //CURR I 
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
     
     //##### Affichage Difficulté ##########
     string tempTxt;
+    SDL_Texture* tex;
     for(unsigned int i=0;i<3;i++){
         switch(i){
-            case 0:{
-                tempTxt="0: Pour les ROUILLES";
-                break;
-            }
-            case 1:{
-                tempTxt="1: Pour les CASUALS";
-                break;
-            }
-                
-            case 2:{
-                tempTxt="2: Pour les ROCKERS";
-                break;
-            }
+            case 0:tex=textureDiff0;break;
+            case 1:tex=textureDiff1;break;
+            case 2:tex=textureDiff2;break;
         }
+        /*
         Surface=TTF_RenderText_Blended(fontMenu,tempTxt.c_str(),WhiteC);
         tex=SDL_CreateTextureFromSurface(renderer,Surface);
         if(tex==NULL){
             cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
             
         }
+        */
         rec.x=0.066*width;
         rec.y=0.20*height+(0.105*height)*i;
         rec.w=0.016*width*tempTxt.size();

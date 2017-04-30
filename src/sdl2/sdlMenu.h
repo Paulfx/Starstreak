@@ -34,6 +34,11 @@ private :
     TTF_Font * fontMenu; //Police pour le menu
     Menu* menu;
 
+/* ######### TEXTURES ######### */
+    vector<SDL_Texture*> texTab; //Contient les textures de texte des chansons
+    SDL_Texture* textureDiff0;
+    SDL_Texture* textureDiff1;
+    SDL_Texture* textureDiff2;
 
     //SdlGame game;
     
@@ -69,6 +74,11 @@ public :
      */
     ~SdlMenu ();
     
+    void sdlInit();
+
+    void createTextTextures();
+
+    SDL_Texture* surfaceToTexture(SDL_Surface* surf);
     
     //SDL_Texture* surfaceNote(SDL_Renderer * renderer,int i);
     
