@@ -26,10 +26,16 @@ class SdlMenu {
 private :
     
 /* ######### FENETRE ######### */
+    //SDL_Surface * Surface;
+    //SDL_Texture * tex;
+    //SDL_Rect * rec;
     SDL_Window * window;
     SDL_Renderer * renderer;
     int height,width; //Taille de la fenêtre
-
+    
+    
+    
+    
 /* ######### MENU ######### */
     TTF_Font * fontMenu; //Police pour le menu
     Menu* menu;

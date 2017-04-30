@@ -37,6 +37,9 @@ private :
     Mix_Music *music;
 
     bool tabPush [5]; //tabPush[i] est true tant que la touche n'est pas relaché
+    
+    SDL_Texture* texScore;
+    TTF_Font * fontMenu;
 
 public :
 	
@@ -59,6 +62,12 @@ public :
 
     void drawValidation();
     
+    
+    
+    SDL_Texture* surfaceToTexture( SDL_Surface* surf );
+    
+    
+    void sdlScore();
 
 };
 

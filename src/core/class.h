@@ -20,8 +20,8 @@ typedef struct { //Une ligne de jeu = données (eg "1001") + temps jusqu'à la p
 class Note {
 
 private :
-	unsigned int posX;
-	unsigned int posY;
+	unsigned int posX; //Colonne
+	unsigned int posY; //Hauteur =etat
 	unsigned int color; //0=vert , 1=rouge, 2=jaune, 3=bleu, 4=orange
 	bool longDuration; //True si la note est longue (noéte "2")
 	float speed;

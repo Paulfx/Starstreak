@@ -3,6 +3,7 @@
 
 
 
+
 SdlGame::SdlGame() {
 
 }
@@ -60,7 +61,20 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     if (!music){
         cout<<"Mix_LoadMus "<<accesMusic<<"error"<<endl;
     }
+    
+    //TTF
+    //Besoin de re- initialisé?
+    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 0.0625*width);
+    if(fontMenu==NULL) {
+        cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
+    }
 
+    
+    
+    SDL_Color white={255,255,255};
+    SDL_Surface* surf;
+    surf=TTF_RenderText_Blended(fontMenu,"0",white);
+    texScore=surfaceToTexture(surf);
 }
 
 SdlGame::~SdlGame() {
@@ -69,6 +83,31 @@ SdlGame::~SdlGame() {
     delete game;
     Mix_FreeMusic(music);
 }
+
+
+SDL_Texture* SdlGame::surfaceToTexture( SDL_Surface* surf ) {
+    SDL_Texture* texture;
+    texture = SDL_CreateTextureFromSurface(renderer, surf);
+    SDL_FreeSurface(surf);
+    return texture;
+}
+
+
+
+
+void SdlGame::sdlScore(){
+     SDL_Color white = {255, 255, 255};
+    SDL_Surface* surf;
+    int score=game->getScore().getTotalScore();
+    string sc=to_string(score);
+    surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),white);
+}
+
+
+
+
+
+
 
 
 //Affichage du jeu
@@ -83,17 +122,19 @@ void SdlGame::sdlShow(){
    // im_ligneValidation.draw(renderer,0,cadre.getBeginValid());
 
     drawValidation();
-    int taille = width/20;
+    int widthNote = width/10;
+    int heightNote = height/6;
 
     for(unsigned int i=0;i<cadre.getNbNote();++i) {
         Note& note = cadre.getNote(i);
         int color = note.getColor();
+        int Distx=width/4;
         switch(color) {
-            case 0 : im_note0.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break; //TODO ENLEVER TABPOS DE CADRE !
-            case 1 : im_note1.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
-            case 2 : im_note2.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
-            case 3 : im_note3.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
-            case 4 : im_note4.draw(renderer,cadre.getTabPos(0)+color*taille,note.getPosY(),taille);break;
+            case 0 : im_note0.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break; //TODO ENLEVER TABPOS DE CADRE !
+            case 1 : im_note1.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
+            case 2 : im_note2.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
+            case 3 : im_note3.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
+            case 4 : im_note4.draw(renderer,Distx+color*widthNote,note.getPosY(),widthNote,heightNote);break;
             default:break;
         }
     }
@@ -102,14 +143,16 @@ void SdlGame::sdlShow(){
 
 void SdlGame::drawValidation(){
     Cadre& cadre = game->getCadre();
-    int taille = width/20;  
-
+    int widthV = width/10;
+    int Distx=width/4; // 1/4 + 1/2 + 1/4
+    int Disty=height*5/6;
+    int heightV =height/6;
     for(unsigned int i=0;i<5;++i) {
         if(!tabPush[i]) {
-            tabImV[i].draw(renderer,cadre.getTabPos(0)+i*taille,cadre.getBeginValid(),taille,taille);
+            tabImV[i].draw(renderer,Distx+i*widthV,Disty,widthV,heightV);
         }
         else {
-            tabImVPush[i].draw(renderer,cadre.getTabPos(0)+i*taille,cadre.getBeginValid(),taille,taille);
+            tabImVPush[i].draw(renderer,Distx+i*widthV,Disty,widthV,heightV);
         }
     }
 }
