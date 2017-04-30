@@ -17,11 +17,8 @@ Cadre::Cadre(unsigned int pos0,unsigned int pos1,unsigned int pos2,unsigned int 
 	initialY = initY;
 	beginValid = beginV;
 	endValid = endV;
-	//partition = currPart;
-	//movingY = (endValid - initY) / (cspeed / DURATION_FRAME); //qtité de déplacement pour déplacer en cspeed milliseconds la note
-															//jusqu'à la fin du cadre
 
-	speed=(float)(beginValid + (float)(endValid-beginValid)/2 - initialY)/timeUntil;
+	speed=(float)(beginValid + (float)(endValid-beginValid)/2 - initialY)/timeUntil;//En pixels par seconde
 	assert(speed!=0);
 	timeLine=0;
 }

@@ -12,9 +12,9 @@
 //nbDiff=0 pour le menu 0
 
 
-const char* txtDiff0 = "1. Pour les ROUILLES";
-const char* txtDiff1 = "2. Pour les CASUALS";
-const char* txtDiff2 = "3. Pour les ROCKEURS";
+const string txtDiff0 = "1. Pour les ROUILLES";
+const string txtDiff1 = "2. Pour les CASUALS";
+const string txtDiff2 = "3. Pour les ROCKEURS";
 
 
 // Pas très utile vu qu'on a fixer le nb de difficulté
@@ -202,17 +202,16 @@ void SdlMenu::createTextTextures() {
         texture=surfaceToTexture(surf);
         texTab.push_back(texture);
     }
-
     SDL_Surface* surfDiff0;
-    surfDiff0 = TTF_RenderText_Blended(fontMenu,txtDiff0,white);
+    surfDiff0 = TTF_RenderText_Blended(fontMenu,txtDiff0.c_str(),white);
     textureDiff0=surfaceToTexture(surfDiff0);
 
     SDL_Surface* surfDiff1;
-    surfDiff1 = TTF_RenderText_Blended(fontMenu,txtDiff1,white);
+    surfDiff1 = TTF_RenderText_Blended(fontMenu,txtDiff1.c_str(),white);
     textureDiff1=surfaceToTexture(surfDiff1);
 
     SDL_Surface* surfDiff2;
-    surfDiff2 = TTF_RenderText_Blended(fontMenu,txtDiff2,white);
+    surfDiff2 = TTF_RenderText_Blended(fontMenu,txtDiff2.c_str(),white);
     textureDiff2=surfaceToTexture(surfDiff2);
 
 }
@@ -288,17 +287,17 @@ void SdlMenu::sdlShowDiff(){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
     //##### Affichage Difficulté ##########
-    string tempTxt;
+    int size;
     SDL_Texture* tex;
     for(unsigned int i=0;i<3;i++){
         switch(i){
-            case 0:tex=textureDiff0;break;
-            case 1:tex=textureDiff1;break;
-            case 2:tex=textureDiff2;break;
+            case 0:tex=textureDiff0;size=txtDiff0.size();break;
+            case 1:tex=textureDiff1;size=txtDiff1.size();break;
+            case 2:tex=textureDiff2;size=txtDiff2.size();break;
         }
         rec.x=0.066*width;
         rec.y=0.20*height+(0.105*height)*i;
-        rec.w=0.016*width*tempTxt.size();
+        rec.w=0.016*width*size;
         rec.h=0.12*height;
         if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
