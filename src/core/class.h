@@ -21,7 +21,7 @@ class Note {
 
 private :
 	unsigned int posX; //Colonne
-	unsigned int posY; //Hauteur =etat
+	unsigned int posY;
 	unsigned int color; //0=vert , 1=rouge, 2=jaune, 3=bleu, 4=orange
 	bool longDuration; //True si la note est longue (noéte "2")
 	float speed;

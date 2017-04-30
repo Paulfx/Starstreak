@@ -30,7 +30,7 @@ private :
 
     Image im_note0, im_note1, im_note2, im_note3, im_note4, im_ligneValidation,
     im_noteV0, im_noteV1, im_noteV2, im_noteV3, im_noteV4/*note val et val pull*/, im_noteVPush0, im_noteVPush1, im_noteVPush2, im_noteVPush3, im_noteVPush4;
-
+    Image Background;
     Image tabImV [5];
     Image tabImVPush [5];
     
@@ -41,6 +41,7 @@ private :
     SDL_Texture* texScore;
     TTF_Font * fontMenu;
 
+    
 public :
 	
 	SdlGame();
@@ -62,7 +63,7 @@ public :
 
     void drawValidation();
     
-    
+    void backgroundImageLoad();
     
     SDL_Texture* surfaceToTexture( SDL_Surface* surf );
     

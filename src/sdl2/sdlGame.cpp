@@ -23,6 +23,8 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
 
     im_ligneValidation.loadFromFile("../data/theme/notes/ligneValidation.png",renderer);
     
+    
+    
     im_noteV0.loadFromFile("../data/theme/notes/validGreen.png",renderer);
     tabImV[0]=im_noteV0;
     im_noteV1.loadFromFile("../data/theme/notes/validRed.png",renderer);
@@ -33,7 +35,7 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     tabImV[3]=im_noteV3;
     im_noteV4.loadFromFile("../data/theme/notes/validOr.png",renderer);
     tabImV[4]=im_noteV4;
-
+    backgroundImageLoad();
     
     im_noteVPush0.loadFromFile("../data/theme/notes/validGreenON.png",renderer);
     tabImVPush[0]=im_noteVPush0;
@@ -51,7 +53,7 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     tabPush[2]=false;
     tabPush[3]=false;
     tabPush[4]=false;
-
+    
 
     string aMusic="../data/wav/";
     aMusic+=game->getSong().fileMusic;
@@ -68,14 +70,21 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     if(fontMenu==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
     }
-
-    
-    
-    SDL_Color white={255,255,255};
-    SDL_Surface* surf;
-    surf=TTF_RenderText_Blended(fontMenu,"0",white);
-    texScore=surfaceToTexture(surf);
+  
 }
+
+
+void SdlGame::backgroundImageLoad(){
+    
+    
+    string aImage="../data/Backgroundsgame/";
+    aImage+=game->getSong().fileImage;
+    const char *accesImage= aImage.c_str();
+    cout <<"Ouverture du background :"<< aImage;
+    
+    Background.loadFromFile(accesImage,renderer);
+}
+
 
 SdlGame::~SdlGame() {
     //Libération images
@@ -91,8 +100,6 @@ SDL_Texture* SdlGame::surfaceToTexture( SDL_Surface* surf ) {
     SDL_FreeSurface(surf);
     return texture;
 }
-
-
 
 
 void SdlGame::sdlScore(){
@@ -112,12 +119,6 @@ void SdlGame::sdlScore(){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
 }
-
-
-
-
-
-
 
 
 //Affichage du jeu
