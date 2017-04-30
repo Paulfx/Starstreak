@@ -183,6 +183,7 @@ SdlMenu::~SdlMenu(){
 
     //Fermeture TTF
     //TTF_CloseFont(fontMenu);  -> erreur d'allocation
+    soundQuit();
     TTF_Quit();
     Mix_CloseAudio();
     SDL_DestroyRenderer(renderer);
@@ -234,13 +235,12 @@ void SdlMenu::sdlShowMenu(){
 
 //###### Affiche le menu Select song #########
 void SdlMenu::sdlShowSelect(){
-    
-    SDL_Color WhiteC = {255, 255, 255};
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     im_backgroundMenu1.draw(renderer,0,0,width,height);
     int beginShowTitle=0;
     int endShowTitle=10;
+
     //Menu Deroulant
     if((menu->getCurrI())>9){
         posPtr=9;//pointe sur la derniere
@@ -254,37 +254,14 @@ void SdlMenu::sdlShowSelect(){
         im_ptrMenu.draw(renderer,(0.33)*width,(0.0375*height)+posPtr*(0.0625*height),(0.15*height),(0.05*height));
     }
     
-    //Declaration des 3 composants de la liste
-    //SDL_Surface * SurfaceList;
-    //SDL_Texture * tex;
     SDL_Rect rec;
-    
-    string tempTitle;
-    
-    //cout<<menu->getNbSongs();
     int i=beginShowTitle;
     int posTitle=0;
     while(i<endShowTitle)
     {
-        /*
-        tempTitle=menu->getTitleSong(i);
-        //cout <<tempTitle <<endl;
-        SurfaceList = TTF_RenderText_Blended(fontMenu,tempTitle.c_str(),WhiteC);
-        if(SurfaceList==NULL)
-        {
-            cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
-        }
-        tex= SDL_CreateTextureFromSurface(renderer,SurfaceList);
-        if(tex==NULL)
-        {
-            cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
-        }
-        SurfaceList=NULL;
-
-        */
         rec.x=(0.025)*width;
         rec.y=(0.03125)*height+posTitle*(0.0625)*height;
-        rec.w=(0.0167)*width*tempTitle.size();
+        rec.w=(0.0167)*width*menu->getTitleSong(i).size();
         rec.h=(0.0625)*height;
         if(SDL_RenderCopy(renderer, texTab[i], NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
@@ -297,35 +274,19 @@ void SdlMenu::sdlShowSelect(){
 
 //### Affiche le menu difficulté ##########
 void SdlMenu::sdlShowDiff(){
-    SDL_Color RedC={255,0,0};
-    SDL_Color WhiteC = {255, 255, 255};
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     im_backgroundMenu2.draw(renderer,0,0,width,height);
     
     //###### Affichage Chanson Selectionnée ##########
-    //SDL_Surface * Surface;
-    //SDL_Texture * tex;
     SDL_Rect rec;
-    /*
-    Surface=TTF_RenderText_Blended(fontMenu,choosenSongTitle.c_str(),RedC);
-    if(Surface==NULL){
-        cout<<"Erreur lors de la creation de la surface : "<<SDL_GetError()<<endl;
-        
-    }
-    tex=SDL_CreateTextureFromSurface(renderer,Surface);
-    if(tex==NULL){
-        cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
-        
-    }*/
     rec.x=0.09*width;
     rec.y=0.07*height;
-    rec.w=0.0167*width*choosenSongTitle.size();
+    rec.w=0.0167*width*menu->getCurrSong().title.size();
     rec.h=0.0625*height;
-    if(SDL_RenderCopy(renderer, texTab[0], NULL, &rec)!=0){ //CURR I 
+    if(SDL_RenderCopy(renderer, texTab[menu->getCurrI()], NULL, &rec)!=0){ //CURR I 
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
-    
     //##### Affichage Difficulté ##########
     string tempTxt;
     SDL_Texture* tex;
@@ -335,14 +296,6 @@ void SdlMenu::sdlShowDiff(){
             case 1:tex=textureDiff1;break;
             case 2:tex=textureDiff2;break;
         }
-        /*
-        Surface=TTF_RenderText_Blended(fontMenu,tempTxt.c_str(),WhiteC);
-        tex=SDL_CreateTextureFromSurface(renderer,Surface);
-        if(tex==NULL){
-            cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
-            
-        }
-        */
         rec.x=0.066*width;
         rec.y=0.20*height+(0.105*height)*i;
         rec.w=0.016*width*tempTxt.size();
@@ -351,7 +304,6 @@ void SdlMenu::sdlShowDiff(){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
         }
     }
-    
     //######### Affichage du pointeur ########
     im_ptrMenu.draw(renderer,(0.40)*width,0.25*height+(0.105*height)*posPtr,0.1*width,0.05*height);
 }
@@ -364,26 +316,18 @@ void SdlMenu::sdlTest(){
 //########## LOOP PRINCIPALE #########
 void SdlMenu::sdlLoop(){
     soundInit();
-    //sdlShow();
     while (stateMenu!=-1){
         switch(stateMenu){
             case 0: {// menu0 loop
                 stateMenu=sdlLoopMenu();
-                //dlShowMenu();
-                //SDL_RenderPresent(renderer);
-                //sdlLoopMenu(quit);
                 break;
             }
             case 1: {//SELECT lloop
                 stateMenu=sdlLoopSelect();
-                //SDL_RenderPresent(renderer);
-                //sdlLoopSelect();
                 break;
             }
             case 2: {//Difficulty loop
                 stateMenu=sdlLoopDiff();
-                //SDL_RenderPresent(renderer);
-                //sdlLoopDiff();
                 break;
             }
             default:break;
@@ -484,7 +428,6 @@ int SdlMenu::sdlLoopSelect(){
                         if (Mix_PlayChannel(4,soundAccept,0)==-1) {
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
-                        choosenSongTitle=(menu->getCurrSong()).title;
                         posPtr=0;
                         return 2;
                     }
@@ -492,7 +435,7 @@ int SdlMenu::sdlLoopSelect(){
                     case SDL_SCANCODE_ESCAPE://Retour arrière
                     {
                         creationMode=false;
-                        return 1;
+                        return 0;
                     }
                     default:break;
                 }
