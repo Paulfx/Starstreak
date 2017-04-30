@@ -65,6 +65,8 @@ public:
     int getTotalScore() const;
     int getNoteStreak() const;
     int getNumberSuccess() const;
+    unsigned int getMultiplier() const;
+    int getRockmeter() const;
 
 };
 #endif

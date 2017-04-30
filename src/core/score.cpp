@@ -164,3 +164,5 @@ cout<<"FAIL"<<endl;
 int Score::getTotalScore() const{return totalScore;}
 int Score::getNoteStreak() const{return noteStreak;}
 int Score::getNumberSuccess() const{return numberSuccess;}
+unsigned int Score::getMultiplier() const{return multiplier;}
+int Score::getRockmeter() const{return rockmeter;}
