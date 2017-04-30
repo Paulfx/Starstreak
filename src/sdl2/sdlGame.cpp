@@ -208,7 +208,6 @@ void SdlGame::sdlLoop(){
         cout<<"Mix_PlayMusic error"<<endl;
     }
 
-    
 
     Keyboard& keyboard = game->getKeyboard();
 
@@ -218,7 +217,7 @@ void SdlGame::sdlLoop(){
         float delta = new_time - time_seconds;
         time_seconds = new_time;
         game->update(delta);
-
+        
         //keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
@@ -250,6 +249,11 @@ void SdlGame::sdlLoop(){
                 }
             }
         }
+        if(game->getScore().getFailed()){
+            quitGame=true;
+        }
+        
+    
         //keyboard.afficher();
         sdlShow();
         sdlScore();
