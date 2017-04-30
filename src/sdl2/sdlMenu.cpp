@@ -299,7 +299,7 @@ void SdlMenu::sdlShowDiff(){
         rec.y=0.20*height+(0.105*height)*i;
         rec.w=0.016*width*size;
         rec.h=0.12*height;
-        if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
+        if(SDL_RenderCopy(renderer, tex ,NULL, &rec)!=0){
             cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
         }
     }
