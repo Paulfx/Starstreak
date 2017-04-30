@@ -78,20 +78,10 @@ void Score::updateScore(const line currLine,const Keyboard& keyState) {
     
     }*/
     if (testSucces) {
-        noteStreak++;
-        numberSuccess++;
-        if (noteStreak%10 == 0 && noteStreak<40){//de 0 à 40 notes consécutives le multiplicateur est incrémenté toutes les 10 notes
-            multiplier++;
-        }
-        if (rockmeter<ROCKMETER_MAX){
-            rockmeter++;
-        }
-        totalScore = totalScore + VALUE_NOTE*multiplier;
+        success();
     }
     else{
-        noteStreak=0;
-        multiplier=1;
-        rockmeter-=2;
+        failure();
     }
     
     if (rockmeter<=0){
@@ -156,7 +146,7 @@ cout<<"FAIL"<<endl;
     noteStreak=0;
     multiplier=1;
     rockmeter-=2;
-    if (rockmeter<=0){
+    if (rockmeter<-30){
         fail=true;
     }
 }
@@ -166,3 +156,4 @@ int Score::getNoteStreak() const{return noteStreak;}
 int Score::getNumberSuccess() const{return numberSuccess;}
 unsigned int Score::getMultiplier() const{return multiplier;}
 int Score::getRockmeter() const{return rockmeter;}
+bool Score::getFailed() const{return fail;}

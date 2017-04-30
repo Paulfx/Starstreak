@@ -67,6 +67,7 @@ public:
     int getNumberSuccess() const;
     unsigned int getMultiplier() const;
     int getRockmeter() const;
+    bool getFailed() const;
 
 };
 #endif

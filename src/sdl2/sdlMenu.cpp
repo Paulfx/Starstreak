@@ -483,6 +483,7 @@ int SdlMenu::sdlLoopDiff(){
                             partMaker.sdlLoop();
                             soundInit();
                             creationMode=false;
+                            posPtr=0;
                             return 0;//Menu initial
                         }
                         else {
@@ -492,6 +493,7 @@ int SdlMenu::sdlLoopDiff(){
                             soundInit();//pour relancer les sons (on ne repasse jamais dans l'appel en haut de menu)
                             //ON PEUT FAIRE UN BIEN JOUERF AFFICHAGE DU SCORE OU UNNE CONNERIE DE CE GENRE ICI (une fonction show avec un delay ou un ok)
                             //Pourquoi un object de la classe "loadingImage" ou "fadeImage" :)?
+                            posPtr=0;
                             return 0;
                         }
                         break;
