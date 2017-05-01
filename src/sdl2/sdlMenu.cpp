@@ -404,6 +404,7 @@ int SdlMenu::sdlLoopSelect(){
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 stateMenu=0;
+                posPtr=0;
             }else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                 switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                     case SDL_SCANCODE_UP:

@@ -88,8 +88,11 @@ SDL_Texture* SdlGame::surfaceToTexture( SDL_Surface* surf ) {
     return texture;
 }
 
-// TODO : Position en fonction de width
+
 void SdlGame::sdlScore(){
+    
+    
+    //SCORE
     SDL_Color white = {255, 255, 255};
     SDL_Color black = {0,0,0};
     SDL_Surface* surf;
@@ -98,36 +101,36 @@ void SdlGame::sdlScore(){
     surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),black);
     texScore=surfaceToTexture(surf);
     SDL_Rect rec;
-    rec.x=width/12;
-    rec.y=height/4;
-    rec.w=width/6;
+    rec.x=width/16;
+    rec.y=height/5;
+    rec.w=width/8;
     rec.h=height/12;
     if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
-    
+    //MULTIPLIER
     unsigned int mult=game->getScore().getMultiplier();
     string smult="Multiplier : ";
     smult+=to_string(mult);
     surf=TTF_RenderText_Blended(fontMenu,smult.c_str(),black);
     texScore=surfaceToTexture(surf);
-    rec.x=950;
-    rec.y=65;
-    rec.w=150;
-    rec.h=50;
+    rec.x=width*9/11;
+    rec.y=height/9;
+    rec.w=width/8;
+    rec.h=height/12;
     if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
-
+    //ROCKMETER
     int rockmeter=game->getScore().getRockmeter();
     string srockm="RockMeter : ";
     srockm+=to_string(rockmeter);
     surf=TTF_RenderText_Blended(fontMenu,srockm.c_str(),black);
     texScore=surfaceToTexture(surf);
-    rec.x=100;
-    rec.y=600;
-    rec.w=150;
-    rec.h=50;
+    rec.x=width*9/11;
+    rec.y=height/4;
+    rec.w=width/8;
+    rec.h=height/12;
     if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
