@@ -19,7 +19,7 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     im_note2.loadFromFile("../data/theme/notes/jaune.png",renderer);
     im_note3.loadFromFile("../data/theme/notes/bleu.png",renderer);
     im_note4.loadFromFile("../data/theme/notes/orange.png",renderer);
-    im_noteAlredyPlayed.loadFromFile("../data/theme/notes/vert.png",renderer);
+    im_noteAlredyPlayed.loadFromFile("../data/theme/notes/noteSuccess.png",renderer);
     
     
     backgroundImageLoad();
@@ -79,10 +79,10 @@ SdlGame::~SdlGame() {
     //Libération images
     //et de la musique en cours
     
-    
-    
-    delete game;
     Mix_FreeMusic(music);
+    TTF_Quit();
+    delete game;
+
 }
 
 

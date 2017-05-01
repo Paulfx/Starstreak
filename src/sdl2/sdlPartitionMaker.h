@@ -50,7 +50,6 @@ public :
     void sdlShow(const string line);
     void sdlShowDiff();
     void sdlShowTime(const int time);
-    void SdlShowSquare(const unsigned int i);
 };
 
 #endif //SDL_PARTMAKER_H

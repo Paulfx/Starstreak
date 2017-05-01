@@ -37,6 +37,8 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
+    
+    TTF_Quit();
     Mix_FreeMusic(music);
 	delete partMaker;
 }
@@ -92,36 +94,11 @@ void SdlPartitionMaker::sdlShow(string line) {
     for(unsigned int i=0;i<5;i++){
         c=line[i]-48;
         if(c==true){
-           SdlShowSquare(i);
+           tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
         }
     }
 }
 
-
-void SdlPartitionMaker::SdlShowSquare(unsigned int i){
-    switch(i){
-        case 0:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 1:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 2:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 3:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 4:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-    }
-}
 
 
 
