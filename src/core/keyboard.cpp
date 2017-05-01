@@ -1,11 +1,3 @@
-//
-//  Keyboard.cpp
-//  
-//
-//  Created by Rabut Théo on 21/03/2017.
-//
-//
-
 #include "keyboard.h"
 #include <cassert>
 #include <iostream>
