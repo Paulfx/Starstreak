@@ -89,13 +89,10 @@ void SdlPartitionMaker::sdlShow(string line) {
     SDL_RenderClear(renderer);
     Background.draw(renderer,0,0,width,height);
     sdlShowDiff();
-    //string line =keyboardX.getCurrentStateStr();
-    //int stoi (const string&  str, size_t* idx = 0, int base = 10);
-    int k;
+    int c;
     for(unsigned int i=0;i<5;i++){
-        k=stoi(line.c_str(),5,10);
-        cout << line <<"######"<<endl;
-        if(k){
+        c=line[i]-48;
+        if(c==true){
            SdlShowSquare(i);
         }
     }
