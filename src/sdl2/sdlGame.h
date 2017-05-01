@@ -67,7 +67,7 @@ public :
     
     
     void sdlScore();
-
+    void sdlShowEnd();
 };
 
 #endif //SDL_GAME_H

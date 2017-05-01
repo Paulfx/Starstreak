@@ -88,7 +88,6 @@ void SdlPartitionMaker::sdlShow(string line) {
 	SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     Background.draw(renderer,0,0,width,height);
-    sdlShowDiff();
     int c;
     for(unsigned int i=0;i<5;i++){
         c=line[i]-48;
@@ -211,6 +210,7 @@ void SdlPartitionMaker::sdlLoop() {
         partMaker->update(time,line);
         sdlShow(line);
         sdlShowTime(timeSeconds);
+        sdlShowDiff();
         SDL_RenderPresent(renderer);
     }
     partMaker->save();

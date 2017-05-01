@@ -36,7 +36,6 @@ private :
     Mix_Music *music;
     
     
-    bool tabIsPress[5];
 
 public :
 	
@@ -48,10 +47,10 @@ public :
     
     void sdlLoop();
 
-    void sdlShow(string line);
+    void sdlShow(const string line);
     void sdlShowDiff();
-    void sdlShowTime(int time);
-    void SdlShowSquare(unsigned int i);
+    void sdlShowTime(const int time);
+    void SdlShowSquare(const unsigned int i);
 };
 
 #endif //SDL_PARTMAKER_H

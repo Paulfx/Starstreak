@@ -160,11 +160,7 @@ void SdlGame::sdlShow(){
     drawValidation();
     int widthNote = width/10;
     int heightNote = height/6;
-    
-    
-    
     bool tabIsPlayed[5];
-
     for(unsigned int i=0;i<cadre.getNbNote();++i) {
         
         Note& note = cadre.getNote(i);
@@ -278,5 +274,45 @@ void SdlGame::sdlLoop(){
         sdlScore();
         SDL_RenderPresent(renderer);
     }
-
+    sdlShowEnd();
 }
+
+
+void SdlGame::sdlShowEnd(){
+    Background.draw(renderer,0,0,width,height);
+    SDL_Color red={255,0,0};
+    SDL_Surface* surf;
+    int score=game->getScore().getTotalScore();
+    
+    if(game->getScore().getFailed()){
+        string sc="YOU FAILED : ";
+        sc+=to_string(score);
+        surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),red);
+        texScore=surfaceToTexture(surf);
+        SDL_Rect rec;
+        rec.x=width/3;
+        rec.y=height/3;
+        rec.w=width/4;
+        rec.h=height/8;
+        if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
+            cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+        }
+    }else{
+        string sc="YOU ROCK : ";
+        sc+=to_string(score);
+        surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),red);
+        texScore=surfaceToTexture(surf);
+        SDL_Rect rec;
+        rec.x=width/3;
+        rec.y=height/3;
+        rec.w=width/4;
+        rec.h=height/8;
+        if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
+            cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+        }
+    }
+    SDL_RenderPresent(renderer);
+    SDL_Delay(4000);
+}
+
+

@@ -17,7 +17,7 @@ const string txtDiff1 = "2. Pour les CASUALS";
 const string txtDiff2 = "3. Pour les ROCKEURS";
 
 
-// Pas très utile vu qu'on a fixer le nb de difficulté
+
 void SdlMenu::movePtr(const string move,const int IDmenu,const int nbDiff){
     if(IDmenu==0){
         if(move=="up"){
