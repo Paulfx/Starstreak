@@ -16,6 +16,9 @@
 
 using namespace std;
 
+/**
+ @Brief Classe de gestion de la création d'une partition, comprend l'affichage et les appels sur les differentes fonctionnalitées du Core
+ */
 class SdlPartitionMaker {
 
 private :
@@ -41,17 +44,43 @@ private :
 
 public :
 	
+    /** @brief Constructeur par paramètres
+     @param Fenetre du jeux
+     @param Renderer
+     @param[in, out] song Chanson en cours
+     @param difficulty Difficulté en cours
+     */
     SdlPartitionMaker(SDL_Window * window, SDL_Renderer * renderer, const Song& song, unsigned int difficulty);
-
+    
+    /** @brief Destructeur
+     */
     ~SdlPartitionMaker();
 
+    /** @brief Affichage mineur
+    Affiche l'image de fond du studio et le calque
+    */
     void backgroundImageLoad();
     
+    /** @brief Boucle principale de création.
+     Contient des appels aux autres boucles d'affichage et de gestion et les tests d'events SDL
+     */
     void sdlLoop();
 
+    /** @brief  Affichage principal de création.
+     Contient des appels aux fonctions de affichages mineurs
+     */
     void sdlShow(const string& line, int timeSeconds);
+    
+    /** @brief Affichage des notes qui sont écrit dans la partition
+     */
     void sdlShowLine(const string& line);
+    
+    /** @brief  Affichage de la difficultée
+     */
     void sdlShowDiff();
+    
+    /** @brief Affichage du temps
+     */
     void sdlShowTime(const int time);
 };
 
