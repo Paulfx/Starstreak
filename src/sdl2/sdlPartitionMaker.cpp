@@ -54,6 +54,7 @@ void SdlPartitionMaker::backgroundImageLoad(){
     cout <<"Ouverture du background :"<< aImage;
     
     Background.loadFromFile(accesImage,renderer);
+    BackgroundCalque.loadFromFile("../data/Backgroundsgame/backgroundMakerCalque.png",renderer);
 }
 
 
@@ -89,6 +90,7 @@ void SdlPartitionMaker::sdlShow(const string& line,int timeSeconds) {
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     Background.draw(renderer,0,0,width,height);
+    BackgroundCalque.draw(renderer,0,0,width,height);
     sdlShowTime(timeSeconds);
     sdlShowDiff();
     sdlShowLine(line);

@@ -29,6 +29,7 @@ private :
 /* ########## IMAGE ######## */
     Image tabSquareColor[5];
     Image Background;
+    Image BackgroundCalque;
     
 /* ######### GAME ######### */
     PartitionMaker* partMaker;
