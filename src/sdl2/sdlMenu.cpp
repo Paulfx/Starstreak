@@ -188,7 +188,6 @@ SdlMenu::~SdlMenu(){
 
     //Fermeture TTF
     TTF_CloseFont(fontMenu);
-
     soundQuit();
     TTF_Quit();
     Mix_CloseAudio();

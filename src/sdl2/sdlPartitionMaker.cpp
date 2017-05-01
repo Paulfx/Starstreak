@@ -3,25 +3,20 @@
 
 SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * renderer, const Song& song, unsigned int difficulty) : window(window), renderer(renderer) {
 	assert(renderer);
-
     partMaker=new PartitionMaker(song,difficulty);
-
     cout<<"Partition Maker créé"<<endl;
-    
     SDL_GetWindowSize(window, &width, &height);
-
     font=TTF_OpenFont("../data/theme/police/fast99.ttf", 0.0625*width); //TAILLE GENERE DYNAMIQUEMENT EN FONCTION DE LA TAILLE DE L'ECRAN
     if(font==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
     }
-    
+
     string aMusic="../data/wav/";
     aMusic+=partMaker->getSong().fileMusic;
     const char *accesMusic = aMusic.c_str();
-    cout<<"lancement de :"<<accesMusic<<endl;
+    cout<<"Chargement de :"<<accesMusic<<endl;
 
     music=Mix_LoadMUS(accesMusic);
-    //music=Mix_LoadMUS("../data/wav/sth.wav");
 
     if (!music){
         cout<<"Mix_LoadMus "<<accesMusic<<Mix_GetError()<<endl;
@@ -34,11 +29,12 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
     tabSquareColor[2].loadFromFile("../data/theme/square/squareYellow.jpg",renderer);
     tabSquareColor[3].loadFromFile("../data/theme/square/squareBlue.jpg",renderer);
     tabSquareColor[4].loadFromFile("../data/theme/square/squareOrange.jpg",renderer);
+
+    oldLine="00000";
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
     TTF_CloseFont(font);
-    TTF_Quit();
     Mix_FreeMusic(music);
 	delete partMaker;
 }
@@ -49,8 +45,6 @@ void SdlPartitionMaker::backgroundImageLoad(){
     BackgroundCalque.loadFromFile("../data/Backgroundsgame/backgroundMakerCalque.png",renderer);
 
 }
-
-
 
 void SdlPartitionMaker::sdlShowDiff() {
     SDL_Surface * surface;
@@ -75,10 +69,6 @@ void SdlPartitionMaker::sdlShowDiff() {
 
 }
 
-
-
-
-//A REPRENDRE -> affiche une image si il y a un un.
 void SdlPartitionMaker::sdlShow(const string& line,int timeSeconds) {
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
@@ -126,12 +116,9 @@ void SdlPartitionMaker::sdlLoop() {
     if (Mix_PlayMusic(music,1)==-1) {
         cout<<"Mix_PlayMusic error"<<endl;
     }
-    
-    
     float duration = partMaker->getSong().duration;
     Keyboard& keyboard = partMaker->getKeyboard();
 
-    
     int time;
     float timeSeconds=0;
     int timeBefore=SDL_GetTicks();
@@ -171,10 +158,8 @@ void SdlPartitionMaker::sdlLoop() {
         }
         string line=keyboard.getCurrentStateStr();
         for(unsigned int i=0;i<5;i++) {keyboard.setNoPress(i);}
-        cout<<"LINE : "<<line<<endl;
         time = SDL_GetTicks() - timeBefore;
         timeSeconds=time/1000.f;
-        
         partMaker->update(time,line);
         sdlShow(line,timeSeconds);
         SDL_RenderPresent(renderer);

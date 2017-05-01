@@ -74,10 +74,7 @@ void SdlGame::backgroundImageLoad(){
     backgroundCalque.loadFromFile("../data/Backgroundsgame/BackgroundCalque.png",renderer);
 }
 
-//Testament de l'ihm de jeu: destrction de :
 SdlGame::~SdlGame() {
-    //Libération images
-    //et de la musique en cours
     TTF_CloseFont(font);
     delete game;
     Mix_FreeMusic(music);
@@ -158,7 +155,6 @@ void SdlGame::sdlScore(){
 
 //Affichage du jeu
 void SdlGame::sdlShow(){
-    
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     Background.draw(renderer,0,0,width,height);
@@ -168,15 +164,13 @@ void SdlGame::sdlShow(){
 
     drawValidation();
     int widthNote = width/10;
-    bool tabIsPlayed[5];
+    //bool tabIsPlayed[5];
     for(unsigned int i=0;i<cadre.getNbNote();++i) {
-        
         Note& note = cadre.getNote(i);
-        tabIsPlayed[i]=note.isPlayed();
+        //tabIsPlayed[i]=note.isPlayed();
         int color = note.getColor();
         int Distx=width/4;
-        cout << endl << tabIsPlayed[i];
-        if(tabIsPlayed[i]){ //si la touche a eté un succes on change l'image (très peu d'affichage mais sympa quand meme)
+        if(note.isPlayed()){ //si la touche a eté un succes on change l'image (très peu d'affichage mais sympa quand meme)
             switch(color) {
                 case 0 : im_noteAlredyPlayed.draw(renderer,Distx+color*widthNote,note.getPosY());break; 
                 case 1 : im_noteAlredyPlayed.draw(renderer,Distx+color*widthNote,note.getPosY());break;
