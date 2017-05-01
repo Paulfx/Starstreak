@@ -32,65 +32,6 @@ Score::Score(const int nbNotes){
 Score::~Score(){
 }
 
-void Score::updateScore(const line currLine,const Keyboard& keyState) {
-    assert(numberSuccess<numberNotes);
-    assert(multiplier<=4);
-    assert(rockmeter<=40);
-    assert(rockmeter>0); //si = -1 ou 0 la partie aurait dû s'arreter
-    assert(fail==false);
-
-    /*
-     test de validité en fonction de l'état du clavier et de la ligne courante
-     */
-    bool testSucces=0;
-
-    if (keyState.isValid()) { //Si la touche validation est pressée, on teste la ligne, sinon testSucces reste à false
-        
-        string seqUSER;
-        /*convertion du tab bool en string pour la comparer avec la ligne de jeu courante*/
-        for (int i=0;i<5;++i){//5 touches, 5 indices
-            if (keyState.isNoPress(i)){
-                seqUSER+="0";
-            }
-            else if (keyState.isSimplePress(i)) {
-                seqUSER+="1";
-            }
-            else if (keyState.isLongPress(i)) {
-                seqUSER+="2";
-            } 
-        }
-        if (seqUSER == currLine.data){
-            testSucces=1;
-        }
-    }
-    
-    /*gestion du strapower*/
-    
-    /*
-     idée:-donnée membre à rajouter:Bool lastOnSequence/int accumulateurStarPower/int longueur sequence
-     
-     bool lastOnSequence qui permet de savoir de détecté la fin d'une séquence. Si c'est le cas on compare notestreak>=longueurSequence)
-    */
-  /*   if (currLine.onSequence==1){
-        
-    
-    }*/
-    if (testSucces) {
-        success();
-    }
-    else{
-        failure();
-    }
-    
-    if (rockmeter<=0){
-        fail=true;
-    }
-    
-}
-
-bool Score::isFail() {
-    return fail;
-}
 
 void Score::update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard) {
     unsigned int i,j;

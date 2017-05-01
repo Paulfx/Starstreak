@@ -34,7 +34,8 @@ class Partition {
 		*/
 		~Partition();
 
-        /** @brief
+        /** @brief Accesseur au nombre de ligne de la partition
+         @return Nombre de ligne
          */
 		int getNbLine();
 
@@ -43,7 +44,8 @@ class Partition {
 		*/
 		line& getLine();
 
-        /** @brief
+        /** @brief Renvoie l'etat de la chanson (en cours/fini)
+         @return booleen d'etat
          */
 		bool isFinished();
 };

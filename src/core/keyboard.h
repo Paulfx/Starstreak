@@ -71,15 +71,16 @@ public :
     */
     void setValid(bool b);
 
-    /** @brief
+    /** @brief Affiche le keyboard
      */
     void afficher();
 
     /**@brief Retourne l'état du clavier sous forme de chaines de caractères
+     @return retourne l'etat du clavier (touche enfoncée ou non) dans une chaine de caractères
     */
     std::string getCurrentStateStr();
 
-    /** Transforme tous les simplePress en longPress
+    /** Transforme tous les simplePress en longPress (pas utilisé)
     */
     void setLongPressAllSimplePress(); 
 

@@ -52,7 +52,8 @@ void SdlPartitionMaker::sdlShowDiff() {
     SDL_Rect rec;
     SDL_Color WhiteC = {0,0,0};
     unsigned int difficulty = partMaker->getDifficulty();
-    string message="DIFFICULTE : "+to_string(difficulty);   
+    string message="DIFFICULTE : ";
+    message+=to_string(difficulty);
     surface=TTF_RenderText_Blended(font,message.c_str(),WhiteC);
     tex=SDL_CreateTextureFromSurface(renderer,surface);
     SDL_FreeSurface(surface);

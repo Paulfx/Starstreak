@@ -18,7 +18,6 @@ Permet de créer un fichier complet de partition (toutes les difficultés sont c
 class PartitionMaker {
 
 	private :
-	
 		Keyboard* keyboard;
 		Song song;
 		int difficulty; //compteur de la difficulté

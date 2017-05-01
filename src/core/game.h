@@ -76,11 +76,12 @@ public :
     */
     Cadre& getCadre();
     
-    /** @brief
+    /** @brief accesseur de keyboard
+     @return reference du keyboard
      */
     Keyboard& getKeyboard();
     
-    /** @brief
+    /** @brief Procédure de gestion du jeux 
      */
     void update(float delta);
     
