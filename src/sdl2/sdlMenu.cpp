@@ -252,6 +252,10 @@ void SdlMenu::sdlShowSelect(){
         
         beginShowTitle=menu->getCurrI()%10; //affiche les 10 chanson aprés la menu->getCurrI()%10
         endShowTitle=menu->getCurrI();
+        if(menu->getCurrI()==10){
+            beginShowTitle=1;
+            endShowTitle=menu->getCurrI()+1;
+        }
     }
     else{
         posPtr=menu->getCurrI()%10;//%menu->getNbSongs();
