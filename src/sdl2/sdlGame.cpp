@@ -59,6 +59,8 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     if(font==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
     }
+    
+    leavebyQ = false; //leave avec le touche q (utile pour showEnd)
   
 }
 
@@ -246,7 +248,8 @@ void SdlGame::sdlLoop(){
                 switch(events.key.keysym.scancode) {
                     case SDL_SCANCODE_A:
                         quitGame=true;
-                        //Mix_HaltMusic();
+                        leavebyQ=true;
+                        Mix_HaltMusic();
                         break;
                     case SDL_SCANCODE_Q:keyboard.setPress(0);tabPush[0]=true;break;
                     case SDL_SCANCODE_W:keyboard.setPress(1);tabPush[1]=true;break;
@@ -286,7 +289,7 @@ void SdlGame::sdlShowEnd(){
     SDL_Surface* surf;
     int score=game->getScore().getTotalScore();
     
-    if(game->getScore().getFailed()){
+    if(game->getScore().getFailed() || leavebyQ){
         string sc="YOU FAILED : ";
         sc+=to_string(score);
         surf=TTF_RenderText_Blended(font,sc.c_str(),red);

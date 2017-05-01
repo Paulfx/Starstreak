@@ -40,6 +40,7 @@ private :
     SDL_Texture* texScore;
     TTF_Font * font;
 
+    bool leavebyQ;
     
 public :
 	
