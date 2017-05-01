@@ -10,84 +10,24 @@
 #include "menu.h"
 
 
-void gameAff(WinTXT & win, Game * game) {
-	const vector<string> cadre = game->getCadre();
-    Song song = game->getSong();
-    Score score = game->getScore();
-
-    win.clear();
-
-
-
-    for(unsigned int i=0;i<cadre.size();++i) {
-    	win.print(0,i,cadre[i].c_str());
-    }
-
-    win.draw();
-}
-
-
-void gameBoucle(WinTXT & win, Game* game) {
-
-	bool ok = true;
-	int c;
-
-	do {
-		gameAff(win,game);
-
-		#ifdef _WIN32
-        Sleep(100);
-		#else
-		usleep(100000);
-        #endif // WIN32
-
-
-		c = win.getCh();
-		switch (c) {
-			case 'a':
-				break;
-			case 'z':
-				break;
-			case 'e':
-				break;
-
-			case 'r':
-
-			case 't':
-
-			case 'q':
-				ok = false;
-				break;
-		}
-
-		//game.defilement();
-
-	} while (ok);
-
-}
-
-
 
 void diffAff(WinTXT & win, Menu & menu) {
 	
-	Song** songList = menu.getSongTab();
 	const unsigned int difficulty = menu.getDifficulty();
-
 
 	win.clear();
 
     // Affichage des titres
 	for(unsigned int i=0;i<menu.getNbSongs();++i) {
-		const char* title = songList[i]->title.c_str();
+		const char* title = menu.getTitleSong(i).c_str();
 		win.print(0,i,title);
 	}
 	
 	//// partie difficultés //
-
 	const unsigned int currI = menu.getCurrI();
 
 	string diff = " 123";
-	int taille = songList[currI]->title.size();
+	int taille = menu.getTitleSong(currI).size();
 	win.print(taille,currI,diff.c_str()); //Affichage de la ligne difficulté
 	win.print(taille+difficulty,currI+1,'*'); //Affichage de l'étoile sous la difficulté pointée
 	win.draw();
@@ -109,7 +49,6 @@ void diffBoucle(WinTXT & win, Menu & menu) {
 		usleep(100000);
         #endif // WIN32
 
-
 		c = win.getCh();
 		switch (c) {
 			case 'l':
@@ -119,10 +58,11 @@ void diffBoucle(WinTXT & win, Menu & menu) {
 				menu.decreaseDiff();
 				break;
 			case 'm':
-				menu.choose();
+				/*menu.choose();	
 				if(!menu.isActive()) { //On vérifie que le menu est inactif
-					gameBoucle(win,menu.getGame()); //Boucle qui fait tourner le jeu
-				}
+					//gameBoucle(win,menu.getGame()); //Boucle qui fait tourner le jeu
+					ok=false;
+				}*/
 				break;
 			case 'q':
 				ok = false;
@@ -135,17 +75,14 @@ void diffBoucle(WinTXT & win, Menu & menu) {
 
 
 void menuAff(WinTXT & win, Menu & menu) {
-	Song** songList = menu.getSongTab();
 	const unsigned int currI = menu.getCurrI();
-
 	win.clear();
-
     // Affichage des titres
 	for(unsigned int i=0;i<menu.getNbSongs();++i) {
-		const char* title = songList[i]->title.c_str();
-		win.print(0,i,title);
+		string titleStr = menu.getTitleSong(i);
+		win.print(0,i,titleStr.c_str());
 		string arrow = "<---";
-		int taille = songList[currI]->title.size();
+		int taille = menu.getTitleSong(currI).size();
 		win.print(taille,currI,arrow.c_str());
 	}
 

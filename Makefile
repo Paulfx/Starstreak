@@ -3,8 +3,6 @@ CORE = core/cadre.cpp core/game.cpp core/keyboard.cpp core/partition.cpp core/me
 
 SRCS_SDL = $(CORE) sdl2/sdlPartitionMaker.cpp sdl2/mainSdl.cpp sdl2/sdlClass.cpp sdl2/sdlMenu.cpp sdl2/sdlGame.cpp
 FINAL_TARGET_SDL = starstreak
-#DEFINE_SDL = -DJEU_SDL
-
 
 ifeq ($(OS),Windows_NT)
 	INCLUDE_DIR_SDL = 	-Iextern/SDL2_mingw/SDL2-2.0.3/include \
@@ -41,6 +39,9 @@ endif
 $(BIN_DIR)/$(FINAL_TARGET_SDL): $(SRCS_SDL:%.cpp=$(OBJ_DIR)/%.o)
 	$(LD) $+ -o $@ $(LDFLAGS) $(LIBS_SDL)
 
+$(BIN_DIR)/$(FINAL_TARGET_TXT): $(SRCS_TXT:%.cpp=$(OBJ_DIR)/%.o)
+	$(LD) $+ -o $@ $(LDFLAGS)
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) -c $(CPPFLAGS) $(INCLUDE_DIR_SDL) $(INCLUDE_DIR) $< -o $@
 
@@ -54,7 +55,7 @@ archive:
 
 clean:
 ifeq ($(OS),Windows_NT)
-	del /f $(OBJ_DIR)\txt\*.o $(OBJ_DIR)\sdl2\*.o $(OBJ_DIR)\core\*.o $(BIN_DIR)\$(FINAL_TARGET_TXT).exe $(BIN_DIR)\$(FINAL_TARGET_SDL).exe
+	del /f $(OBJ_DIR)\txt\*.o $(OBJ_DIR)\sdl2\*.o $(OBJ_DIR)\core\*.o $(BIN_DIR)\$(FINAL_TARGET_SDL).exe
 else
 	rm -rf $(OBJ_DIR) $(BIN_DIR)/$(FINAL_TARGET_SDL)
 endif
