@@ -37,7 +37,7 @@ public :
 	Cadre();
     
     
-    /** @brief
+    /** @brief Constructeur par paramètres
      */
 	Cadre(unsigned int pos0,unsigned int pos1,unsigned int pos2,unsigned int pos3,unsigned int pos4, float time, unsigned int initY, unsigned int beginV, unsigned int endV);
 	
@@ -54,28 +54,37 @@ public :
 	void scrollCadre(float delta, Score& score);
     
     /** @brief
+     @return unsigned int
      */
 	unsigned int getNbNote() const;
 
     /** @brief
+     @return note&
      */
 	Note& getNote(unsigned int i);
 
 	/** @brief
+     @return note*
      */
     Note* getPtrNote(unsigned int i);
-
+    
+    /** @brief
+     @return vector<Note*>
+    */
     vector<Note*> getNeedPlayTab();
 
     /** @brief
+     @return bool
      */
 	bool isEmpty() const;
     
     /** @brief
+     @return int
      */
 	int getBeginValid() const;
     
     /** @brief
+     @return int
      */
 	int getTabPos(unsigned int i) const;
 
