@@ -29,16 +29,16 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
     
     backgroundImageLoad();
     
-    tabSquareColor[0].loadFromFile("../data/theme/square/squareGreen.png",renderer);
-    tabSquareColor[1].loadFromFile("../data/theme/square/squareRed.png",renderer);
-    tabSquareColor[2].loadFromFile("../data/theme/square/squareYellow.png",renderer);
-    tabSquareColor[3].loadFromFile("../data/theme/square/squareBlue.png",renderer);
-    tabSquareColor[4].loadFromFile("../data/theme/square/squareOrange.png",renderer);
-
-    oldLine="00000";
+    tabSquareColor[0].loadFromFile("../data/theme/square/squareGreen.jpg",renderer);
+    tabSquareColor[1].loadFromFile("../data/theme/square/squareRed.jpg",renderer);
+    tabSquareColor[2].loadFromFile("../data/theme/square/squareYellow.jpg",renderer);
+    tabSquareColor[3].loadFromFile("../data/theme/square/squareBlue.jpg",renderer);
+    tabSquareColor[4].loadFromFile("../data/theme/square/squareOrange.jpg",renderer);
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
+    
+    TTF_Quit();
     Mix_FreeMusic(music);
 	delete partMaker;
 }
