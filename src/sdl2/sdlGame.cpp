@@ -43,6 +43,7 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     tabPush[3]=false;
     tabPush[4]=false;
     
+    backgroundCalque.loadFromFile("../data/Backgroundsgame/BackgroundCalqueFINAL.png",renderer);
 
     string aMusic="../data/wav/";
     aMusic+=game->getSong().fileMusic;
@@ -110,8 +111,8 @@ void SdlGame::sdlScore(){
     smult+=to_string(mult);
     surf=TTF_RenderText_Blended(fontMenu,smult.c_str(),black);
     texScore=surfaceToTexture(surf);
-    rec.x=100;
-    rec.y=400;
+    rec.x=950;
+    rec.y=65;
     rec.w=150;
     rec.h=50;
     if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
@@ -146,7 +147,7 @@ void SdlGame::sdlShow(){
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     Background.draw(renderer,0,0,width,height);
-    
+    backgroundCalque.draw(renderer,0,0,width,height);
     Cadre& cadre = game->getCadre();
 
 
