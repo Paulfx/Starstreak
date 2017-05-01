@@ -37,15 +37,11 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
-    
+    TTF_CloseFont(font);
     TTF_Quit();
     Mix_FreeMusic(music);
 	delete partMaker;
 }
-
-
-
-
 
 void SdlPartitionMaker::backgroundImageLoad(){
     string aImage="../data/Backgroundsgame/";
@@ -64,10 +60,10 @@ void SdlPartitionMaker::sdlShowDiff() {
     SDL_Rect rec;
     SDL_Color WhiteC = {0,0,0};
     unsigned int difficulty = partMaker->getDifficulty();
-    string message="DIFFICULTE : "+to_string(difficulty);
-    
+    string message="DIFFICULTE : "+to_string(difficulty);   
     surface=TTF_RenderText_Blended(font,message.c_str(),WhiteC);
     tex=SDL_CreateTextureFromSurface(renderer,surface);
+    SDL_FreeSurface(surface);
     if(tex==NULL){
         cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
     }
@@ -108,8 +104,9 @@ void SdlPartitionMaker::sdlShowTime(int time){
     SDL_Color WhiteC = {0,0,0};
     string message="Time : "+to_string(time);
     
-    surface=TTF_RenderText_Blended(font,message.c_str(),WhiteC);
+    surface=TTF_RenderText_Solid(font,message.c_str(),WhiteC);
     tex=SDL_CreateTextureFromSurface(renderer,surface);
+    SDL_FreeSurface(surface);
     if(tex==NULL){
         cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
     }

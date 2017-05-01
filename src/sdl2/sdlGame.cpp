@@ -56,8 +56,8 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     
     //TTF
     //Besoin de re- initialisé?
-    fontMenu=TTF_OpenFont("../data/theme/police/fast99.ttf", 0.0625*width);
-    if(fontMenu==NULL) {
+    font=TTF_OpenFont("../data/theme/police/fast99.ttf", 0.0625*width);
+    if(font==NULL) {
         cout<<"TTF_OpenFont: "<<endl<<TTF_GetError()<<endl;
     }
   
@@ -76,6 +76,7 @@ void SdlGame::backgroundImageLoad(){
 SdlGame::~SdlGame() {
     //Libération images
     //et de la musique en cours
+    TTF_CloseFont(font);
     delete game;
     Mix_FreeMusic(music);
 }
@@ -90,12 +91,11 @@ SDL_Texture* SdlGame::surfaceToTexture( SDL_Surface* surf ) {
 
 // TODO : Position en fonction de width
 void SdlGame::sdlScore(){
-    SDL_Color white = {255, 255, 255};
     SDL_Color black = {0,0,0};
     SDL_Surface* surf;
     int score=game->getScore().getTotalScore();
     string sc=to_string(score);
-    surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),black);
+    surf=TTF_RenderText_Blended(font,sc.c_str(),black);
     texScore=surfaceToTexture(surf);
     SDL_Rect rec;
     rec.x=width/12;
@@ -109,7 +109,7 @@ void SdlGame::sdlScore(){
     unsigned int mult=game->getScore().getMultiplier();
     string smult="Multiplier : ";
     smult+=to_string(mult);
-    surf=TTF_RenderText_Blended(fontMenu,smult.c_str(),black);
+    surf=TTF_RenderText_Blended(font,smult.c_str(),black);
     texScore=surfaceToTexture(surf);
     rec.x=950;
     rec.y=65;
@@ -122,7 +122,7 @@ void SdlGame::sdlScore(){
     int rockmeter=game->getScore().getRockmeter();
     string srockm="RockMeter : ";
     srockm+=to_string(rockmeter);
-    surf=TTF_RenderText_Blended(fontMenu,srockm.c_str(),black);
+    surf=TTF_RenderText_Blended(font,srockm.c_str(),black);
     texScore=surfaceToTexture(surf);
     rec.x=100;
     rec.y=600;
@@ -153,7 +153,6 @@ void SdlGame::sdlShow(){
 
     drawValidation();
     int widthNote = width/10;
-    int heightNote = height/6;
     bool tabIsPlayed[5];
     for(unsigned int i=0;i<cadre.getNbNote();++i) {
         
@@ -191,10 +190,6 @@ void SdlGame::drawValidation(){
     Cadre& cadre = game->getCadre();
     int widthV = width/10;
     int Distx=width/4; // 1/4 + 1/2 + 1/4
-    int Disty=height*5/6;
-    int heightV =height/6;
-
-    int taille=width/20;
     for(unsigned int i=0;i<5;++i) {
         if(!tabPush[i]) {
             tabImV[i].draw(renderer,Distx+i*widthV,cadre.getBeginValid(),widthV,widthV);
@@ -281,7 +276,7 @@ void SdlGame::sdlShowEnd(){
     if(game->getScore().getFailed()){
         string sc="YOU FAILED : ";
         sc+=to_string(score);
-        surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),red);
+        surf=TTF_RenderText_Blended(font,sc.c_str(),red);
         texScore=surfaceToTexture(surf);
         SDL_Rect rec;
         rec.x=width/3;
@@ -294,7 +289,7 @@ void SdlGame::sdlShowEnd(){
     }else{
         string sc="YOU ROCK : ";
         sc+=to_string(score);
-        surf=TTF_RenderText_Blended(fontMenu,sc.c_str(),red);
+        surf=TTF_RenderText_Blended(font,sc.c_str(),red);
         texScore=surfaceToTexture(surf);
         SDL_Rect rec;
         rec.x=width/3;

@@ -6,16 +6,13 @@ class Image {
     
 private:
     
-    SDL_Surface * surface;
+    int width,height;
     SDL_Texture * texture;
-    bool has_changed;
-    
+
 public:
     Image ();
     void loadFromFile (const char* filename, SDL_Renderer * renderer);
     void draw (SDL_Renderer * renderer, int x, int y, int w=-1, int h=-1);
-    int getWidth();
-	int getHeight();
 };
 
 

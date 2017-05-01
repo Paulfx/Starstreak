@@ -44,23 +44,6 @@ class PartitionMaker {
 
 		void update(unsigned int msTime, const string& line);
 
-
-		/**@brief Calcule les bonnes valeurs de décalage de buffer pour les difficultés
-		Modifie les paramètres en entrée.
-		Si la somme des nbChar avec count ajoute une unité à nbChar, alors on resomme le nombre d'unités ajoutées aux trois nbChar
-		@param [in,out]
-		@param [in,out]
-		@param [in,out]
-		@param [in] count nombre de caractères (ou digits) des 3 nbChar, plus 2 (virgules de la première ligne)
-		*/
-		/*
-		void calcNbChar(unsigned int& nbChar1,unsigned int& nbChar2,unsigned int& nbChar3, unsigned int count);
-
-		/**@brief Calcule et renvoie le nombre d'unités de number
-		*/
-		/*
-		int nbDigits(unsigned int number);
-		*/
 		Keyboard& getKeyboard();
 
 		const Song& getSong();

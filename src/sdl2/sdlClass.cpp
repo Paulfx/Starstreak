@@ -11,12 +11,11 @@ using namespace std;
 // ============= IMAGE =============== //
 
 Image::Image () {
-    surface = NULL;
     texture = NULL;
-    has_changed = false;
 }
 
 void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
+    SDL_Surface* surface;
     surface = IMG_Load(filename);
     if (surface == NULL) {
         string nfn = string("../") + filename;
@@ -34,10 +33,11 @@ void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
     
     SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(surface,SDL_PIXELFORMAT_ARGB8888,0);
     SDL_FreeSurface(surface);
-    surface = surfaceCorrectPixelFormat;
-    texture = SDL_CreateTextureFromSurface(renderer,surface);
+    width=surfaceCorrectPixelFormat->w;
+    height=surfaceCorrectPixelFormat->h;
+    texture = SDL_CreateTextureFromSurface(renderer,surfaceCorrectPixelFormat);
+    SDL_FreeSurface(surfaceCorrectPixelFormat);
     if (texture == NULL) {
-        
         cout << "Error: problem to create the texture of "<< filename<< endl;
         cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
         exit(1);
@@ -49,18 +49,8 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
     SDL_Rect r;
     r.x = x;
     r.y = y;
-    r.w = (w<0)?surface->w:w;
-    r.h = (h<0)?surface->h:h;
-    
-    if (has_changed) {
-        ok = SDL_UpdateTexture(texture,NULL,surface->pixels,surface->pitch);
-        assert(ok == 0);
-        has_changed = false;
-    }
-    
+    r.w = (w<0)?width:w;
+    r.h = (h<0)?height:h; 
     ok = SDL_RenderCopy(renderer,texture,NULL,&r);
-    //assert(ok == 0);
+    assert(ok == 0);
 }
-
-int Image::getWidth() { return surface->w;}
-int Image::getHeight() { return surface->h;}

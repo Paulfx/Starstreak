@@ -38,7 +38,7 @@ private :
     bool tabPush [5]; //tabPush[i] est true tant que la touche n'est pas relaché
     
     SDL_Texture* texScore;
-    TTF_Font * fontMenu;
+    TTF_Font * font;
 
     
 public :

@@ -81,8 +81,6 @@ SdlMenu::SdlMenu() : creationMode(false){
     }
     
     createTextTextures();
-
-
     SDL_RenderSetLogicalSize(renderer,width, height); //taille fenetre
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); //rend en noir
     SDL_RenderClear(renderer);
@@ -182,7 +180,8 @@ SdlMenu::~SdlMenu(){
     delete menu;
 
     //Fermeture TTF
-    //TTF_CloseFont(fontMenu);  -> erreur d'allocation
+    TTF_CloseFont(fontMenu);
+
     soundQuit();
     TTF_Quit();
     Mix_CloseAudio();

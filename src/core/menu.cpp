@@ -48,7 +48,7 @@ Menu::~Menu() {
 	for(unsigned int i =0;i<nbSongs;i++) {
 		delete songTab[i];
 	}
-	delete songTab;
+	delete [] songTab;
 	songTab = NULL;
 }
 
