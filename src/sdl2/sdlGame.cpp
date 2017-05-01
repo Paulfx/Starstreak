@@ -10,11 +10,10 @@ SdlGame::SdlGame() {
 
 SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,unsigned int difficulty) : window(window), renderer(renderer){
     assert(renderer);
-
-    game = new Game(song,difficulty);
-    
     SDL_GetWindowSize(window, &width, &height);
 
+    game = new Game(song,difficulty,height - (height/5));
+    
     im_note0.loadFromFile("../data/theme/notes/vert.png",renderer);
     im_note1.loadFromFile("../data/theme/notes/rouge.png",renderer);
     im_note2.loadFromFile("../data/theme/notes/jaune.png",renderer);
@@ -224,12 +223,14 @@ void SdlGame::sdlLoop(){
 
 
     Keyboard& keyboard = game->getKeyboard();
-
+    float duration = game->getSong().duration;
+    float totalTime=0;
     float time_seconds = SDL_GetTicks() / 1000.f;
-    while(!quitGame){
+    while(!quitGame && totalTime<duration){
         float new_time = SDL_GetTicks() / 1000.f;
         float delta = new_time - time_seconds;
         time_seconds = new_time;
+        totalTime+=delta;
         game->update(delta);
         
         
@@ -267,8 +268,6 @@ void SdlGame::sdlLoop(){
         if(game->getScore().getFailed()){
             quitGame=true;
         }
-        
-    
         //keyboard.afficher();
         sdlShow();
         sdlScore();
@@ -295,7 +294,7 @@ void SdlGame::sdlShowEnd(){
         rec.w=width/4;
         rec.h=height/8;
         if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
-            cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+            cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl;
         }
     }else{
         string sc="YOU ROCK : ";
@@ -308,7 +307,7 @@ void SdlGame::sdlShowEnd(){
         rec.w=width/4;
         rec.h=height/8;
         if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
-            cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+            cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl;
         }
     }
     SDL_RenderPresent(renderer);

@@ -50,7 +50,7 @@ public :
      @param difficulty difficulté de la Game et donc modification de la lecture/ecriture sur le fichier ? 
      @todo
      */
-    Game(const Song& song,unsigned int difficulty);
+    Game(const Song& song,unsigned int difficulty,int beginV);
     
     /**@brief Destructeur
      */
