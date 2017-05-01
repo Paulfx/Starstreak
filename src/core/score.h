@@ -39,6 +39,7 @@ public:
     /**
      @brief Constructeur par paramètres
      Ce constructeur permet d'initialiser le nombre de notes total afin d'avoir un pourcentage de notes réussites
+     @param const int nbNotes Valeur récupérée dans le fichier index.
      */
     Score(const int nbNotes);
     
@@ -49,47 +50,47 @@ public:
     
     /**
      @brief La fonction updateScore est appelée à chaque fois qu'une note doit etre jouée. Elle contient un test de validité qui compare la ligne de jeu courante avec l'état du clavier.
-      Les différentes valeurs du score seront ensuite mises à jour en fonction du résultat de ce test.
-     */
-    void updateScore(const line currLine,const Keyboard& keyState);
-
-    /** @brief
-     */
-    bool isFail();
-    
-    /** @brief
+     Les différentes valeurs du score seront ensuite mises à jour en fonction du résultat de ce test.
+     @param[const in] tabNeedPlay vector contenant la ligne de note à jouer
+     @param[in, out] Keyboard contient la ligne de touches utilisateur, l'etat est modifié pour eviter de jouer deux fois la même note
      */
     void update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard);
 
-    /** @brief
+    /** @brief Incrémentation des valeurs du score.
      */
     void success();
 
-    /** @brief
+    /** @brief Décrémentation des valeurs du score.
      */
     void failure();
 
-    /** @brief
+    /** @brief Accesseur score
+     @return int
      */
     int getTotalScore() const;
     
-    /** @brief
+    /** @brief Accesseur série de notes
+     @return int
      */
     int getNoteStreak() const;
     
-    /** @brief
+    /** @brief Accesseur nombre de notes réussies
+     @return unsigned int
      */
     int getNumberSuccess() const;
     
-    /** @brief
+    /** @brief Accesseur multiplicateur
+     @return unsigned int
      */
     unsigned int getMultiplier() const;
     
-    /** @brief
+    /** @brief Accesseur rockmeter (equivalent à une barre de vie)
+     @return int
      */
     int getRockmeter() const;
     
-    /** @brief
+    /** @brief Cette fonction renvoit true si la partie est perdue.
+     @return bool
      */
     bool getFailed() const;
 

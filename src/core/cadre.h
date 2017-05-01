@@ -31,7 +31,8 @@ private :
 
 
 public :
-	/** @brief 
+    /** @brief Constructeur par défaut
+     Constructeur sans paramètres
      */
 	Cadre();
     
