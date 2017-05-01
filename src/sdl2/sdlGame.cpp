@@ -136,7 +136,7 @@ void SdlGame::sdlScore(){
     int noteStreak=game->getScore().getNoteStreak();
     string sStreak="Streak : ";
     sStreak+=to_string(noteStreak);
-    surf=TTF_RenderText_Blended(fontMenu,sStreak.c_str(),black);
+    surf=TTF_RenderText_Blended(font,sStreak.c_str(),black);
     texScore=surfaceToTexture(surf);
     rec.x=width*9/11;
     rec.y=height*3/8;
