@@ -34,6 +34,8 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
     tabSquareColor[2].loadFromFile("../data/theme/square/squareYellow.png",renderer);
     tabSquareColor[3].loadFromFile("../data/theme/square/squareBlue.png",renderer);
     tabSquareColor[4].loadFromFile("../data/theme/square/squareOrange.png",renderer);
+
+    oldLine="00000";
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
@@ -83,47 +85,21 @@ void SdlPartitionMaker::sdlShowDiff() {
 
 
 //A REPRENDRE -> affiche une image si il y a un un.
-void SdlPartitionMaker::sdlShow(string line) {
-    
-	SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
+void SdlPartitionMaker::sdlShow(const string& line,int timeSeconds) {
+    SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     Background.draw(renderer,0,0,width,height);
-    int c;
-    for(unsigned int i=0;i<5;i++){
-        c=line[i]-48;
-        if(c==true){
-           SdlShowSquare(i);
-        }
-    }
+    sdlShowTime(timeSeconds);
+    sdlShowDiff();
+    sdlShowLine(line);
 }
 
-
-void SdlPartitionMaker::SdlShowSquare(unsigned int i){
-    switch(i){
-        case 0:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 1:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 2:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 3:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
-        case 4:{
-            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
-            break;
-        }
+void SdlPartitionMaker::sdlShowLine(const string& line) {
+    if(line!="00000") oldLine=line; //On change la ligne qu'on affiche
+    for(unsigned int i=0;i<5;++i) {
+        if (oldLine[i] != '0') tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
     }
 }
-
-
 
 void SdlPartitionMaker::sdlShowTime(int time){
     SDL_Surface * surface;
@@ -143,12 +119,8 @@ void SdlPartitionMaker::sdlShowTime(int time){
     rec.h=height/10;
     if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl;
-    }
-    
+    }   
 }
-
-
-
 
 void SdlPartitionMaker::sdlLoop() {
 	SDL_Event events;
@@ -171,7 +143,6 @@ void SdlPartitionMaker::sdlLoop() {
 		time=SDL_GetTicks()-timeBefore;
 		timeSeconds=time/1000.f;
 		cout<<timeSeconds<<"   "<<duration<<endl;
-        //keyboard.setLongPressAllSimplePress(); //Tous les simplePress deviennent longPress
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 quit = true;
@@ -208,9 +179,7 @@ void SdlPartitionMaker::sdlLoop() {
         timeSeconds=time/1000.f;
         
         partMaker->update(time,line);
-        sdlShow(line);
-        sdlShowTime(timeSeconds);
-        sdlShowDiff();
+        sdlShow(line,timeSeconds);
         SDL_RenderPresent(renderer);
     }
     partMaker->save();

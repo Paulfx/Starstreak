@@ -64,13 +64,10 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
 
 
 void SdlGame::backgroundImageLoad(){
-    
-    
     string aImage="../data/Backgroundsgame/";
     aImage+=game->getSong().fileImage;
     const char *accesImage= aImage.c_str();
     cout <<"Ouverture du background :"<< aImage;
-    
     Background.loadFromFile(accesImage,renderer);
 }
 
@@ -78,9 +75,6 @@ void SdlGame::backgroundImageLoad(){
 SdlGame::~SdlGame() {
     //Libération images
     //et de la musique en cours
-    
-    
-    
     delete game;
     Mix_FreeMusic(music);
 }

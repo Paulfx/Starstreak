@@ -35,6 +35,7 @@ private :
     TTF_Font * font;
     Mix_Music *music;
     
+    string oldLine; //Permet de se souvenir de la ligne d'avant
     
 
 public :
@@ -47,7 +48,8 @@ public :
     
     void sdlLoop();
 
-    void sdlShow(const string line);
+    void sdlShow(const string& line, int timeSeconds);
+    void sdlShowLine(const string& line);
     void sdlShowDiff();
     void sdlShowTime(const int time);
     void SdlShowSquare(const unsigned int i);
