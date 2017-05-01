@@ -44,12 +44,10 @@ SdlPartitionMaker::~SdlPartitionMaker() {
 }
 
 void SdlPartitionMaker::backgroundImageLoad(){
-    string aImage="../data/Backgroundsgame/";
-    aImage+=partMaker->getSong().fileImage;
-    const char *accesImage= aImage.c_str();
-    cout <<"Ouverture du background :"<< aImage;
     
-    Background.loadFromFile(accesImage,renderer);
+    Background.loadFromFile("../data/theme/BackgroundStudio.jpg",renderer);
+    BackgroundCalque.loadFromFile("../data/Backgroundsgame/backgroundMakerCalque.png",renderer);
+
 }
 
 
@@ -85,6 +83,7 @@ void SdlPartitionMaker::sdlShow(const string& line,int timeSeconds) {
     SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
     SDL_RenderClear(renderer);
     Background.draw(renderer,0,0,width,height);
+    BackgroundCalque.draw(renderer,0,0,width,height);
     sdlShowTime(timeSeconds);
     sdlShowDiff();
     sdlShowLine(line);
@@ -93,7 +92,7 @@ void SdlPartitionMaker::sdlShow(const string& line,int timeSeconds) {
 void SdlPartitionMaker::sdlShowLine(const string& line) {
     if(line!="00000") oldLine=line; //On change la ligne qu'on affiche
     for(unsigned int i=0;i<5;++i) {
-        if (oldLine[i] != '0') tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
+        if (oldLine[i] != '0') tabSquareColor[i].draw(renderer,width/6+i*width/14+(i+1)*width/18,height*3/5,width/14,width/14);
     }
 }
 
@@ -102,7 +101,8 @@ void SdlPartitionMaker::sdlShowTime(int time){
     SDL_Texture * tex;
     SDL_Rect rec;
     SDL_Color WhiteC = {0,0,0};
-    string message="Time : "+to_string(time);
+    string message="Time : ";
+    message+=to_string(time);
     
     surface=TTF_RenderText_Solid(font,message.c_str(),WhiteC);
     tex=SDL_CreateTextureFromSurface(renderer,surface);

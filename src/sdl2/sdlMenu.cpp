@@ -140,6 +140,7 @@ void SdlMenu::soundInit() {
     soundMove=NULL;
     soundAccept=NULL;
     soundMenu=NULL;
+    soundBack=NULL;
     
     if (soundMenu==NULL){
         Mix_AllocateChannels(5);
@@ -152,6 +153,11 @@ void SdlMenu::soundInit() {
         soundAccept=Mix_LoadWAV("../data/theme/sounds/action.wav");
         if(!soundAccept){
             cout<<"erreur ouverture effet de validation:"<<Mix_GetError()<<endl;
+        }
+        
+        soundBack=Mix_LoadWAV("../data/theme/sounds/back.wav");
+        if(!soundBack){
+            cout<<"erreur ouverture effet de retour:"<<Mix_GetError()<<endl;
         }
         /*musique de fond dans le menu*/
         /**@todo Ouvrir plusieurs son de menu qui se lance aléatoirement**/
@@ -166,11 +172,12 @@ void SdlMenu::soundInit() {
     }
 }
     
-void SdlMenu::soundQuit() {// ne peut etre appelé que lorsqu' on quite le programme sinon on aura plus aucun son lorsque l'on retourne dans le menu
+void SdlMenu::soundQuit() {
     Mix_HaltChannel(1);
     Mix_FreeChunk(soundAccept);
     Mix_FreeChunk(soundMove);
     Mix_FreeChunk(soundMenu);
+    Mix_FreeChunk(soundBack);
 }
 
 
@@ -403,6 +410,7 @@ int SdlMenu::sdlLoopSelect(){
         while (SDL_PollEvent(&events)) {
             if (events.type == SDL_QUIT){
                 stateMenu=0;
+                posPtr=0;
             }else if (events.type == SDL_KEYDOWN) {// Si une touche est enfoncee
                 switch (events.key.keysym.scancode) { //On test en fonction de la touche enfoncée (id par scancode)
                     case SDL_SCANCODE_UP:
@@ -432,7 +440,11 @@ int SdlMenu::sdlLoopSelect(){
                         
                     case SDL_SCANCODE_ESCAPE://Retour arrière
                     {
+                        if (Mix_PlayChannel(4,soundBack,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
                         creationMode=false;
+                        posPtr=0;
                         return 0;
                     }
                     default:break;
@@ -499,6 +511,9 @@ int SdlMenu::sdlLoopDiff(){
                     }
                     case SDL_SCANCODE_ESCAPE://touche echap
                     {
+                        if (Mix_PlayChannel(4,soundBack,0)==-1) {
+                            cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
+                        }
                         return 1;//retour arrière
                     }
                     default:

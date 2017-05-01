@@ -68,6 +68,7 @@ private :
 /* son */
     Mix_Chunk *soundMove;
     Mix_Chunk *soundAccept;
+    Mix_Chunk *soundBack;
     Mix_Chunk *soundMenu;
     
 public :
