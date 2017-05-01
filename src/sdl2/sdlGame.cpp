@@ -134,8 +134,20 @@ void SdlGame::sdlScore(){
     if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
     }
+    //STREAK
+    int noteStreak=game->getScore().getNoteStreak();
+    string sStreak="Streak : ";
+    sStreak+=to_string(noteStreak);
+    surf=TTF_RenderText_Blended(fontMenu,sStreak.c_str(),black);
+    texScore=surfaceToTexture(surf);
+    rec.x=width*9/11;
+    rec.y=height*3/8;
+    rec.w=width/8;
+    rec.h=height/12;
+    if(SDL_RenderCopy(renderer,texScore, NULL, &rec)!=0){
+        cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl; //printf plus en C
+    }
 
-    
 }
 
 

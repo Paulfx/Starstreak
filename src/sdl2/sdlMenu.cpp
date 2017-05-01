@@ -445,6 +445,7 @@ int SdlMenu::sdlLoopSelect(){
                             cout<<"Mix_PlayChannel error"<<Mix_GetError()<<endl;
                         }
                         creationMode=false;
+                        posPtr=0;
                         return 0;
                     }
                     default:break;
