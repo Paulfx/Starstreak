@@ -313,10 +313,6 @@ void SdlMenu::sdlShowDiff(){
     im_ptrMenu.draw(renderer,(0.40)*width,0.25*height+(0.105*height)*posPtr,0.1*width,0.05*height);
 }
 
-//Essai de loop+affichage
-void SdlMenu::sdlTest(){
-    sdlLoop();
-}
 
 //########## LOOP PRINCIPALE #########
 void SdlMenu::sdlLoop(){
