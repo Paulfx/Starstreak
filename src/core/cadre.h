@@ -48,11 +48,9 @@ public :
 	*/
 	bool update(float delta, const line& currLine); //Lit partition et remplit noteTab des notes correspondantes, et fait défiler celles existantes
 
-    
     /** @brief
      */
 	void scrollCadre(float delta, Score& score);
-    
     
     /** @brief
      */
@@ -71,12 +69,13 @@ public :
     /** @brief
      */
 	bool isEmpty() const;
-
     
     /** @brief
      */
 	int getBeginValid() const;
-
+    
+    /** @brief
+     */
 	int getTabPos(unsigned int i) const;
 
 };

@@ -75,9 +75,13 @@ public :
     @return une référence vers cadre 
     */
     Cadre& getCadre();
-
+    
+    /** @brief
+     */
     Keyboard& getKeyboard();
     
+    /** @brief
+     */
     void update(float delta);
     
 };

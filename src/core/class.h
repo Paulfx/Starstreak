@@ -29,15 +29,45 @@ private :
 	bool needPlay = false; //true si le joueur doit jouer la note
 public :
 	Note();
+    
+    /** @brief
+     */
 	Note(unsigned int x, unsigned int y, unsigned int c, bool longBool, float speedNote);
+    
+    /** @brief
+     */
 	unsigned int getPosX() const;
+    
+    /** @brief
+     */
 	unsigned int getPosY() const;
+    
+    /** @brief
+     */
 	unsigned int getColor() const;
+    
+    /** @brief
+     */
 	bool getNeedPlay() const;
+    
+    /** @brief
+     */
 	bool isPlayed() const;
+    
+    /** @brief
+     */
 	bool isLong() const;
+    
+    /** @brief
+     */
 	void scroll(float delta);
+    
+    /** @brief
+     */
 	void setNeedPlay();
+    
+    /** @brief
+     */
 	void setPlayed();
 };
 

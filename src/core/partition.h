@@ -34,6 +34,8 @@ class Partition {
 		*/
 		~Partition();
 
+        /** @brief
+         */
 		int getNbLine();
 
 		/**@brief Renvoie une référence vers la prochaine ligne de partition
@@ -41,6 +43,8 @@ class Partition {
 		*/
 		line& getLine();
 
+        /** @brief
+         */
 		bool isFinished();
 };
 

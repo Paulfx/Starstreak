@@ -58,33 +58,50 @@ public :
 	/**@brief Crée la partie associée à la chanson pointée par currPtr
 		Rend le menu inactif
 	*/
-	//void choose();
-
 	Song& getCurrSong();
-
+    
+    /** @brief
+     */
 	const Song& getConstCurrSong(); 
 
+    /** @brief
+     */
 	unsigned int getCurrI() const;
 
+    /** @brief
+     */
 	unsigned int getNbSongs() const;
 
+    /** @brief
+     */
     unsigned int getDifficulty() const;
     
-    
+    /** @brief
+     */
 	Game& getGame();
 
+    /** @brief
+     */
 	bool isActive() const;
 
+    /** @brief
+     */
 	void increaseDiff();
 
+    /** @brief
+     */
 	void decreaseDiff();
 
+    /** @brief
+     */
 	bool getMode() const;
 
 	/** @brief Renvoie le tab des noms de chansons
      */
     string getList();
 
+    /** @brief
+     */
     string getTitleSong(unsigned int i);
 
 };

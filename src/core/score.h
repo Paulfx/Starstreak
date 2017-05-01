@@ -19,11 +19,10 @@ class Score {
     
 private :
     
-    int totalScore;
-    int noteStreak;
-    bool starPower;
-    int numberSuccess;
-    int numberNotes;
+    int totalScore; //Score total de la parti en cours
+    int noteStreak; //Serie de notes reussies
+    int numberSuccess; //Nombre de note reussies
+    int numberNotes; //nombre de notes
     unsigned int multiplier; //valeur (de 1 à 4) établit en fonction de noteStreak qui multiplie la valeur d'une note
     int rockmeter; /*la valeur augmente (respct:baisse) lorsque qu'une note est réussie (respct:ratée). A zéro (ou -1) la partie s'arrête*/
     bool fail=false; //True si le joueur a perdu
@@ -54,19 +53,44 @@ public:
      */
     void updateScore(const line currLine,const Keyboard& keyState);
 
+    /** @brief
+     */
     bool isFail();
-
+    
+    /** @brief
+     */
     void update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard);
 
+    /** @brief
+     */
     void success();
 
+    /** @brief
+     */
     void failure();
 
+    /** @brief
+     */
     int getTotalScore() const;
+    
+    /** @brief
+     */
     int getNoteStreak() const;
+    
+    /** @brief
+     */
     int getNumberSuccess() const;
+    
+    /** @brief
+     */
     unsigned int getMultiplier() const;
+    
+    /** @brief
+     */
     int getRockmeter() const;
+    
+    /** @brief
+     */
     bool getFailed() const;
 
 };

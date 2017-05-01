@@ -14,7 +14,6 @@ const int ROCKMETER_MAX = 40;
 Score::Score(){
     totalScore=0;
     noteStreak=0;
-    starPower=0;//1 quand straPower actif
     numberSuccess=0;
     numberNotes=0;
     multiplier=1;
@@ -24,7 +23,6 @@ Score::Score(){
 Score::Score(const int nbNotes){
     totalScore=0;
     noteStreak=0;
-    starPower=0;
     numberSuccess=0;
     numberNotes=nbNotes;
     multiplier=1;

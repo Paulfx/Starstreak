@@ -71,6 +71,8 @@ public :
     */
     void setValid(bool b);
 
+    /** @brief
+     */
     void afficher();
 
     /**@brief Retourne l'état du clavier sous forme de chaines de caractères
