@@ -43,7 +43,6 @@ SdlGame::SdlGame(SDL_Window * window, SDL_Renderer * renderer, const Song& song,
     tabPush[3]=false;
     tabPush[4]=false;
     
-    backgroundCalque.loadFromFile("../data/Backgroundsgame/BackgroundCalqueFINAL.png",renderer);
 
     string aMusic="../data/wav/";
     aMusic+=game->getSong().fileMusic;
@@ -70,6 +69,7 @@ void SdlGame::backgroundImageLoad(){
     const char *accesImage= aImage.c_str();
     cout <<"Ouverture du background :"<< aImage;
     Background.loadFromFile(accesImage,renderer);
+    backgroundCalque.loadFromFile("../data/Backgroundsgame/BackgroundCalque.png",renderer);
 }
 
 //Testament de l'ihm de jeu: destrction de :
