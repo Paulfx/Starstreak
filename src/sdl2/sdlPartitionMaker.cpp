@@ -19,14 +19,21 @@ SdlPartitionMaker::SdlPartitionMaker(SDL_Window * window, SDL_Renderer * rendere
     aMusic+=partMaker->getSong().fileMusic;
     const char *accesMusic = aMusic.c_str();
     cout<<"lancement de :"<<accesMusic<<endl;
-    cout<<"coucou0"<<endl;
+
     music=Mix_LoadMUS(accesMusic);
     //music=Mix_LoadMUS("../data/wav/sth.wav");
-    cout<<"coucou1"<<endl;
+
     if (!music){
         cout<<"Mix_LoadMus "<<accesMusic<<Mix_GetError()<<endl;
     }
-    cout<<"coucou2"<<endl;
+    
+    backgroundImageLoad();
+    
+    tabSquareColor[0].loadFromFile("../data/theme/square/squareGreen.png",renderer);
+    tabSquareColor[1].loadFromFile("../data/theme/square/squareRed.png",renderer);
+    tabSquareColor[2].loadFromFile("../data/theme/square/squareYellow.png",renderer);
+    tabSquareColor[3].loadFromFile("../data/theme/square/squareBlue.png",renderer);
+    tabSquareColor[4].loadFromFile("../data/theme/square/squareOrange.png",renderer);
 }
 
 SdlPartitionMaker::~SdlPartitionMaker() {
@@ -36,33 +43,115 @@ SdlPartitionMaker::~SdlPartitionMaker() {
 
 
 
-void SdlPartitionMaker::sdlShow() {
-	SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
-    SDL_RenderClear(renderer);
 
-	unsigned int difficulty = partMaker->getDifficulty();
-	string message="DIFFICULTE : "+difficulty;
 
-	SDL_Surface * surface;
+void SdlPartitionMaker::backgroundImageLoad(){
+    string aImage="../data/Backgroundsgame/";
+    aImage+=partMaker->getSong().fileImage;
+    const char *accesImage= aImage.c_str();
+    cout <<"Ouverture du background :"<< aImage;
+    
+    Background.loadFromFile(accesImage,renderer);
+}
+
+
+
+void SdlPartitionMaker::sdlShowDiff() {
+    SDL_Surface * surface;
     SDL_Texture * tex;
     SDL_Rect rec;
-	SDL_Color WhiteC = {0,0,0};
-
-
+    SDL_Color WhiteC = {0,0,0};
+    unsigned int difficulty = partMaker->getDifficulty();
+    string message="DIFFICULTE : "+to_string(difficulty);
+    
     surface=TTF_RenderText_Blended(font,message.c_str(),WhiteC);
     tex=SDL_CreateTextureFromSurface(renderer,surface);
     if(tex==NULL){
         cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
     }
-    rec.x=width/2;
-    rec.y=height/2;
-    rec.w=surface->w;
-    rec.h=surface->h;
+    rec.x=width/10;
+    rec.y=height/10;
+    rec.w=width/10;
+    rec.h=height/10;
     if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
         cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl;
     }
 
 }
+
+
+
+
+//A REPRENDRE -> affiche une image si il y a un un.
+void SdlPartitionMaker::sdlShow(string line) {
+    
+	SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
+    SDL_RenderClear(renderer);
+    Background.draw(renderer,0,0,width,height);
+    sdlShowDiff();
+    //string line =keyboardX.getCurrentStateStr();
+    //int stoi (const string&  str, size_t* idx = 0, int base = 10);
+    int k;
+    for(unsigned int i=0;i<5;i++){
+        k=stoi(line.c_str(),5,10);
+        cout << line <<"######"<<endl;
+        if(k){
+           SdlShowSquare(i);
+        }
+    }
+}
+
+
+void SdlPartitionMaker::SdlShowSquare(unsigned int i){
+    switch(i){
+        case 0:{
+            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
+            break;
+        }
+        case 1:{
+            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
+            break;
+        }
+        case 2:{
+            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
+            break;
+        }
+        case 3:{
+            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
+            break;
+        }
+        case 4:{
+            tabSquareColor[i].draw(renderer,width/6+i*width/10,height/2,width/10,width/10);
+            break;
+        }
+    }
+}
+
+
+
+void SdlPartitionMaker::sdlShowTime(int time){
+    SDL_Surface * surface;
+    SDL_Texture * tex;
+    SDL_Rect rec;
+    SDL_Color WhiteC = {0,0,0};
+    string message="Time : "+to_string(time);
+    
+    surface=TTF_RenderText_Blended(font,message.c_str(),WhiteC);
+    tex=SDL_CreateTextureFromSurface(renderer,surface);
+    if(tex==NULL){
+        cout<<"Erreur lors de la creation de la texture : "<<SDL_GetError()<<endl;
+    }
+    rec.x=width*8/10;
+    rec.y=height/10;
+    rec.w=width/10;
+    rec.h=height/10;
+    if(SDL_RenderCopy(renderer, tex, NULL, &rec)!=0){
+        cout<<"Erreur lors de l'update du renderer : "<<SDL_GetError()<<endl;
+    }
+    
+}
+
+
 
 
 void SdlPartitionMaker::sdlLoop() {
@@ -123,8 +212,8 @@ void SdlPartitionMaker::sdlLoop() {
         timeSeconds=time/1000.f;
         
         partMaker->update(time,line);
-
-        sdlShow();
+        sdlShow(line);
+        sdlShowTime(timeSeconds);
         SDL_RenderPresent(renderer);
     }
     partMaker->save();

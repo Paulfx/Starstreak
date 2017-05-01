@@ -25,10 +25,18 @@ private :
     SDL_Renderer * renderer;
     int width,height; //taille de la fenêtre
 
+    
+/* ########## IMAGE ######## */
+    Image tabSquareColor[5];
+    Image Background;
+    
 /* ######### GAME ######### */
     PartitionMaker* partMaker;
     TTF_Font * font;
     Mix_Music *music;
+    
+    
+    bool tabIsPress[5];
 
 public :
 	
@@ -36,10 +44,14 @@ public :
 
     ~SdlPartitionMaker();
 
+    void backgroundImageLoad();
+    
     void sdlLoop();
 
-    void sdlShow();
-    
+    void sdlShow(string line);
+    void sdlShowDiff();
+    void sdlShowTime(int time);
+    void SdlShowSquare(unsigned int i);
 };
 
 #endif //SDL_PARTMAKER_H
