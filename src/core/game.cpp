@@ -9,7 +9,7 @@ const int COLUMN_NOTE_3 = 450;
 const int COLUMN_NOTE_4 = 600;
 const int BEGIN_CADRE = 0;
 const int END_VALIDATION = 600;
-const float TIME_UNTIL_DOWN = 3; //dépend de difficulté
+const float TIME_UNTIL_DOWN = 2; //dépend de difficulté
 
 Game::Game() {
 
