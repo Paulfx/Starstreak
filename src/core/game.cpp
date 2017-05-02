@@ -21,7 +21,6 @@ Game::Game(const Song& currSong,unsigned int difficulty,int beginValid) {
 	partition = new Partition(currSong.filePartition,difficulty);//A CHANGER DIFFICULTY != 1
 
 	cout<<"Partition créée"<<endl;
-	cout<<partition->getNbLine()<<endl;
 
 	cadre= new Cadre(COLUMN_NOTE_0,COLUMN_NOTE_1,COLUMN_NOTE_2,COLUMN_NOTE_3,COLUMN_NOTE_4,TIME_UNTIL_DOWN,BEGIN_CADRE,
 		beginValid,beginValid+100);
