@@ -12,6 +12,8 @@
 
 using namespace std;
 
+/**@class
+*/
 class Menu {
     
     private :
@@ -80,11 +82,6 @@ class Menu {
      */
     unsigned int getDifficulty() const;
     
-    /** @brief Accesseur Game
-     @return reference de Game
-     */
-    Game& getGame();
-    
     /** @brief Accesseur booleen d'activité du menu (txt)
      @return Booleen d'activité
      */
@@ -103,10 +100,6 @@ class Menu {
      */
     bool getMode() const;
     
-    /** @brief Renvoie le tab des noms de chansons
-     @return Liste des chansons
-     */
-    string getList();
     
     /** @brief Renvoie le bom de la chanson a l'indice i
      @param indice

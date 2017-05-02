@@ -45,7 +45,6 @@ void Score::update(const vector<Note*>& tabNeedPlay, Keyboard& keyboard) {
                     tabNeedPlay[j]->setPlayed();
                     keyboard.setNoPress(i);
                     cout<<"NOTE COLONNE : "<<j<<" est jouée"<<endl;
-                    //tabNeedPlay[j]->setNoNeedPlay(); //A FAIRE
                     //success();
                 }
             }  

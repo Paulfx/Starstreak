@@ -4,6 +4,9 @@ CORE = core/cadre.cpp core/game.cpp core/keyboard.cpp core/partition.cpp core/me
 SRCS_SDL = $(CORE) sdl2/sdlPartitionMaker.cpp sdl2/mainSdl.cpp sdl2/sdlClass.cpp sdl2/sdlMenu.cpp sdl2/sdlGame.cpp
 FINAL_TARGET_SDL = starstreak
 
+SRCS_TXT = $(CORE) txt/txtGame.cpp txt/winTxt.cpp txt/mainTxt.cpp
+FINAL_TARGET_TXT = starstreakTxt
+
 ifeq ($(OS),Windows_NT)
 	INCLUDE_DIR_SDL = 	-Iextern/SDL2_mingw/SDL2-2.0.3/include \
 						-Iextern/SDL2_mingw/SDL2_ttf-2.0.12/i686-w64-mingw32/include/SDL2 \
@@ -27,13 +30,13 @@ SRC_DIR 			= src
 BIN_DIR 			= bin
 INCLUDE_DIR			= -Isrc -Isrc/core -Isrc/sdl2
 
-default: make_dir $(BIN_DIR)/$(FINAL_TARGET_SDL)
+default: make_dir $(BIN_DIR)/$(FINAL_TARGET_SDL) $(BIN_DIR)/$(FINAL_TARGET_TXT)
 
 make_dir:
 ifeq ($(OS),Windows_NT)
 	if not exist $(OBJ_DIR) mkdir $(OBJ_DIR) $(OBJ_DIR)\sdl2 $(OBJ_DIR)\core
 else
-	test -d $(OBJ_DIR) || mkdir -p $(OBJ_DIR) $(OBJ_DIR)/sdl2 $(OBJ_DIR)/core
+	test -d $(OBJ_DIR) || mkdir -p $(OBJ_DIR) $(OBJ_DIR)/sdl2 $(OBJ_DIR)/core $(OBJ_DIR)/txt
 endif
 
 $(BIN_DIR)/$(FINAL_TARGET_SDL): $(SRCS_SDL:%.cpp=$(OBJ_DIR)/%.o)

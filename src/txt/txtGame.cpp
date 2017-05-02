@@ -19,8 +19,8 @@ void diffAff(WinTXT & win, Menu & menu) {
 
     // Affichage des titres
 	for(unsigned int i=0;i<menu.getNbSongs();++i) {
-		const char* title = menu.getTitleSong(i).c_str();
-		win.print(0,i,title);
+		string titleStr = menu.getTitleSong(i);
+		win.print(0,i,titleStr.c_str());
 	}
 	
 	//// partie difficultés //

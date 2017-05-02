@@ -53,7 +53,7 @@ Menu::~Menu() {
 }
 
 
-//On ne peut qu'afficher 10 chanson dans le cadre de selection -> il faudra faire un modulo 10 pour recuperer la position ou la chanson pointer (sdlGame l-160)
+
 void Menu::moveUp() {
 	(currI == 0) ? currI=nbSongs-1 : currI=(currI - 1) % nbSongs;
 }
@@ -85,32 +85,8 @@ void Menu::decreaseDiff(){
 	difficulty == 1 ? difficulty = 3 : difficulty -= 1;
 }
 
-//Game& Menu::getGame() {return *currGame;} //surement inutile, à bouger
-
 bool Menu::getMode() const { return mode;}
 
-
-//Fonction D'affichage pour la SDL
-//Recuperation des noms de chansons disponibles un a un dans un vector -> pointeur ?
-//
-/*
-string Menu::getList(){
-
-    cout << "Adresse : "<< &nbSongs << endl;
-    cout << "coucou from getList :" << nbSongs << endl;
-    //ListSong.reserve(nbSongs); //pas sur qu'il y en ait besoin avec push_back
-    
-    
-    
-    string ListSong[nbSongs];
-    int i=0;
-    while(songTab[i]!=NULL){
-        ListSong[i]=(songTab[i]->title);
-    	i++;
-    }
-    
-return ListSong;
-}*/
 
 string Menu::getTitleSong(unsigned int i){
 	assert(i<nbSongs);
